@@ -67,7 +67,7 @@ def create_syllable_cypher_map(syllable_library, vowel_map, consonant_map):
 
 # --- Core Logic ---
 def compress(text, c2_map, c1_vowel_map, c1_consonant_map, syllable_library):
-    """Compresses text, handling words, spaces, and newlines."""
+    """Compresses text, handling words, spaces, newlines, and case preservation."""
     compressed_data = []
     # Preserve structure by splitting on spaces but keeping newlines to be handled separately
     lines = text.split('\n')
@@ -76,40 +76,86 @@ def compress(text, c2_map, c1_vowel_map, c1_consonant_map, syllable_library):
         for word_idx, word in enumerate(words):
             if not word: continue
             temp_word = word.lower()
+            original_word = word
+            original_idx = 0
             while len(temp_word) > 0:
                 found_syllable = False
                 for syllable in syllable_library:
                     if temp_word.startswith(syllable):
                         if syllable in c2_map:
-                            compressed_data.append(c2_map[syllable])
+                            # Preserve case information from original word
+                            original_syllable = original_word[original_idx:original_idx + len(syllable)]
+                            case_pattern = [1 if c.isupper() else 0 for c in original_syllable]
+                            compressed_data.append({
+                                "type": "C2",
+                                **c2_map[syllable],
+                                "case": case_pattern
+                            })
                         temp_word = temp_word[len(syllable):]
+                        original_idx += len(syllable)
                         found_syllable = True
                         break
                 if not found_syllable:
                     char = temp_word[0]
+                    original_char = original_word[original_idx]
                     if char in c1_vowel_map: value = c1_vowel_map[char]
                     elif char in c1_consonant_map: value = c1_consonant_map[char]
                     else: value = -1
-                    compressed_data.append({"type": "C1", "char": char, "value": value})
+                    compressed_data.append({
+                        "type": "C1",
+                        "char": char,
+                        "value": value,
+                        "is_uppercase": original_char.isupper()
+                    })
                     temp_word = temp_word[1:]
+                    original_idx += 1
             if word_idx < len(words) - 1:
                 compressed_data.append({"type": "SPACE"})
         if line_idx < len(lines) - 1:
             compressed_data.append({"type": "NEWLINE"}) 
     return compressed_data
 
-def decompress(compressed_data, c2_map):
-    """Decompresses a list of data blocks back into text."""
+def decompress(compressed_data, c2_map, original_c2_map=None):
+    """Decompresses a list of data blocks back into text, preserving case."""
     reconstructed_parts = []
-    reverse_c2_map = {json.dumps(v, sort_keys=True): k for k, v in c2_map.items()}
+    
+    # Build reverse map: compare just the core C2 data (without type/case)
+    reverse_c2_map = {}
+    for syllable, c2_data in c2_map.items():
+        # Store the mapping using the core C2 data structure
+        reverse_c2_map[syllable] = c2_data
+    
     for block in compressed_data:
         block_type = block.get("type")
         if block_type == "C1":
-            reconstructed_parts.append(block["char"])
+            char = block["char"]
+            if block.get("is_uppercase", False):
+                char = char.upper()
+            reconstructed_parts.append(char)
         elif block_type == "C2":
-            serialized_block = json.dumps(block, sort_keys=True)
-            syllable = reverse_c2_map.get(serialized_block)
-            if syllable:
+            # Search through c2_map to find the matching syllable
+            found_syllable = None
+            for syllable, c2_data in c2_map.items():
+                # Check if all keys in c2_data match the corresponding keys in block
+                match = True
+                for key, value in c2_data.items():
+                    if key not in block or block[key] != value:
+                        match = False
+                        break
+                if match:
+                    found_syllable = syllable
+                    break
+            
+            if found_syllable:
+                # Apply case pattern if present
+                case_pattern = block.get("case", [])
+                syllable = found_syllable
+                if case_pattern:
+                    syllable_list = list(syllable)
+                    for i, should_upper in enumerate(case_pattern):
+                        if i < len(syllable_list):
+                            syllable_list[i] = syllable_list[i].upper() if should_upper else syllable_list[i]
+                    syllable = "".join(syllable_list)
                 reconstructed_parts.append(syllable)
         elif block_type == "SPACE":
             reconstructed_parts.append(" ")

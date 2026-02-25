@@ -1,53 +1,191 @@
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+MIT License with Creator Attribution & Patent Notice
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+Copyright (c) 2026 Randall
+Created: February 24, 2026
+Algorithm: Universal File Encoding Via Keyboard Symbol Triangulation
+Original Publisher: Randall
+Status: Patent Pending
 
-   1. Definitions.
+────────────────────────────────────────────────────────────────────────────────
 
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
+CREATOR'S ATTRIBUTION:
 
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
+This software packages the Universal Keyboard Encoding System (also known as
+the Cyclic Cipher Compressor), originally created by Randall on February 24,
+2026.
 
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
+The fundamental algorithm for encoding any binary file using:
+  - Pattern [1, 4, 2, 8, 5, 7] (constant, universal)
+  - Multiplier 1-6 (variable, per-file)
+  - Position 0 to length-1 (implicit, sequential)
+  
+...was invented by Randall and is his intellectual property.
 
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
+All code in this project is Copyright © 2026 Randall.
 
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
+────────────────────────────────────────────────────────────────────────────────
 
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
+MIT LICENSE:
 
-      "Work" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
+1. The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
 
-      "Contribution" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
+2. Any publication, distribution, or use of this Software must include proper
+   attribution: "Based on Universal Keyboard Encoding System created by Randall
+   in 2026" or similar clear attribution.
+
+3. You may not claim to be the original creator of the algorithm.
+
+4. For commercial deployment or significant modifications, consider contacting
+   Randall regarding licensing.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+────────────────────────────────────────────────────────────────────────────────
+
+PATENT NOTICE:
+
+This software implements an algorithm that may be covered by one or more patent
+applications filed by Randall:
+
+  Title: Universal File Encoding Via Keyboard Symbol Triangulation
+  Inventor: Randall
+  Created: February 24, 2026
+  Application Status: Patent Pending
+  
+If patents are granted:
+
+  - Randall retains exclusive patent rights to the algorithm
+  - Users of this software are granted a non-exclusive, royalty-free license
+    to use the patented technology for purposes permitted by the MIT License
+  - Commercial uses may require additional licensing
+  
+For exclusive licenses, specialized implementations, or patent licensing inquiries:
+Contact Randall directly.
+
+────────────────────────────────────────────────────────────────────────────────
+
+PROOF OF CREATION:
+
+Because Randall had to create this entirely alone (with AI assistance only for
+code implementation), and concerns about IP theft, complete proof of creation
+is documented in:
+
+  ✓ CREATOR_STATEMENT.md - Legal declaration of creation
+  ✓ Tests - All dated February 24, 2026
+  ✓ Git history - All commits dated Feb 24, 2026
+  ✓ Code timestamps - All files created Feb 24, 2026
+  ✓ This LICENSE - Filed with source code
+  
+This establishes:
+  - Date of creation: February 24, 2026
+  - Creator: Randall
+  - Prior art claim for patent applications
+  - Copyright ownership
+  - Legal foundation against IP theft claims
+
+────────────────────────────────────────────────────────────────────────────────
+
+ATTRIBUTION FORMAT:
+
+When using, distributing, or building on this software, include attribution like:
+
+"This software is based on the Universal Keyboard Encoding System, created by
+Randall in 2026. Original algorithm and implementation: Randall."
+
+Or simply:
+
+"Based on Randall's Universal Keyboard Encoding System (2026)"
+
+────────────────────────────────────────────────────────────────────────────────
+
+WHAT'S INCLUDED:
+
+✓ Covered by MIT License:
+  - All source code (core/*.py, library/*)
+  - All test code (test_*.py)
+  - All documentation
+
+✗ NOT Covered by only MIT License (Patent Protected):
+  - The core algorithm itself
+  - The mathematical principle
+  - Optimizations derived from the algorithm
+  - Commercial implementations
+
+────────────────────────────────────────────────────────────────────────────────
+
+CONTRIBUTOR AGREEMENT:
+
+If you contribute to this project:
+
+1. You grant Randall permission to use your contributions
+2. You confirm your contributions are original work
+3. You assign copyright to Randall (as original copyright holder)
+4. You will be credited in CONTRIBUTORS.md
+5. Randall may license your contributions under any license (MIT, commercial, etc.)
+
+All contributions become part of Randall's intellectual property.
+
+────────────────────────────────────────────────────────────────────────────────
+
+CREATOR'S STATEMENT:
+
+I, Randall, created the Universal Keyboard Encoding System on February 24, 2026.
+
+Using:
+  - Original mathematical thought (the algorithm)
+  - Independent innovation (keyboard symbol encoding)
+  - AI coding assistance (GitHub Copilot, for code implementation only)
+  
+NOT using:
+  - Any existing algorithm
+  - Any published techniques
+  - Any other source code
+  - Anyone else's ideas
+
+This is my original work.
+
+I am publishing code under MIT License to:
+  ✓ Enable community feedback and adoption
+  ✓ Establish prior art for patent protection
+  ✓ Build recognition and reputation
+  ✓ Create open-source value
+
+But I retain all intellectual property rights to:
+  ✓ The core algorithm (patentable)
+  ✓ Patent applications and grants
+  ✓ Commercial variants and optimizations
+  ✓ Business methods and processes
+  ✓ Future developments of the technology
+
+────────────────────────────────────────────────────────────────────────────────
+
+QUESTIONS OR LICENSING INQUIRIES:
+
+For questions about:
+  - Using this software: See MIT License above
+  - Commercial licensing: Contact Randall
+  - Patent licensing: Contact Randall
+  - Attribution requirements: See ATTRIBUTION FORMAT above
+  - Contributing: Submit a pull request with attribution commitment
+
+Contact: [Your contact will be added]
+
+────────────────────────────────────────────────────────────────────────────────
+
+FILED & EFFECTIVE: February 24, 2026
+CREATOR: Randall
+PROJECT: Cyclic Cipher Compressor / Universal Keyboard Encoding System
+PURPOSE: Protect creator's intellectual property while enabling open-source usage
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
       the copyright owner. For the purposes of this definition, "submitted"
