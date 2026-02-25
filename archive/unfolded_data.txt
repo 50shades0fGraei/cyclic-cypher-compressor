@@ -1,0 +1,1 @@
+ThisisatestoftheCyclicCypherCompressor.Wearetestingthefullround-tripprocesstoensurethattheunfoldenginecanperfectlyreconstructthedatatransmutedbytheccc-engine.
