@@ -29,7 +29,7 @@ A **universal file encoding system** that converts ANY binary file into keyboard
 
 ## A Multi-layer Cascading Compression System
 
-Using the 142857 cyclic pattern combined with 2D matrix triangulation to achieve **61% compression** through pattern grouping and delta encoding.
+Using the 142857 cyclic pattern combined with 2D matrix triangulation to achieve **.oo6% compression** through pattern grouping and delta encoding.
 
 ### Quick Start
 
