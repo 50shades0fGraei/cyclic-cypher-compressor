@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "original_filename": "test_document.txt",
+    "original_size_bytes": 44,
+    "created": "2026-02-25T11:23:43.531233",
+    "version": "1.0",
+    "compression_type": "signature-based",
+    "secret_key_hash": 1190090462
+  },
+  "character_counts": {
+    "alphabetic": 35,
+    "punctuation": 1,
+    "unknown": 8
+  },
+  "signatures": {
+    "alphabetic": {
+      "signature": [
+        492,
+        536,
+        445,
+        626,
+        555,
+        665
+      ],
+      "char_count": 35,
+      "position_count": 35
+    },
+    "punctuation": {
+      "signature": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "char_count": 1,
+      "position_count": 1
+    },
+    "unknown": {
+      "data": "ICAgICAgICA=",
+      "char_count": 8
+    }
+  }
+}

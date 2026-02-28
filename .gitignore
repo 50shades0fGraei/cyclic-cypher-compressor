@@ -1,0 +1,103 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific test files
+test_*.txt
+test_*.bin
+test_*.ccc
+test_*.keyboard
+test_*.keyboard_simple
+test_*.uni
+test_*.json
+*_decompressed.txt
+*_reconstructed.txt
+*_restored.txt
+final_test*
+generate_test_file.py
+analyze_output.py
+ccc.py
+
+# Old versions (keep only keyboard_simple.py and related)
+core/alphabet_cyphers.py
+core/cyclic_cipher.py
+core/cyclic_compressor.py
+core/cyclic_compressor_cascade.py
+core/cyclic_compressor_clean.py
+core/cyclic_compressor_final.py
+core/cyclic_compressor_matrix.py
+core/cyclic_compressor_paired.py
+core/cyclic_compressor_rle.py
+core/cyclic_compressor_symphony.py
+core/cyclic_compressor_symphony_simple.py
+core/cyclic_compressor_triple.py
+core/cyclic_compressor_v3.py
+core/cyclic_v3.py
+core/universal_binary.py
+core/universal_codec.py
+core/universal_decoder.py
+core/universal_encoder.py
+core/keyboard_encoding.py
+
+# Old documentation
+ARCHITECTURE.md
+COMPLETION.md
+DOCUMENTATION.md
+FINAL.md
+GLANCE.md
+IMPLEMENTATION.md
+PROJECT_COMPLETE.md
+PROJECT_COMPLETION.txt
+QUICKSTART.md
+START_HERE.md
+SYMPHONY.md
+SYSTEM_COMPLETE.md
+TEST_RESULTS.md
+UNIVERSAL_CODEC_MVP.md
+VISION_REALIZED.md
+
+# Database
+vault.db
+*.db
+
+# Secrets
+.env
+secrets.json
+config.local.json
