@@ -1,0 +1,5 @@
+input_file: large_file.txt
+original_size_bytes: 8807400
+compressed_signature: 204527075,204527135,204527166,204527153,204527118,204527039
+signature_size_bytes: 59
+compression_ratio: 0.00066989%

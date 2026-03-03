@@ -1,5 +1,5 @@
 input_file: sample.txt
-original_size_bytes: 188
-compressed_signature: 3900,3968,4052,4197,4200,4200
-signature_size_bytes: 29
-compression_ratio: 15.42553191%
+original_size_bytes: 30
+compressed_signature: 377,325,375,352,439,340
+signature_size_bytes: 23
+compression_ratio: 76.66666667%

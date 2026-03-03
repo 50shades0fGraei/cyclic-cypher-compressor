@@ -1,54 +1,59 @@
 # To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  # Create a Python environment with Flask available.
+  # This is the idiomatic Nix way to handle Python dependencies.
+  pythonWithFlask = pkgs.python311.withPackages (ps: [
+    ps.flask
+  ]);
+in
+{
   # Which nixpkgs channel to use.
   channel = "stable-24.05"; # or "unstable"
+
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    # pkgs.go
-    pkgs.python311
-    pkgs.python311Packages.pip
-    # pkgs.nodejs_20
-    # pkgs.nodePackages.nodemon
+    # This places the Python interpreter (with Flask) onto the PATH.
+    pythonWithFlask,
+    pkgs.ffmpeg
   ];
+
   # Sets environment variables in the workspace
-  env = {};
+  env = {
+    # Add the project root to the Python path to allow imports of local modules.
+    PYTHONPATH = ".";
+    # Set the Flask app to be the 'app' object in the 'backend.py' file
+    FLASK_APP = "backend";
+  };
+
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
-      # "vscodevim.vim"
       "google.gemini-cli-vscode-ide-companion"
     ];
+
     # Enable previews
     previews = {
       enable = true;
       previews = {
-        # web = {
-        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
-        #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "dev"];
-        #   manager = "web";
-        #   env = {
-        #     # Environment variables to set for your server
-        #     PORT = "$PORT";
-        #   };
-        # };
+        web = {
+          # This command now uses the Python interpreter defined in 'packages' above,
+          # which has Flask installed.
+          command = ["flask" "run" "--port" "$PORT" "--host" "0.0.0.0"];
+          manager = "web";
+        };
       };
     };
+
     # Workspace lifecycle hooks
     workspace = {
       # Runs when a workspace is first created
       onCreate = {
-        # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
-        # Open editors for the following files by default, if they exist:
-        default.openFiles = [ ".idx/dev.nix" "README.md" ];
+        default.openFiles = [ ".idx/dev.nix" "README.md" "backend.py" "web/index.html" ];
       };
       # Runs when the workspace is (re)started
-      onStart = {
-        # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run watch-backend";
-      };
+      onStart = {};
     };
   };
 }

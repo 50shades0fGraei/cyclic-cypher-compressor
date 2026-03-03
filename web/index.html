@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclic Cypher Compressor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cyclic Cypher Compressor</h1>
+            <p>A demonstration of hybrid compression technology.</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <h2>1. Upload Your File</h2>
+                <input type="file" id="fileInput">
+                <button id="compressButton">Compress</button>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <h2>2. Compression Results</h2>
+                <div id="spinner" style="display: none;">Compressing...</div>
+                <div id="resultsContent">
+                    <p><strong>Success!</strong> Your file has been compressed.</p>
+                    <div class="download-links">
+                        <a id="traceLink" class="button" download>Download .trace File</a>
+                        <a id="metaLink" class="button" download>Download .meta File</a>
+                    </div>
+                </div>
+                <div id="errorSection" style="display: none;"></div>
+            </div>
+
+            <div class="info-section">
+                <h2>How It Works</h2>
+                <p>
+                    The <strong>Hybrid Compression</strong> mode generates two distinct outputs from a single pass:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Trace File (.ccc.trace):</strong> 
+                        A complete, reversible record of the compression. This allows the original file to be perfectly reconstructed.
+                    </li>
+                    <li>
+                        <strong>Meta File (.meta):</strong> 
+                        A compact, verifiable signature of the compression. This is ideal for quickly confirming file integrity and origin.
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
