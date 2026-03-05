@@ -52,7 +52,6 @@ export function FileDropZone({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) onFileSelected(file)
-    // Reset so the same file can be selected again
     e.target.value = ""
   }
 
@@ -66,11 +65,10 @@ export function FileDropZone({
       disabled={disabled}
       className={cn(
         "relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-12 transition-all",
-        "hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.04)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]",
-        isDragOver &&
-          "border-[hsl(var(--primary))] bg-[hsl(var(--primary)/0.08)]",
-        !isDragOver && "border-[hsl(var(--border))]",
+        "hover:border-primary hover:bg-primary/4",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        isDragOver && "border-primary bg-primary/8",
+        !isDragOver && "border-border",
         disabled && "pointer-events-none opacity-50"
       )}
     >
@@ -78,19 +76,15 @@ export function FileDropZone({
         className={cn(
           "flex h-12 w-12 items-center justify-center rounded-full transition-colors",
           isDragOver
-            ? "bg-[hsl(var(--primary)/0.15)] text-[hsl(var(--primary))]"
-            : "bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]"
+            ? "bg-primary/15 text-primary"
+            : "bg-muted text-muted-foreground"
         )}
       >
         <Upload className="h-5 w-5" />
       </div>
       <div className="flex flex-col items-center gap-1">
-        <span className="text-sm font-medium text-[hsl(var(--foreground))]">
-          {label}
-        </span>
-        <span className="text-xs text-[hsl(var(--muted-foreground))]">
-          {sublabel}
-        </span>
+        <span className="text-sm font-medium text-foreground">{label}</span>
+        <span className="text-xs text-muted-foreground">{sublabel}</span>
       </div>
       <input
         ref={inputRef}

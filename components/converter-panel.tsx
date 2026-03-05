@@ -76,13 +76,10 @@ export function ConverterPanel() {
       const data = new Uint8Array(buffer)
 
       if (!isCCFile(data)) {
-        throw new Error(
-          "Not a valid .cc file (missing CCC2 magic bytes)"
-        )
+        throw new Error("Not a valid .cc file (missing CCC2 magic bytes)")
       }
 
       const result = decompressFromCC(data)
-      // Strip .cc extension for the output name
       const outputName = file.name.endsWith(".cc")
         ? file.name.slice(0, -3)
         : `${file.name}.restored`
@@ -112,13 +109,13 @@ export function ConverterPanel() {
   return (
     <div className="flex w-full max-w-xl flex-col gap-6">
       {/* Mode tabs */}
-      <div className="flex rounded-lg bg-[hsl(var(--muted))] p-1">
+      <div className="flex rounded-lg bg-muted p-1">
         <button
           onClick={() => switchMode("compress")}
           className={`flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all ${
             mode === "compress"
-              ? "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-sm"
-              : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]"
+              ? "bg-background text-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           <FileArchive className="h-4 w-4" />
@@ -128,8 +125,8 @@ export function ConverterPanel() {
           onClick={() => switchMode("restore")}
           className={`flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all ${
             mode === "restore"
-              ? "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-sm"
-              : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]"
+              ? "bg-background text-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           <RotateCcw className="h-4 w-4" />
@@ -157,8 +154,8 @@ export function ConverterPanel() {
       {/* Processing state */}
       {processing && (
         <div className="flex items-center justify-center gap-3 py-4">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[hsl(var(--primary))] border-t-transparent" />
-          <span className="text-sm text-[hsl(var(--muted-foreground))]">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <span className="text-sm text-muted-foreground">
             {mode === "compress" ? "Compressing" : "Restoring"} {fileName}...
           </span>
         </div>
@@ -166,15 +163,13 @@ export function ConverterPanel() {
 
       {/* Error */}
       {error && (
-        <div className="animate-fade-in flex items-start gap-3 rounded-lg border border-[hsl(var(--destructive)/0.3)] bg-[hsl(var(--destructive)/0.08)] px-4 py-3">
-          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[hsl(var(--destructive))]" />
+        <div className="animate-fade-in flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/8 px-4 py-3">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
           <div className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-[hsl(var(--destructive))]">
+            <span className="text-sm font-medium text-destructive">
               {mode === "compress" ? "Compression" : "Restoration"} failed
             </span>
-            <span className="text-xs text-[hsl(var(--muted-foreground))]">
-              {error}
-            </span>
+            <span className="text-xs text-muted-foreground">{error}</span>
           </div>
         </div>
       )}
@@ -183,20 +178,18 @@ export function ConverterPanel() {
       {result && !processing && (
         <div className="animate-fade-in flex flex-col gap-4">
           {/* File info */}
-          <div className="flex items-center justify-between rounded-lg bg-[hsl(var(--card))] border border-[hsl(var(--border))] px-4 py-3">
+          <div className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3">
             <div className="flex flex-col gap-0.5">
-              <span className="text-xs text-[hsl(var(--muted-foreground))]">
+              <span className="text-xs text-muted-foreground">
                 {mode === "compress" ? "Input" : "Restored from"}
               </span>
-              <span className="font-mono text-sm text-[hsl(var(--foreground))]">
+              <span className="font-mono text-sm text-foreground">
                 {fileName}
               </span>
             </div>
             <div className="flex flex-col items-end gap-0.5">
-              <span className="text-xs text-[hsl(var(--muted-foreground))]">
-                Output
-              </span>
-              <span className="font-mono text-sm text-[hsl(var(--primary))]">
+              <span className="text-xs text-muted-foreground">Output</span>
+              <span className="font-mono text-sm text-primary">
                 {"outputName" in result
                   ? (result as { outputName: string }).outputName
                   : "output"}
@@ -223,7 +216,7 @@ export function ConverterPanel() {
                   : "output"
               )
             }
-            className="flex items-center justify-center gap-2 rounded-lg bg-[hsl(var(--primary))] px-4 py-3 text-sm font-semibold text-[hsl(var(--primary-foreground))] transition-opacity hover:opacity-90 active:opacity-80"
+            className="flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 active:opacity-80"
           >
             <Download className="h-4 w-4" />
             Download{" "}

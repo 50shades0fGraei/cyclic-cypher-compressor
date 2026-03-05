@@ -17,12 +17,12 @@ export function StatsDisplay({ stats }: StatsDisplayProps) {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="flex flex-col gap-1 rounded-md bg-[hsl(var(--muted))] px-3 py-2.5"
+          className="flex flex-col gap-1 rounded-md bg-muted px-3 py-2.5"
         >
-          <span className="text-[11px] font-medium uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+          <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             {stat.label}
           </span>
-          <span className="font-mono text-sm font-semibold text-[hsl(var(--foreground))]">
+          <span className="font-mono text-sm font-semibold text-foreground">
             {stat.value}
           </span>
         </div>
