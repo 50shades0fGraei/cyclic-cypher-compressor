@@ -1,6 +1,7 @@
 import { ConverterPanel } from "@/components/converter-panel"
 
 export default function Home() {
+  console.log("[v0] Home page rendered")
   return (
     <main className="flex min-h-screen flex-col items-center px-4 py-16 sm:py-24">
       {/* Header */}
