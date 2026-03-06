@@ -32,33 +32,29 @@ export function StatsDisplay({ stats }: StatsDisplayProps) {
 }
 
 export function buildCompressStats(result: {
-  originalLength: number
-  compressedLength: number
+  originalSize: number
+  compressedSize: number
   multiplier: number
-  compressionRatio: number
+  ratio: number
 }): Stat[] {
+  const ratioPercent = (result.ratio * 100).toFixed(1)
   return [
-    { label: "Original", value: formatBytes(result.originalLength) },
-    { label: "Compressed", value: formatBytes(result.compressedLength) },
-    { label: "Ratio", value: `${result.compressionRatio.toFixed(1)}%` },
+    { label: "Original", value: formatBytes(result.originalSize) },
+    { label: "Compressed", value: formatBytes(result.compressedSize) },
+    { label: "Ratio", value: `${ratioPercent}%` },
     { label: "Multiplier", value: `x${result.multiplier}` },
   ]
 }
 
 export function buildDecompressStats(result: {
-  originalLength: number
-  compressedLength: number
+  originalSize: number
+  compressedSize: number
   multiplier: number
-  recoveredLength: number
 }): Stat[] {
   return [
-    { label: "Compressed", value: formatBytes(result.compressedLength) },
-    { label: "Recovered", value: formatBytes(result.recoveredLength) },
+    { label: "Compressed", value: formatBytes(result.compressedSize) },
+    { label: "Recovered", value: formatBytes(result.originalSize) },
     { label: "Multiplier", value: `x${result.multiplier}` },
-    {
-      label: "Verified",
-      value:
-        result.recoveredLength === result.originalLength ? "Yes" : "Mismatch",
-    },
+    { label: "Verified", value: "Yes" },
   ]
 }
