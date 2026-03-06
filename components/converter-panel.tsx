@@ -1,5 +1,6 @@
 "use client"
 
+// CCC2 File Converter
 import { useState, useCallback } from "react"
 import { Download, FileArchive, RotateCcw, AlertCircle } from "lucide-react"
 import { FileDropZone } from "./file-drop-zone"
