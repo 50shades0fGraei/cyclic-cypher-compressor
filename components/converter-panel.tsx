@@ -56,8 +56,8 @@ export function ConverterPanel() {
     try {
       const buffer = await file.arrayBuffer()
       const data = new Uint8Array(buffer)
-      const result = compressToCC(data)
-      setCompressResult({ ...result, outputName: `${file.name}.cc` })
+      const result = compressToCC(data, file.name)
+      setCompressResult({ ...result, outputName: result.fileName })
     } catch (err) {
       setError(err instanceof Error ? err.message : "Compression failed")
     } finally {
@@ -79,11 +79,8 @@ export function ConverterPanel() {
         throw new Error("Not a valid .cc file (missing CCC2 magic bytes)")
       }
 
-      const result = decompressFromCC(data)
-      const outputName = file.name.endsWith(".cc")
-        ? file.name.slice(0, -3)
-        : `${file.name}.restored`
-      setDecompressResult({ ...result, outputName })
+      const result = decompressFromCC(data, file.name)
+      setDecompressResult({ ...result, outputName: result.fileName })
     } catch (err) {
       setError(err instanceof Error ? err.message : "Decompression failed")
     } finally {
