@@ -1,6 +1,6 @@
 "use client"
 
-import { formatBytes } from "@/lib/cc-codec"
+import { formatBytes } from "../lib/cc-codec"
 
 interface Stat {
   label: string

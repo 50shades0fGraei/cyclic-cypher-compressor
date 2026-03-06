@@ -14,7 +14,7 @@ import {
   isCCFile,
   type CompressResult,
   type DecompressResult,
-} from "@/lib/cc-codec"
+} from "../lib/cc-codec"
 
 type Mode = "compress" | "restore"
 

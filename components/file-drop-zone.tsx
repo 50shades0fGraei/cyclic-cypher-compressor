@@ -2,7 +2,7 @@
 
 import { useCallback, useState, useRef } from "react"
 import { Upload } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn } from "../lib/utils"
 
 interface FileDropZoneProps {
   onFileSelected: (file: File) => void
