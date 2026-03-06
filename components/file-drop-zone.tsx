@@ -2,10 +2,10 @@
 
 import { useCallback, useState, useRef } from "react"
 import { Upload } from "lucide-react"
-import { clsx } from "clsx"
+import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-function cn(...inputs: (string | boolean | undefined | null)[]) {
+function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
