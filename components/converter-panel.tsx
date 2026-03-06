@@ -8,13 +8,154 @@ import {
   buildCompressStats,
   buildDecompressStats,
 } from "./stats-display"
-import {
-  compressToCC,
-  decompressFromCC,
-  isCCFile,
-  type CompressResult,
-  type DecompressResult,
-} from "../lib/cc-codec"
+import pako from "pako"
+
+// ============== CCC2 CODEC (inlined) ==============
+
+const MAGIC = new Uint8Array([0x43, 0x43, 0x43, 0x32]) // "CCC2"
+const HEADER_SIZE = 9 // 4 magic + 4 length + 1 multiplier
+
+export interface CompressResult {
+  data: Uint8Array
+  fileName: string
+  originalSize: number
+  compressedSize: number
+  multiplier: number
+  ratio: number
+}
+
+export interface DecompressResult {
+  data: Uint8Array
+  fileName: string
+  originalSize: number
+  compressedSize: number
+  multiplier: number
+}
+
+function findBestMultiplier(data: Uint8Array): number {
+  if (data.length === 0) return 1
+
+  let bestMultiplier = 1
+  let bestScore = 0
+
+  for (let m = 1; m <= 255; m++) {
+    const transformed = new Uint8Array(data.length)
+    for (let i = 0; i < data.length; i++) {
+      transformed[i] = (data[i] * m) & 0xff
+    }
+
+    const freqs = new Map<number, number>()
+    for (const b of transformed) {
+      freqs.set(b, (freqs.get(b) || 0) + 1)
+    }
+
+    let entropy = 0
+    for (const count of freqs.values()) {
+      const p = count / data.length
+      entropy -= p * Math.log2(p)
+    }
+
+    const score = 8 - entropy
+    if (score > bestScore) {
+      bestScore = score
+      bestMultiplier = m
+    }
+  }
+
+  return bestMultiplier
+}
+
+function modInverse(a: number, m: number): number {
+  a = ((a % m) + m) % m
+  for (let x = 1; x < m; x++) {
+    if ((a * x) % m === 1) return x
+  }
+  return 1
+}
+
+function applyMultiplier(data: Uint8Array, multiplier: number): Uint8Array {
+  const result = new Uint8Array(data.length)
+  for (let i = 0; i < data.length; i++) {
+    result[i] = (data[i] * multiplier) & 0xff
+  }
+  return result
+}
+
+function reverseMultiplier(data: Uint8Array, multiplier: number): Uint8Array {
+  const inverse = modInverse(multiplier, 256)
+  const result = new Uint8Array(data.length)
+  for (let i = 0; i < data.length; i++) {
+    result[i] = (data[i] * inverse) & 0xff
+  }
+  return result
+}
+
+export function compressToCC(data: Uint8Array, fileName: string): CompressResult {
+  const multiplier = findBestMultiplier(data)
+  const transformed = applyMultiplier(data, multiplier)
+  const compressed = pako.deflate(transformed, { level: 9 })
+
+  const output = new Uint8Array(HEADER_SIZE + compressed.length)
+  output.set(MAGIC, 0)
+
+  const lengthView = new DataView(output.buffer)
+  lengthView.setUint32(4, data.length, true)
+  output[8] = multiplier
+  output.set(compressed, HEADER_SIZE)
+
+  return {
+    data: output,
+    fileName: `${fileName}.cc`,
+    originalSize: data.length,
+    compressedSize: output.length,
+    multiplier,
+    ratio: output.length / data.length,
+  }
+}
+
+export function decompressFromCC(data: Uint8Array, fileName: string): DecompressResult {
+  if (!isCCFile(data)) {
+    throw new Error("Invalid CCC2 file: missing magic bytes")
+  }
+
+  const view = new DataView(data.buffer, data.byteOffset)
+  const originalLength = view.getUint32(4, true)
+  const multiplier = data[8]
+
+  const compressedPayload = data.slice(HEADER_SIZE)
+  const decompressed = pako.inflate(compressedPayload)
+  const restored = reverseMultiplier(decompressed, multiplier)
+
+  if (restored.length !== originalLength) {
+    throw new Error(
+      `Length mismatch: expected ${originalLength}, got ${restored.length}`
+    )
+  }
+
+  const outputName = fileName.endsWith(".cc")
+    ? fileName.slice(0, -3)
+    : `${fileName}.restored`
+
+  return {
+    data: restored,
+    fileName: outputName,
+    originalSize: restored.length,
+    compressedSize: data.length,
+    multiplier,
+  }
+}
+
+export function isCCFile(data: Uint8Array): boolean {
+  if (data.length < HEADER_SIZE) return false
+  return (
+    data[0] === MAGIC[0] &&
+    data[1] === MAGIC[1] &&
+    data[2] === MAGIC[2] &&
+    data[3] === MAGIC[3]
+  )
+}
+
+// ============== CONVERTER COMPONENT ==============
 
 type Mode = "compress" | "restore"
 
@@ -160,7 +301,7 @@ export function ConverterPanel() {
 
       {/* Error */}
       {error && (
-        <div className="animate-fade-in flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/8 px-4 py-3">
+        <div className="animate-fade-in flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3">
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
           <div className="flex flex-col gap-1">
             <span className="text-sm font-medium text-destructive">

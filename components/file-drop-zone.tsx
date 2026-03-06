@@ -2,7 +2,12 @@
 
 import { useCallback, useState, useRef } from "react"
 import { Upload } from "lucide-react"
-import { cn } from "../lib/utils"
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+function cn(...inputs: (string | boolean | undefined | null)[]) {
+  return twMerge(clsx(inputs))
+}
 
 interface FileDropZoneProps {
   onFileSelected: (file: File) => void
@@ -65,9 +70,9 @@ export function FileDropZone({
       disabled={disabled}
       className={cn(
         "relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-12 transition-all",
-        "hover:border-primary hover:bg-primary/4",
+        "hover:border-primary hover:bg-primary/5",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-        isDragOver && "border-primary bg-primary/8",
+        isDragOver && "border-primary bg-primary/10",
         !isDragOver && "border-border",
         disabled && "pointer-events-none opacity-50"
       )}
