@@ -36,13 +36,12 @@ export function buildCompressStats(result: {
   compressedSize: number
   multiplier: number
   alignmentCount: number
+  totalBits: number
   ratio: number
-  encodingMethod: "runs" | "positions"
 }): Stat[] {
   const ratioPercent = (result.ratio * 100).toFixed(1)
-  const bitCount = result.originalSize * 8
-  const alignPct = bitCount > 0 
-    ? ((result.alignmentCount / bitCount) * 100).toFixed(1)
+  const alignPct = result.totalBits > 0 
+    ? ((result.alignmentCount / result.totalBits) * 100).toFixed(1)
     : "0"
   return [
     { label: "Original", value: formatBytes(result.originalSize) },
@@ -50,7 +49,7 @@ export function buildCompressStats(result: {
     { label: "Ratio", value: `${ratioPercent}%` },
     { label: "Multiplier", value: `x${result.multiplier}` },
     { label: "Alignments", value: `${alignPct}%` },
-    { label: "Encoding", value: result.encodingMethod },
+    { label: "Total Bits", value: result.totalBits.toLocaleString() },
   ]
 }
 
