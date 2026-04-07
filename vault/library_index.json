@@ -1,0 +1,12 @@
+{
+    "0x0001": {
+        "name": "activate_npu",
+        "origin_program": "temp_dummy_program.py",
+        "storage_path": "vault\\dna_functions\\0x0001.dna"
+    },
+    "0x0002": {
+        "name": "override_directve",
+        "origin_program": "temp_dummy_program.py",
+        "storage_path": "vault\\dna_functions\\0x0002.dna"
+    }
+}

@@ -83,20 +83,31 @@ class GarudaDeductiveVault:
             for pos in positions:
                 processed_mask[pos] = 1
         
-        # Removed bloated Residual Storage (Lossless layer discarded).
-        # We process ONLY the cyclic alignments, relying intensely on the Deductive Matrix.
+        # 2. Store Residuals (The Lossless Layer)
+        packed.append(0xFE) # Residuals Marker
+        residuals = bytearray()
+        for pos in range(orig_len):
+            if not processed_mask[pos]:
+                residuals.append(chunk[pos])
+        
+        packed.extend(struct.pack('<I', len(residuals)))
+        packed.extend(residuals)
+        
         return packed
 
     def decode_chunk(self, packed_data):
-        """Reconstructs strictly based on deductive alignment arrays."""
+        """Reconstructs the original chunk bit-perfectly."""
         orig_len = struct.unpack('<I', packed_data[0:4])[0]
-        # We default unmapped bytes to 0 (Null space/silence), optimizing file density.
         chunk = bytearray(orig_len)
         processed_mask = bytearray(orig_len)
         ptr = 4
         
+        # Read Alignments until we hit the Residuals Marker
         while ptr < len(packed_data):
-            # No residual boundaries, strictly parsing alignments until EOF.
+            if packed_data[ptr] == 0xFE:
+                ptr += 1
+                break
+                
             cypher = packed_data[ptr]
             multiplier = packed_data[ptr + 1]
             count = struct.unpack('<I', packed_data[ptr + 2 : ptr + 6])[0]
@@ -104,7 +115,6 @@ class GarudaDeductiveVault:
             
             last_pos = -1
             for _ in range(count):
-                if ptr >= len(packed_data): break
                 flag = packed_data[ptr]
                 ptr += 1
                 if flag < 254:
@@ -114,10 +124,20 @@ class GarudaDeductiveVault:
                     ptr += 4
                 
                 pos = last_pos + gap
-                if pos < orig_len:
-                    chunk[pos] = cypher
-                    processed_mask[pos] = 1
+                chunk[pos] = cypher
+                processed_mask[pos] = 1
                 last_pos = pos
+        
+        # Read Residuals
+        if ptr + 4 <= len(packed_data):
+            res_len = struct.unpack('<I', packed_data[ptr : ptr + 4])[0]
+            ptr += 4
+            residuals = packed_data[ptr : ptr + res_len]
+            res_ptr = 0
+            for pos in range(orig_len):
+                if not processed_mask[pos]:
+                    chunk[pos] = residuals[res_ptr]
+                    res_ptr += 1
                     
         return chunk
 

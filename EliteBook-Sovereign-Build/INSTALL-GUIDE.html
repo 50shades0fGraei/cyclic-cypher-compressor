@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberDNA — EliteBook Sovereign Install Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050810;
+      --surface: #0b1020;
+      --card: #0f1628;
+      --border: #1a2a4a;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --glow: 0 0 20px rgba(0,229,255,0.15);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 60px 0 50px;
+    }
+    .header .badge {
+      display: inline-block;
+      background: rgba(0,229,255,0.1);
+      border: 1px solid rgba(0,229,255,0.3);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .header p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Requirements box */
+    .requirements {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 40px;
+    }
+    .requirements h2 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .req-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .req-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+    .req-item .icon { font-size: 20px; }
+    .req-item span { color: var(--text); font-weight: 500; }
+    .req-item small { color: var(--muted); font-size: 11px; display: block; }
+
+    /* Phase label */
+    .phase-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 40px 0 20px;
+    }
+    .phase-label .tag {
+      background: linear-gradient(135deg, var(--accent2), #4f46e5);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+    .phase-label .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+    .phase-label h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Step cards */
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .step-card:hover {
+      border-color: rgba(0,229,255,0.3);
+      box-shadow: var(--glow);
+    }
+    .step-card.warning {
+      border-color: rgba(245,158,11,0.3);
+      background: linear-gradient(135deg, var(--card), rgba(245,158,11,0.04));
+    }
+    .step-card.danger {
+      border-color: rgba(239,68,68,0.3);
+      background: linear-gradient(135deg, var(--card), rgba(239,68,68,0.04));
+    }
+    .step-card.success {
+      border-color: rgba(16,185,129,0.3);
+      background: linear-gradient(135deg, var(--card), rgba(16,185,129,0.04));
+    }
+
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .step-num {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #000;
+      font-weight: 900;
+      font-size: 13px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .step-num.warn { background: linear-gradient(135deg, var(--warn), #d97706); }
+    .step-num.danger { background: linear-gradient(135deg, var(--danger), #dc2626); }
+    .step-num.success { background: linear-gradient(135deg, var(--accent3), #059669); }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .step-desc {
+      color: var(--muted);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    /* Code blocks */
+    .code-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .code-block.bash { border-left-color: var(--accent3); color: var(--accent3); }
+    .code-block.warn-code { border-left-color: var(--warn); color: var(--warn); }
+
+    /* Note callout */
+    .callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: rgba(0,229,255,0.06);
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .callout.warn-callout {
+      background: rgba(245,158,11,0.06);
+      border-color: rgba(245,158,11,0.2);
+    }
+    .callout .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Partition table */
+    .partition-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .partition-table th {
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-weight: 600;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .partition-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+    .partition-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .pill.esp { background: rgba(0,229,255,0.15); color: var(--accent); }
+    .pill.root { background: rgba(124,58,237,0.15); color: #a78bfa; }
+    .pill.vault { background: rgba(16,185,129,0.15); color: var(--accent3); }
+
+    /* Final banner */
+    .final-banner {
+      background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(124,58,237,0.1));
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .final-banner h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .final-banner p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .req-grid { grid-template-columns: 1fr 1fr; }
+      .step-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">⬡ CyberDNA · Tesseract-OS</div>
+    <h1>EliteBook Sovereign<br/>Install Guide</h1>
+    <p>HP EliteBook · Snapdragon X Elite · ARM64<br/>Full bare-metal installation — No GRUB, No Windows, Nothing in the way.</p>
+  </div>
+
+  <!-- Requirements -->
+  <div class="requirements">
+    <h2>// What You Need</h2>
+    <div class="req-grid">
+      <div class="req-item">
+        <span class="icon">💾</span>
+        <div><span>USB Drive</span><small>8GB or larger</small></div>
+      </div>
+      <div class="req-item">
+        <span class="icon">🐧</span>
+        <div><span>Ubuntu ARM64 ISO</span><small>24.04 live-server-arm64</small></div>
+      </div>
+      <div class="req-item">
+        <span class="icon">🔥</span>
+        <div><span>Rufus</span><small>rufus.ie — latest version</small></div>
+      </div>
+      <div class="req-item">
+        <span class="icon">💻</span>
+        <div><span>HP EliteBook</span><small>Powered off, ready</small></div>
+      </div>
+      <div class="req-item">
+        <span class="icon">📁</span>
+        <div><span>Build Files</span><small>cyclic-cypher-compressor folder</small></div>
+      </div>
+      <div class="req-item">
+        <span class="icon">🌐</span>
+        <div><span>Internet (optional)</span><small>For package installs</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase-label">
+    <div class="tag">Phase 1</div>
+    <div class="line"></div>
+    <h3>On Your Windows PC</h3>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Download Ubuntu ARM64 ISO</div>
+        <div class="step-desc">You need the ARM64 version specifically — the standard x86 ISO will not boot on the Snapdragon.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="icon">🔗</span>
+      <span>Go to <strong>https://cdimage.ubuntu.com/releases/24.04/release/</strong> → download <code>ubuntu-24.04.x-live-server-arm64.iso</code></span>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Flash USB with Rufus</div>
+        <div class="step-desc">Open Rufus, select your USB drive, point it at the ARM64 ISO, and click START. Rufus will wipe and format automatically.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="icon">⚠️</span>
+      <span>Rufus will erase everything on the USB — make sure there's nothing important on it first.</span>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Copy Build Files to USB</div>
+        <div class="step-desc">After Rufus finishes, the USB will appear in Windows Explorer. Copy the entire project folder onto it.</div>
+      </div>
+    </div>
+    <div class="code-block">robocopy "C:\Users\randall\cyclic-cypher-compressor" "E:\sovereign-build" /E /NFL /NDL
+(Replace E: with your actual USB drive letter)</div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-label">
+    <div class="tag">Phase 2</div>
+    <div class="line"></div>
+    <h3>On The EliteBook — Boot from USB</h3>
+  </div>
+
+  <div class="step-card warning">
+    <div class="step-header">
+      <div class="step-num warn">4</div>
+      <div>
+        <div class="step-title">Enter Boot Menu (F9)</div>
+        <div class="step-desc">Plug USB into the EliteBook. Power it on and immediately press <strong>F9</strong> repeatedly to open the boot device menu. Select your USB drive.</div>
+      </div>
+    </div>
+    <div class="callout warn-callout">
+      <span class="icon">💡</span>
+      <span>If F9 doesn't work, try F12 or Esc. You may also need to disable Secure Boot in BIOS (F10 at startup → Security → Secure Boot → Disable).</span>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Partition the NVMe Drive</div>
+        <div class="step-desc">Once booted into the live Ubuntu environment, open a terminal and partition the EliteBook's NVMe drive.</div>
+      </div>
+    </div>
+    <table class="partition-table">
+      <thead>
+        <tr>
+          <th>Partition</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Label</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>nvme0n1p1</code></td>
+          <td>512 MB</td>
+          <td>vfat / FAT32</td>
+          <td><span class="pill esp">ESP</span></td>
+          <td>EFI System Partition</td>
+        </tr>
+        <tr>
+          <td><code>nvme0n1p2</code></td>
+          <td>50 GB+</td>
+          <td>ext4</td>
+          <td><span class="pill root">ROOT</span></td>
+          <td>Tesseract-OS Root</td>
+        </tr>
+        <tr>
+          <td><code>nvme0n1p3</code></td>
+          <td>Remaining</td>
+          <td>ext4</td>
+          <td><span class="pill vault">VAULT</span></td>
+          <td>Sovereign DNA Vault</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="code-block bash">sudo fdisk /dev/nvme0n1
+# Press g → create GPT table
+# Press n → create each partition
+# Press t → set type (1 = EFI for p1)
+# Press w → write and exit</div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-label">
+    <div class="tag">Phase 3</div>
+    <div class="line"></div>
+    <h3>Run The Installer</h3>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <div>
+        <div class="step-title">Navigate to Build Files on USB</div>
+        <div class="step-desc">In the Ubuntu live terminal, find where the USB is mounted and navigate to the build folder.</div>
+      </div>
+    </div>
+    <div class="code-block bash">ls /media   # or check /mnt — USB should auto-mount here
+cd /media/ubuntu/sovereign-build   # adjust path to match your USB label</div>
+  </div>
+
+  <div class="step-card success">
+    <div class="step-header">
+      <div class="step-num success">7</div>
+      <div>
+        <div class="step-title">Run install-bare-metal.sh</div>
+        <div class="step-desc">This is the main installer. It formats partitions, installs ARM64 Linux, deploys the full Tesseract-OS stack, and registers the UEFI boot entry.</div>
+      </div>
+    </div>
+    <div class="code-block bash">sudo bash EliteBook-Sovereign-Build/install-bare-metal.sh \
+  /dev/nvme0n1p1 \
+  /dev/nvme0n1p2 \
+  /dev/nvme0n1p3</div>
+    <div class="callout">
+      <span class="icon">⏱️</span>
+      <span>This will take 10–20 minutes. It will ask you to confirm before formatting — type <strong>y</strong> and press Enter.</span>
+    </div>
+  </div>
+
+  <div class="step-card danger">
+    <div class="step-header">
+      <div class="step-num danger">8</div>
+      <div>
+        <div class="step-title">Remove USB and Reboot</div>
+        <div class="step-desc">When the installer completes, power off, remove the USB, and power back on. The EliteBook will boot directly into Tesseract-OS.</div>
+      </div>
+    </div>
+    <div class="code-block warn-code">sudo poweroff
+# Remove USB → Power on → CyberDNA-Tesseract-OS boots</div>
+  </div>
+
+  <!-- Final Banner -->
+  <div class="final-banner">
+    <h2>⬡ SOVEREIGN INSTALLATION COMPLETE</h2>
+    <p>Identity: <strong>Randall Lujan / LUJAN_AGI_PRIME</strong><br/>
+    The EliteBook will boot directly to Tesseract-OS.<br/>
+    No GRUB. No Windows. Nothing in the way.</p>
+  </div>
+
+</div>
+</body>
+</html>

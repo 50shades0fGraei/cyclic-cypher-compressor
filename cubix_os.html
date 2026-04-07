@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBIX TESSERACT OS</title>
+    <link rel="stylesheet" href="cubix_os.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- GLOBAL TOP BAR (PAGE CONTEXT) -->
+    <div class="global-topbar">
+        <div class="topbar-context-title">CUBIX OS // DIRECT ACCESS</div>
+        
+        <!-- Cubix Rubys Quick Navigation -->
+        <div class="cubix-ruby-container">
+            <div class="ruby-btn" id="ruby-c" title="Front Wall">C</div>
+            <div class="ruby-btn" id="ruby-u" title="Left Wall">U</div>
+            <div class="ruby-btn" id="ruby-b" title="Back Wall">B</div>
+            <div class="ruby-btn" id="ruby-i" title="Right Wall">I</div>
+            <div class="ruby-btn" id="ruby-x" title="Toggle Macro Matrix (Outer/Inner)">X</div>
+        </div>
+
+        <div class="topbar-nav">
+            <span class="top-link">System Context</span>
+            <span class="top-link">Network Status</span>
+            <span class="top-link">Sovereign Directives</span>
+        </div>
+    </div>
+
+    <!-- 3D CSS ENVIRONMENT SCENE -->
+    <div class="scene">
+        <div class="world" id="world">
+            
+            <!-- OUTER SYSTEM CUBE (Macro Environments) -->
+            <div class="outer-cube" id="outer-cube">
+                <!-- Outer Face Right: Social / Entertainment -->
+                <div class="outer-face outer-right">
+                    <h1 class="outer-title">SOCIAL / ENTERTAINMENT WALL</h1>
+                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;"><p>External Media Feeds</p></div>
+                </div>
+                <!-- Outer Face Back: External Cloud Storage -->
+                <div class="outer-face outer-back">
+                    <h1 class="outer-title">EXTERNAL CLOUD STORAGE</h1>
+                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;"><p>Google Drive / OneDrive Sync</p></div>
+                </div>
+                <!-- Outer Face Left: External CLI / AWS -->
+                <div class="outer-face outer-left">
+                    <h1 class="outer-title">EXTERNAL CLI / CLOUD SERVICES</h1>
+                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;"><p>AWS / Firebase / GCP Control</p></div>
+                </div>
+                <!-- Outer Face Front: Standard Browser -->
+                <div class="outer-face outer-front">
+                    <h1 class="outer-title">STANDARD BROWSER WALL</h1>
+                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;"><p>Web Browsing Interface</p></div>
+                </div>
+            </div>
+
+            <!-- INNER AGI CUBE (Micro Environments) -->
+            <div class="environment-cube" id="environment-cube">
+            
+            <!-- FACE 0: SOVEREIGN DASHBOARD -->
+            <div class="face face-front">
+                <h1 class="room-title">HOME (CUBIX TESSERACT)</h1>
+                <div class="room-panel">
+                    <h3 style="color:#A1C1D1;">CUSTOMIZED BACKGROUND LOADED</h3>
+                    <p>Integrity Minimum: 0.95</p>
+                    <p>Energy Optimization: 68% Savings Secured (ACPI P-State locked)</p>
+                </div>
+            </div>
+
+            <!-- FACE 1: DEEP ARCHIVE VAULT & LIBRARIAN -->
+            <div class="face face-right">
+                <h1 class="room-title">LIBRARIAN VAULT</h1>
+                <div class="room-panel" style="width: 85%; height: 80%;">
+                    <div class="vault-layout">
+                        
+                        <!-- Left: Vault Storage & Function Library -->
+                        <div class="vault-col-left">
+                            <h3 style="color:#A1C1D1; margin: 0;">MSDS1 HIDDEN LAYER STORAGE</h3>
+                            <div class="library-list">
+                                <div class="vault-item">
+                                    <span>[0x0A1] Garuda_V6_Compressor.py</span>
+                                    <span class="locked">LOCKED</span>
+                                </div>
+                                <div class="vault-item">
+                                    <span>[0x0A2] Reflective_Space_Core.py</span>
+                                    <span class="locked">LOCKED</span>
+                                </div>
+                                <div class="vault-item" style="color:#E2E2E2; border-color:#fff;">
+                                    <span>[0x0A3] Tesseract_Nav_Matrix.js</span>
+                                    <span>EDITING</span>
+                                </div>
+                                <div class="vault-item">
+                                    <span>[0x0B1] DNA_Strand_SOV01.dna</span>
+                                    <span class="locked">LOCKED</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Mini inline file editor -->
+                            <div class="dna-editor" style="flex: 0.6; padding: 10px;">
+                                <div style="color: #8892B0; font-size:0.8rem;"># Function Entry: Tesseract_Nav_Matrix</div>
+                                <div style="color: #A1C1D1; margin-top:5px;">export function <span style="color:#FFF;">calibrateMatrix()</span> {</div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;return { xAxis: 0, yAxis: 90 };<br>
+                                <div style="color: #A1C1D1;">}</div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Librarian Chat & Terminal -->
+                        <div class="vault-col-right">
+                            <div class="librarian-chat">
+                                <h3 style="color:#A1C1D1; margin: 0 0 10px 0;">AI LIBRARIAN COMMAND</h3>
+                                <div style="flex:1; overflow-y:auto; font-size: 0.9rem;">
+                                    <div style="margin-bottom: 10px; color: #8892B0;"><b>System:</b> Librarian AGI Initialized.</div>
+                                    <div style="margin-bottom: 10px;"><b>Librarian:</b> I have archived `Garuda_V6_Compressor` into the MSDS1 vault at address `0x0A1` and generated the function library mapping. Would you like me to commit the `Tesseract_Nav_Matrix` changes?</div>
+                                </div>
+                                <div style="display:flex; margin-top: 10px;">
+                                    <input type="text" id="librarian-input" placeholder="Instruct Librarian on storage commands..." style="flex:1; background: #0d1117; color: #E2E2E2; border: 1px solid #323844; padding: 10px; border-radius: 5px;">
+                                </div>
+                            </div>
+                            
+                            <!-- VS Code / CLI Terminal -->
+                             <div class="terminal-window" id="vault-terminal">
+                                <div class="terminal-header">
+                                    <span>VAULT TERMINAL ~ /cypher-compressor/msds1</span>
+                                    <span>bash</span>
+                                </div>
+                                <div id="terminal-feed">
+                                    <div><span style="color:#70E100;">randall@tesseract:~$</span> ls -la ./vault/</div>
+                                    <div style="color:#8892B0;">drwxr-xr-x 1 root root  4096 Apr  3 12:44 .</div>
+                                    <div style="color:#8892B0;">-rw-r--r-- 1 rand alg  18432 Apr  3 12:44 garuda_v6.bin</div>
+                                </div>
+                                <div class="terminal-input-line">
+                                    <span style="color:#70E100;">randall@tesseract:~$</span> <input type="text" id="terminal-input" style="background:transparent; border:none; color:#FFF; outline:none; flex:1; font-family:monospace; margin-left: 10px;">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- FACE 2: AGI BUILDER FORGE (CI UI) -->
+            <div class="face face-back">
+                <div class="spiral-visualizer-container" id="forge-spiral"></div>
+                <h1 class="room-title">AGI BUILDER FORGE (CI)</h1>
+                <div class="room-panel" style="width: 90%; max-width: 1400px; height: 85%;">
+                    <div class="builder-layout">
+                        
+                        <!-- Left Sidebar: AI Roles & Jobs -->
+                        <div class="roles-sidebar">
+                            <div class="role-category">Professional Genres</div>
+                            <div class="agi-role-badge"><span>Cyber-Security Sentinel</span> <span>🟢</span></div>
+                            <div class="agi-role-badge"><span>Code Architect (CI/CD)</span> <span>🟡</span></div>
+                            <div class="agi-role-badge"><span>Data Analytics Auditor</span> <span>🟢</span></div>
+                            
+                            <div class="role-category" style="margin-top: 30px;">Personal Genres</div>
+                            <div class="agi-role-badge"><span>Creative Brainstormer</span> <span>🟢</span></div>
+                            <div class="agi-role-badge active" style="background: rgba(161,193,209,0.2);"><span>Sovereign Assistant</span> <span>🔵</span></div>
+                            <div class="agi-role-badge"><span>Research Librarian</span> <span>🟢</span></div>
+                        </div>
+
+                        <!-- Main DNA Workspace -->
+                        <div class="dna-workspace">
+                            <!-- Workspace Header -->
+                            <div class="dna-strand-header">
+                                <h3 style="color:#A1C1D1; margin: 0;">DNA Strand: <span style="color:#E2E2E2;">SOV_MASTERY_01</span></h3>
+                                <select class="shared-functions-dropdown">
+                                    <option value="" disabled selected>-- Shared Function Library --</option>
+                                    <optgroup label="Local Storage">
+                                        <option value="Garuda_V6">Garuda V6 Compressor</option>
+                                        <option value="MSDS1_Vault">MSDS1 Vault Manager</option>
+                                    </optgroup>
+                                    <optgroup label="UI & Browser">
+                                        <option value="ThreeJS_Renderer">ThreeJS Nav Renderer</option>
+                                        <option value="DOM_Injector">DOM Injector</option>
+                                    </optgroup>
+                                    <optgroup label="Network">
+                                        <option value="NPU_Telemetry">NPU Telemetry Sync</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <!-- DNA Editor -->
+                            <div class="dna-editor">
+                                <div style="color: #8892B0;"># Current Role Blueprint: Sovereign Assistant</div>
+                                <div style="color: #A1C1D1;">import</div> <div style="display:inline;">os, json</div><br><br>
+                                <div style="color: #A1C1D1;">class</div> <div style="display:inline;">SovereignAssistant(Role):</div><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<div style="color: #A1C1D1;">def</div> <div style="display:inline;">__init__(self):</div><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.directives = ["Sovereign_Stewardship", "Grey_Directive"]<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.integrity_min = 0.98<br>
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<div style="color: #A1C1D1;">def</div> <div style="display:inline;">execute_task(self, task):</div><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div style="color: #8892B0;"># Role specific execution logic here...</div><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div style="color: #A1C1D1;">pass</div>
+                            </div>
+                            
+                            <!-- Role/Function Specific Chat Thread -->
+                            <div class="chat-thread-container">
+                                <div style="font-size: 0.8rem; color: #8892B0; margin-bottom: 10px;">Messenger: Sovereign Assistant Thread</div>
+                                <div style="flex:1; overflow-y:auto; font-size: 0.9rem;">
+                                    <div style="margin-bottom: 10px;"><b>Antigravity AGI:</b> I've updated the core function logic for the Sovereign Assistant role. The integrity minimum is now locked to 0.98.</div>
+                                    <div style="margin-bottom: 10px; color: #70E100;"><b>Randall (Architect):</b> Looks good. Connect it to the Garuda V6 compressor from the shared function library next.</div>
+                                </div>
+                                <div style="display:flex; margin-top: 10px;">
+                                    <input type="text" placeholder="Send message to this Role's specific thread..." style="flex:1; background: #0d1117; color: #E2E2E2; border: 1px solid #323844; padding: 10px; border-radius: 5px;">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- FACE 3: SYSTEM SETTINGS & CUSTOMIZATION -->
+            <div class="face face-left">
+                <h1 class="room-title">SYSTEM SETTINGS</h1>
+                <div class="room-panel" style="width: 80%; height: 80%;">
+                    <div class="settings-layout">
+                        <!-- Settings Sidebar -->
+                        <div class="settings-sidebar">
+                            <div class="settings-category active"><span>🖥️</span> Display</div>
+                            <div class="settings-category"><span>🎨</span> Personalization</div>
+                            <div class="settings-category"><span>🌐</span> Network & NPU</div>
+                            <div class="settings-category"><span>🔒</span> Privacy & Directives</div>
+                            <div class="settings-category"><span>🔋</span> Power & Battery</div>
+                            <div class="settings-category"><span>⚙️</span> System Core</div>
+                        </div>
+
+                        <!-- Settings Content Area -->
+                        <div class="settings-content">
+                            <h2 class="setting-group-title">Display Attributes</h2>
+                            
+                            <!-- Toggle Item -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>3D Environment Rendering</h4>
+                                    <p>Enable WebGL ThreeJS overlays on system faces.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <!-- Toggle Item -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Glassmorphism UI Blurring</h4>
+                                    <p>Toggle CSS backdrop-filter on panels for performance.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <h2 class="setting-group-title" style="margin-top: 40px;">Sovereign Core Config</h2>
+
+                            <!-- Toggle Item -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Sovereign Directives Enforcer</h4>
+                                    <p>Lock execution logic to only permitted AI roles.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <!-- Toggle Item -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>ACPI P-State Lock</h4>
+                                    <p>Force CPU to maximum energy savings profile.</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> <!-- End of environment-cube -->
+        </div> <!-- End of world -->
+    </div> <!-- End of scene -->
+
+    <!-- GLOBAL TASKBAR (PERSISTENT UI) -->
+    <div class="global-taskbar">
+        <!-- LEFT: App Dock -->
+        <div class="taskbar-apps">
+            <div class="app-icon active" title="CUBIX OS Dashboard">⊞</div>
+            <div class="app-icon" title="Terminal Access">&gt;_</div>
+            <div class="app-icon" title="Reflective Space">🧠</div>
+            <div class="app-icon" title="Deep Archive Vault">🗄️</div>
+        </div>
+
+        <!-- CENTER: Cubix 3D Navigator -->
+        <div class="taskbar-navigator">
+            <div id="bottom-navigator"></div>
+        </div>
+
+        <!-- RIGHT: System Utilities -->
+        <div class="taskbar-utilities">
+            <div class="util-item">
+                <span>🔋 68% (P-State Lock)</span>
+            </div>
+            <div class="util-item">
+                <span>📡 NPU Uplink</span>
+            </div>
+            <div class="util-item">
+                <span id="sys-time">00:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PERSISTENT OMNI-AI CHAT BUBBLE -->
+    <div class="floating-omni-ai">
+        <div class="omni-chat-window minimized" id="omni-window">
+            <div class="omni-header">
+                <div class="omni-title" title="Guided Research & Assistant Entity Intelligence">
+                    <div class="omni-indicator"></div>
+                    GRAEI AGI [MIRROR STACK]
+                </div>
+                <!-- Controls -->
+            </div>
+            <div class="omni-body" id="omni-chat-feed">
+                <div class="chat-msg msg-ai">GRAEI Core Initialized. Synchronization complete. I am serving as your Mirror Stack—calibrated just above your optimal parameters to guide and assist you seamlessly across the OS.</div>
+            </div>
+            <div class="omni-input-area">
+                <input type="text" id="omni-input" placeholder="Query GRAEI...">
+            </div>
+        </div>
+        
+        <div class="omni-bubble-btn" id="omni-toggle" title="Toggle GRAEI Mirror Stack">
+            <span>👁️</span>
+        </div>
+    </div>
+
+    <!-- INJECT ENVIRONMENT LOGIC -->
+    <script type="module">
+        import { initCubixEnvironment } from './cubix_environment_core.js';
+        window.addEventListener('DOMContentLoaded', () => {
+            initCubixEnvironment();
+            
+            // Omni-AI Toggle Logic
+            const toggleBtn = document.getElementById('omni-toggle');
+            const omniWin = document.getElementById('omni-window');
+            toggleBtn.addEventListener('click', () => {
+                omniWin.classList.toggle('minimized');
+            });
+        });
+    </script>
+</body>
+</html>
