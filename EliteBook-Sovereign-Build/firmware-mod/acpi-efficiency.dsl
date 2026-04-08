@@ -7,6 +7,8 @@
 
 DefinitionBlock ("efficiency.aml", "SSDT", 2, "LUJAN", "CODMAP", 0x00000001)
 {
+    External (\_PR.CPU0, DeviceObj)
+
     Scope (\_PR.CPU0)
     {
         /* 
@@ -32,8 +34,9 @@ DefinitionBlock ("efficiency.aml", "SSDT", 2, "LUJAN", "CODMAP", 0x00000001)
          */
         Method (_CST, 0, NotSerialized)
         {
-            Return (Package (0x02)
+            Return (Package (0x03)
             {
+                2,
                 /* C1: Immediate Response */
                 Package (0x04) { ResourceTemplate() { Register(FFixedHW, 1, 2, 0) }, 1, 1, 1000 },
                 /* C2: Sovereign Retention */

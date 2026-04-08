@@ -49,7 +49,7 @@ if ! command -v iasl &>/dev/null; then
         exit 1
     fi
 fi
-iasl -oa "$FIRMWARE_DIR/acpi-efficiency.dsl" -p "$BUILD_DIR/efficiency"
+iasl -p "$BUILD_DIR/efficiency" -oa "$FIRMWARE_DIR/acpi-efficiency.dsl"
 echo "[✓] ACPI table compiled: efficiency.aml"
 
 # ─── STEP 3: Compile EFI Bootloader (Codemap-loader.c → .efi) ─────────────────
@@ -67,21 +67,29 @@ if ! command -v aarch64-linux-gnu-gcc &>/dev/null; then
     fi
 fi
 
-EFI_INCLUDE="/usr/aarch64-linux-gnu/include/efi"
-EFI_LIB="/usr/aarch64-linux-gnu/lib"
+# Auto-detect EFI include and library paths
+EFI_INCLUDE=$(find /usr/include -name efi -type d 2>/dev/null | grep -v "aarch64" | head -1)
+[ -z "$EFI_INCLUDE" ] && EFI_INCLUDE=$(find /usr/aarch64-linux-gnu/include -name efi -type d 2>/dev/null | head -1)
+[ -z "$EFI_INCLUDE" ] && EFI_INCLUDE="/usr/include/efi"
+
+EFI_LIB=$(find /usr/lib -name "crt0-efi-aarch64.o" 2>/dev/null -exec dirname {} \;)
+[ -z "$EFI_LIB" ] && EFI_LIB="/usr/lib"
+
+LDS_SCRIPT=$(find /usr/lib -name "elf_aarch64_efi.lds" 2>/dev/null | head -1)
+[ -z "$LDS_SCRIPT" ] && LDS_SCRIPT="/usr/lib/elf_aarch64_efi.lds"
 
 aarch64-linux-gnu-gcc \
     -I"$EFI_INCLUDE" \
     -I"$EFI_INCLUDE/aarch64" \
+    -I"$EFI_INCLUDE/protocol" \
     -fno-stack-protector \
     -fpic \
     -fshort-wchar \
-    -mno-red-zone \
     -DEFI_FUNCTION_WRAPPER \
     -shared \
     -Wl,-Bsymbolic \
     -Wl,-znocombreloc \
-    -T "$EFI_LIB/elf_aarch64_efi.lds" \
+    -T "$LDS_SCRIPT" \
     -o "$BUILD_DIR/Codemap-loader.so" \
     "$FIRMWARE_DIR/Codemap-loader.c" \
     "$EFI_LIB/crt0-efi-aarch64.o" \
