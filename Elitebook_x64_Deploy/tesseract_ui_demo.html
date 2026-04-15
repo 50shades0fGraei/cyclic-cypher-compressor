@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberDNA: Tesseract-UI [Sovereign]</title>
+    <link rel="stylesheet" href="tesseract_ui_demo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="enlightened-grey">
+    <div class="sovereign-container">
+        <!-- HEADER: System State -->
+        <header class="tesseract-header">
+            <div class="logo-group">
+                <div id="cube-navigator-container" class="dashboard-logo-container"></div>
+                <h1 class="logo">CUBIX<span>TESSERACT</span></h1>
+                <p class="tagline">Sovereign AGI Host | Cubix Tesseract CAT Build</p>
+            </div>
+            <div class="system-status">
+                <div class="status-item">
+                    <span class="label">ROOT OF TRUST:</span>
+                    <span class="value status-green">SOVEREIGN_KEYS_ACTIVE</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">ENERGY_BIAS:</span>
+                    <span class="value">68% SAVINGS</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD -->
+        <main class="tesseract-grid">
+            <!-- INTEGRITY GAUGE -->
+            <section class="card glass-panel integrity-section">
+                <h2 class="card-title">FUNCTIONAL INTEGRITY</h2>
+                <div class="gauge-container">
+                    <div class="gauge-ring">
+                        <div class="gauge-value">0.95</div>
+                        <div class="gauge-label">SOVEREIGN_ADMIN</div>
+                    </div>
+                </div>
+                <p class="card-footer">Minimum Integrity Required: 0.8</p>
+            </section>
+
+            <!-- ENERGY MONITOR -->
+            <section class="card glass-panel energy-section">
+                <h2 class="card-title">ENERGY EFFICIENCY</h2>
+                <div class="efficiency-bar">
+                    <div class="bar-fill" style="width: 68%;"></div>
+                    <span class="bar-label">68%</span>
+                </div>
+                <ul class="telemetry-list">
+                    <li><span class="t-label">CPU_FREQ_GOV:</span> <span class="t-val">PERFORMANCE_LOCK</span></li>
+                    <li><span class="t-label">NPU_TOPS:</span> <span class="t-val">85 / 85</span></li>
+                    <li><span class="t-label">THERMAL_LOCK:</span> <span class="t-val">ACTIVE</span></li>
+                </ul>
+            </section>
+
+            <!-- REFLECTIVE FEED (DCNA / RCNA) -->
+            <section class="card glass-panel feed-section">
+                <h2 class="card-title">REFLECTIVE LOG (CYBER DNA)</h2>
+                <div class="log-stream" id="logStream">
+                    <!-- Logs will be populated by JS -->
+                </div>
+            </section>
+        </main>
+
+        <!-- FOOTER: Active Directives -->
+        <footer class="tesseract-footer">
+            <div class="directives-group">
+                <span class="dir-icon">◈</span>
+                <span class="dir-text">ACTIVE_DIRECTIVES: [[GREY_DIRECTIVE]], [[SOVEREIGN_STEWARDSHIP]], [[WIN_WIN_PROSPERITY]]</span>
+            </div>
+        </footer>
+    </div>
+    <script src="tesseract_ui_demo.js"></script>
+    <script type="module">
+        import { init3DNavigator } from './cubix-tesseract-cat/src/codemap_dna_tesseract/3d_navigator_core.js';
+        // Initialize the 3D cube navigator inside its container
+        window.addEventListener('DOMContentLoaded', () => {
+            init3DNavigator('cube-navigator-container', 'cubix_logo.png');
+        });
+    </script>
+</body>
+</html>
