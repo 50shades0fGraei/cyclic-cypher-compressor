@@ -30,9 +30,9 @@ class GarudaDeductiveVault:
 
     def encode_chunk(self, chunk):
         """
-        Deductive Metronome Scanner (Lossless V6.1):
+        Deductive Metronome Scanner (Lossless V6.1 - Sequential Restored):
         - Maps all aligning bytes via the cyclic pattern.
-        - Stores 'Residuals' for non-aligning bytes to ensure bit-perfect reconstruction.
+        - Sequentially bundles remaining data; position is deductively inferred.
         """
         orig_len = len(chunk)
         m_cypher_pos = [{} for _ in range(6)]
@@ -49,54 +49,72 @@ class GarudaDeductiveVault:
 
         all_bytes = set(chunk)
         processed_mask = bytearray(orig_len)
+        
         packed = bytearray(struct.pack('<I', orig_len))
+        pattern_data = bytearray()
+        num_patterns = 0
         
-        # 1. Store Alignments
-        for cypher in sorted(all_bytes, key=lambda b: max(
-            len(m_cypher_pos[m].get(b, [])) for m in range(6)
-        ), reverse=True):
-            best_m_idx = max(range(6), key=lambda m: len(m_cypher_pos[m].get(cypher, [])))
-            # Only pick positions that actually align WITH THIS CYHPER AND MULTIPLIER
-            positions = [p for p in m_cypher_pos[best_m_idx].get(cypher, []) 
-                        if not processed_mask[p]]
+        # 1. Store Alignments (Multi-Multiplier Greedy Sweep)
+        # We test all 6 multipliers to find the highest density of alignments for this chunk.
+        for m_idx in range(6):
+            m = m_idx + 1
+            # Sort ciphers by how many positions they hit with THIS multiplier
+            valid_ciphers = [b for b in all_bytes if b in m_cypher_pos[m_idx]]
             
-            if not positions:
-                continue
-            
-            gaps = []
-            last_pos = -1
-            for pos in positions:
-                gaps.append(pos - last_pos)
-                last_pos = pos
-            
-            packed.append(cypher)
-            packed.append(best_m_idx + 1)
-            packed.extend(struct.pack('<I', len(gaps)))
-            
-            for gap in gaps:
-                if gap < 254:
-                    packed.append(gap)
-                else:
-                    packed.append(255)
-                    packed.extend(struct.pack('<I', gap))
-            
-            for pos in positions:
-                processed_mask[pos] = 1
+            for cypher in sorted(valid_ciphers, key=lambda b: len(m_cypher_pos[m_idx][b]), reverse=True):
+                positions = [p for p in m_cypher_pos[m_idx][cypher] if not processed_mask[p]]
+                
+                if not positions:
+                    continue
+                
+                num_patterns += 1
+                gaps = []
+                last_pos = -1
+                for pos in positions:
+                    gaps.append(pos - last_pos)
+                    last_pos = pos
+                
+                pattern_data.append(cypher)
+                pattern_data.append(m) # Store the specific multiplier used for this pattern
+                pattern_data.extend(struct.pack('<I', len(gaps)))
+                
+                for gap in gaps:
+                    if gap < 254:
+                        pattern_data.append(gap)
+                    else:
+                        pattern_data.append(255)
+                        pattern_data.extend(struct.pack('<I', gap))
+                
+                for pos in positions:
+                    processed_mask[pos] = 1
         
-        # Removed bloated Residual Storage (Lossless layer discarded).
-        # We process ONLY the cyclic alignments, relying intensely on the Deductive Matrix.
+        # Write pattern metadata and patterns
+        packed.extend(struct.pack('<H', num_patterns))
+        packed.extend(pattern_data)
+        
+        # 2. Sequential Deductive Strings (The user's optimization)
+        # We now extract the unmodified residual string in exact order. 
+        # Optional: zlib compress the residual string for maximum density
+        import zlib
+        residual_string = bytearray([chunk[p] for p in range(orig_len) if not processed_mask[p]])
+        compressed_residuals = zlib.compress(residual_string, 9)
+        
+        packed.extend(compressed_residuals)
+        
         return packed
 
     def decode_chunk(self, packed_data):
-        """Reconstructs strictly based on deductive alignment arrays."""
+        """Reconstructs deductively based on alignment arrays and sequential strings."""
+        import zlib
         orig_len = struct.unpack('<I', packed_data[0:4])[0]
-        # We default unmapped bytes to 0 (Null space/silence), optimizing file density.
+        num_patterns = struct.unpack('<H', packed_data[4:6])[0]
+        
         chunk = bytearray(orig_len)
         processed_mask = bytearray(orig_len)
-        ptr = 4
+        ptr = 6
         
-        while ptr < len(packed_data):
-            # No residual boundaries, strictly parsing alignments until EOF.
+        # 1. Play back the explicit alignments
+        for _ in range(num_patterns):
             cypher = packed_data[ptr]
             multiplier = packed_data[ptr + 1]
             count = struct.unpack('<I', packed_data[ptr + 2 : ptr + 6])[0]
@@ -104,7 +122,6 @@ class GarudaDeductiveVault:
             
             last_pos = -1
             for _ in range(count):
-                if ptr >= len(packed_data): break
                 flag = packed_data[ptr]
                 ptr += 1
                 if flag < 254:
@@ -118,6 +135,20 @@ class GarudaDeductiveVault:
                     chunk[pos] = cypher
                     processed_mask[pos] = 1
                 last_pos = pos
+        
+        # 2. Deductive String Reconstruction
+        # Automatically fills the gaps sequentially without needing index coordinates.
+        if ptr < len(packed_data):
+            compressed_residuals = packed_data[ptr:]
+            try:
+                residual_string = zlib.decompress(compressed_residuals)
+                res_idx = 0
+                for p in range(orig_len):
+                    if not processed_mask[p] and res_idx < len(residual_string):
+                        chunk[p] = residual_string[res_idx]
+                        res_idx += 1
+            except Exception as e:
+                print(f"[Garuda] Failed to deductively reconstruct sequence: {e}")
                     
         return chunk
 

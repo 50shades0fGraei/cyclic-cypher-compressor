@@ -2,70 +2,82 @@
 import time
 import os
 import sys
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
 
-from cyclic_compressor_paired import decompress_file_paired
+from garuda_pack import GarudaDeductiveVault
+from cyclic_hybrid import compress_realtime, decompress_realtime
 
 print("=" * 80)
-print("UNFOLDING PERFORMANCE BENCHMARK - Clean Build Sequence Tracking")
+print("UNFOLDING PERFORMANCE BENCHMARK - GARUDA V6 DEDUCTIVE VAULT")
+print("Target: Assess '.0006' Ratio Baseline and Unfolding Speed")
 print("=" * 80)
 
-test_files = [
-    ('test_document.ccc', 'test_document.txt'),
-    ('test_large.ccc', 'test_large.txt'),
-    ('test_final_large.ccc', 'test_final_large_restored.txt'),
-]
+# Determine files available for robust benchmarking
+test_files = []
+for test_file in ['test_document.txt', 'lab_archives/test_iso_small.bin', 'lab_archives/test_iso_slice.bin']:
+    if os.path.exists(test_file):
+        test_files.append(test_file)
+
+if not test_files:
+    print("No test files found to benchmark. Please verify test data in directory.")
+    sys.exit(1)
 
 results = []
+gdv_vault = GarudaDeductiveVault()
 
-for compressed_file, original_file in test_files:
-    if not os.path.exists(compressed_file):
+for original_file in test_files:
+    orig_size = os.path.getsize(original_file)
+    if orig_size == 0:
         continue
     
+    compressed_file = original_file + '.gdv6'
+    unfolded_file = original_file + '.restored'
+    
+    # 1. Compress first to prepare the unfolding environment
+    start_comp = time.perf_counter()
+    gdv_vault.compress(original_file, compressed_file)
+    comp_time = time.perf_counter() - start_comp
     comp_size = os.path.getsize(compressed_file)
-    orig_size = os.path.getsize(original_file) if os.path.exists(original_file) else 0
     
-    # Run decompression - clean, no trace output
-    output_file = compressed_file.replace('.ccc', '_unfold.txt')
-    start = time.perf_counter()
-    info = decompress_file_paired(compressed_file, output_file)
-    elapsed = time.perf_counter() - start
+    # 2. Benchmark Decompression (Unfolding)
+    start_decomp = time.perf_counter()
+    gdv_vault.decompress(compressed_file, unfolded_file)
+    elapsed_decomp = time.perf_counter() - start_decomp
     
-    decompressed_size = os.path.getsize(output_file)
+    unfolded_size = os.path.getsize(unfolded_file)
     
-    # Record essential info only
-    result = {
-        'file': compressed_file,
-        'multiplier': info['multiplier'],
-        'original': info['original_length'],
-        'compressed': info['compressed_length'],
-        'recovered': info['recovered_length'],
-        'time_ms': elapsed * 1000
-    }
+    # 3. Validation
+    with open(original_file, 'rb') as f1, open(unfolded_file, 'rb') as f2:
+        verified = (f1.read() == f2.read())
+        
+    ratio = comp_size / orig_size
+    speed_mb_s = (unfolded_size / elapsed_decomp / (1024 * 1024)) if elapsed_decomp > 0 else 0
+        
+    results.append({
+        'file': os.path.basename(original_file),
+        'original': orig_size,
+        'compressed': comp_size,
+        'ratio': ratio,
+        'unfolded': unfolded_size,
+        'comp_time_ms': comp_time * 1000,
+        'decomp_time_ms': elapsed_decomp * 1000,
+        'speed_mb_s': speed_mb_s,
+        'verified': verified
+    })
     
-    if decompressed_size > 0:
-        result['speed_mb_s'] = decompressed_size / elapsed / 1024 / 1024
-    
-    # Verify correctness
-    if os.path.exists(original_file):
-        with open(original_file, 'rb') as f1, open(output_file, 'rb') as f2:
-            original_data = f1.read()
-            decompressed_data = f2.read()
-            result['verified'] = original_data == decompressed_data
-    
-    results.append(result)
-    
-    # Cleanup
-    if os.path.exists(output_file):
-        os.remove(output_file)
+    # Cleanup artifacts automatically to keep workspace pristine
+    for f in [compressed_file, unfolded_file]:
+        if os.path.exists(f):
+             os.remove(f)
 
-# Display clean results - only build sequence and multiplier tracking
-print("\nBUILD SEQUENCE & MULTIPLIER TRACKING\n")
-print(f"{'File':<25} {'Multiplier':<12} {'Original':<12} {'Compressed':<12} {'Unfolded':<12} {'Time (ms)':<12} {'Status':<10}")
-print("-" * 105)
+# Display Clean Results
+print("\nGARUDA V6 UNFOLDING & RATIO TRACKING\n")
+print(f"{'File':<25} {'Orig (B)':<10} {'Comp (B)':<10} {'Ratio':<10} {'Time (ms)':<10} {'Speed (MB/s)':<12} {'Valid':<5}")
+print("-" * 85)
 
-for result in results:
-    status = "✓" if result.get('verified', True) else "✗"
-    print(f"{result['file']:<25} x{result['multiplier']:<11} {result['original']:<12} {result['compressed']:<12} {result['recovered']:<12} {result['time_ms']:<12.2f} {status:<10}")
+for r in results:
+    status = "PASS" if r['verified'] else "FAIL"
+    print(f"{r['file']:<25} {r['original']:<10} {r['compressed']:<10} {r['ratio']:<10.5f} {r['decomp_time_ms']:<10.2f} {r['speed_mb_s']:<12.2f} {status:<5}")
 
 print("\n" + "=" * 80)
