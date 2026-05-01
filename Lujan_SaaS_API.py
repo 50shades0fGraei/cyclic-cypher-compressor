@@ -121,5 +121,6 @@ def store_file():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    # Marketplace standard port
-    app.run(host='0.0.0.0', port=8080)
+    # Cloud-agnostic port binding (Render/Vercel/Azure compatibility)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
