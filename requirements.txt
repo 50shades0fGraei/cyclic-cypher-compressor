@@ -1,2 +1,4 @@
 # Cyclic Cypher Compressor Requirements
-# No external dependencies required - uses only Python standard library
+# Core dependencies
+flask
+stripe
