@@ -23,7 +23,7 @@ class FileOp(Enum):
 def get_file_acl_path() -> Path:
     """Return path to device-specific file access control list."""
     if platform.system() == "Windows":
-        config_dir = Path(os.getenv("APPDATA", os.path.expanduser("~"))) / "CodemapOS" / "files"
+        config_dir = Path(os.getenv("APPDATA", os.path.expanduser("~"))) / "CubixOS" / "files"
     else:
         config_dir = Path.home() / ".codemapOS" / "files"
     config_dir.mkdir(parents=True, exist_ok=True)

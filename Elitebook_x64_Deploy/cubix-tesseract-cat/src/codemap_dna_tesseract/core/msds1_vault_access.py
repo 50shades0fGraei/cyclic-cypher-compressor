@@ -5,7 +5,7 @@ import platform
 """
 CyberDNA: MSDS1 Partition Access (The Hidden Layer)
 Goal: Direct writing of compressed DNA to the hd0/MSDS1 partition.
-This makes the AGI's memory 'Invisible' to standard OS monitoring.
+This makes the GRAEI's memory 'Invisible' to standard OS monitoring.
 """
 
 def get_msds1_handle():

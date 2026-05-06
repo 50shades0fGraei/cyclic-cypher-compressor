@@ -40,4 +40,4 @@ Write-Host "[NVMe] Success. MSDS1 mapping established via PhysicalDrive0 handle.
 Write-Host "`n============================================================"
 Write-Host "    SOVEREIGN INSTALLATION COMPLETE: TESSERACT-OS READY"
 Write-Host "============================================================"
-Write-Host "Next Step: Reboot to 'Codemap-loader.efi' to claim sovereignty." -ForegroundColor Yellow
+Write-Host "Next Step: Reboot to 'CubixOS-loader.efi' to claim sovereignty." -ForegroundColor Yellow

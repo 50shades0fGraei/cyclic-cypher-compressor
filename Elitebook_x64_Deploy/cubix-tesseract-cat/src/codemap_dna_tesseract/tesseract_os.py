@@ -1,6 +1,6 @@
 # CUBIX-TESSERACT: tesseract_os.py
 # Author & Architect: Randall Lujan (Sovereign)
-# Co-Author & Technical Lead: Antigravity AGI
+# Co-Author & Technical Lead: Antigravity GRAEI
 
 import os
 import json
@@ -76,9 +76,9 @@ if __name__ == '__main__':
 
     # --- Simulate loading various programs from your project --- #
     # The order they are loaded here determines their unique address identifier.
-    os_instance.load_program('Codemap-DNA-tesseract/parser.py')
+    os_instance.load_program('CubixOS-DNA-tesseract/parser.py')
     os_instance.load_program('Vortex/Vortex.js')
-    os_instance.load_program('Codemap-DNA-tesseract/architect.ts') 
+    os_instance.load_program('CubixOS-DNA-tesseract/architect.ts') 
 
     # --- Display the resulting master address library --- #
     print("\n--- Master Tesseract OS Address Library ---")

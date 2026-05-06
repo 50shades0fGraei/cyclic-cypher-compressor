@@ -1,0 +1,16 @@
+{
+  "users": {
+    "alovelace": {
+      "name": "Ada Lovelace",
+      "contacts": { "ghopper": true }
+    },
+    "ghopper": {
+      "name": "Grace Hopper",
+      "contacts": { "alovelace": true }
+    },
+    "eclarke": {
+      "name": "Edith Clarke",
+      "contacts": {}
+    }
+  }
+}

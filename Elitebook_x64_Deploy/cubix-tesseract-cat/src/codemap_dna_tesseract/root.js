@@ -21,7 +21,7 @@ const readConfig = () => {
 };
 // Main function for the root process
 const runRoot = () => {
-    console.log('Initializing Codemap DNA Tesseract OS...');
+    console.log('Initializing CubixOS DNA Tesseract OS...');
     const { traits, cyclones } = readConfig();
     if (traits.length === 0 || cyclones.length === 0) {
         console.error('Configuration files are missing or empty. Please run the architect first.');
@@ -40,6 +40,6 @@ const runRoot = () => {
     else {
         console.error('Initial cyclone not found. The OS cannot start.');
     }
-    console.log('Codemap DNA Tesseract OS initialized.');
+    console.log('CubixOS DNA Tesseract OS initialized.');
 };
 runRoot();

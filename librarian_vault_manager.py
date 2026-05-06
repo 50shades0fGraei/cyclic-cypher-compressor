@@ -6,7 +6,7 @@ import sys
 
 class LibrarianVaultManager:
     """
-    Sovereign AGI Logic: The Librarian Vault Manager
+    Sovereign GRAEI Logic: The Librarian Vault Manager
     Role: Receives entire programs, dismantles them into isolated DNA functions,
     and archives them under sequential system-specific memory addresses.
     Eliminates the need for traditional file execution by replacing calls with

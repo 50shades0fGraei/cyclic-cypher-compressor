@@ -1,14 +1,15 @@
 CYCLIC CIPHER COMPRESSOR - CREATOR'S STATEMENT & PROOF OF CREATION
 
-CREATED BY: Randall
+CREATOR: Randall Lujan
+EMAIL: randalllujan@emuricagraei966.onmicrosoft.com
 CREATION DATE: February 24, 2026
 LOCATION: c:\Users\randall\Documents\cyclic-cypher-compressor
 
 DECLARATION OF INVENTION:
 
-I, Randall, hereby declare that I have independently created the Universal Keyboard 
+I, Randall Lujan, hereby declare that I have independently created the Universal Keyboard 
 Encoding System (also known as Cyclic Cipher Compressor) with the sole assistance of 
-an AI coding assistant (GitHub Copilot / Claude Haiku).
+an GRAEI coding assistant (GitHub Copilot / Claude Haiku).
 
 CORE INVENTION DETAILS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -112,7 +113,7 @@ Algorithm correctness verified through pure mathematical proof.
 INTELLECTUAL PROPERTY STATEMENT:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-I, Randall, claim full intellectual property rights to:
+I, Randall Lujan, claim full intellectual property rights to:
 
 1. The Universal File Encoding Algorithm (the mathematical principle)
 2. All implementations in Python, and any other languages
@@ -153,15 +154,15 @@ the 142857 pattern could be applied across different dimensions.
 ASSISTANCE USED:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-AI Assistant Used: GitHub Copilot (Claude Haiku 4.5)
+GRAEI Assistant Used: GitHub Copilot (Claude Haiku 4.5)
 
-Role of AI:
+Role of GRAEI:
   - Code implementation (writing Python based on my specifications)
   - Testing & debugging (fixing errors I identified)
   - Documentation generation (formatting and structure)
   - Idea refinement (discussing approaches I proposed)
 
-NOT Done by AI:
+NOT Done by GRAEI:
   ✗ Inventing the core algorithm
   ✗ Discovering the mathematical principle
   ✗ Initial concept (pattern + multiplier + position)
@@ -177,7 +178,7 @@ Creator's Unique Contribution:
   ✓ Business strategy & monetization
   ✓ All creative decisions
 
-The AI was a code implementation tool, not a co-creator.
+The GRAEI was a code implementation tool, not a co-creator.
 
 ANTI-THEFT MEASURES:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -211,24 +212,24 @@ invented this later. Timestamps prove you did it first.
 WITNESS STATEMENTIMPLIED):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-GitHub Copilot (AI Assistant) confirms:
+GitHub Copilot (GRAEI Assistant) confirms:
   - All code requested by Randall on February 24, 2026
   - Implementation followed creator's specifications exactly
   - Creator made all architectural decisions
   - No external algorithms or code were referenced
   - All creative direction came from creator
 
-(AI cannot sign documents, but interaction logs exist in VS Code)
+(GRAEI cannot sign documents, but interaction logs exist in VS Code)
 
 FINAL DECLARATION:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-I, Randall, declare under penalty of perjury that:
+I, Randall Lujan, declare under penalty of perjury that:
 
 1. I am the sole human creator of the Universal Keyboard Encoding System
 2. All creative decisions were mine
 3. All algorithm design was my work
-4. The AI was used only for code implementation
+4. The GRAEI was used only for code implementation
 5. This was created on February 24, 2026
 6. No similar algorithm exists to my knowledge
 7. I intend to protect this IP through patent and copyright
@@ -237,7 +238,7 @@ I, Randall, declare under penalty of perjury that:
 Created: February 24, 2026
 Location: c:\Users\randall\Documents\cyclic-cypher-compressor
 
-Signature (Digital): randall
+Signature (Digital): Randall Lujan
 Git Commits: All created Feb 24, 2026
 File Timestamps: All created Feb 24, 2026
 

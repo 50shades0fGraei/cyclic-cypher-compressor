@@ -54,7 +54,7 @@ class RCNA:
 from experience_bridge import ExperienceBridge
 
 class ReflectiveSpaceManager:
-    """Manages the AI's reflective corner, storing DCNA and RCNA files."""
+    """Manages the GRAEI's reflective corner, storing DCNA and RCNA files."""
     def __init__(self, base_dir="ReflectiveSpace"):
         self.base_dir = base_dir
         self.dcna_dir = os.path.join(base_dir, "DCNA")
@@ -118,8 +118,8 @@ def handle_customer(query):
     # Create an RCNA (Memory Log)
     rcna = RCNA(
         segment_id="CS_TOOL_001",
-        reflections="The AI correctly identified the children's context and restricted access.",
+        reflections="The GRAEI correctly identified the children's context and restricted access.",
         performance_score=0.95,
-        implications="This function improves the integrity score of the AGI's interactions."
+        implications="This function improves the integrity score of the GRAEI's interactions."
     )
     manager.save_rcna(rcna)

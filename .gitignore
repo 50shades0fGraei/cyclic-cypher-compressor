@@ -101,3 +101,17 @@ vault.db
 .env
 secrets.json
 config.local.json
+
+# Ignore large binaries and executables
+*.bin
+*.cdv6
+*.msi
+*.exe
+*.log
+scratch/
+tunnel.log
+hn_tunnel.log
+cloudflared.exe
+cloudflared2.exe
+AzureCLI.msi
+

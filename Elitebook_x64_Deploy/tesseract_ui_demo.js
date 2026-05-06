@@ -11,7 +11,7 @@ const mockLogs = [
     { type: 'DCNA', text: 'Segment SOV_AUDIT_001 indexed in Reflective Space.' },
     { type: 'RCNA', text: 'Retention note archived. Integrity verified at 0.95.' },
     { type: 'GRL', text: 'General-Retention Library mapped to NPU SRAM.' },
-    { type: 'DNA', text: 'Memory note Ref_001 compressed via Garuda V6 Cycle.' },
+    { type: 'DNA', text: 'Memory note Ref_001 compressed via CyberDNA V6 Cycle.' },
     { type: 'VAULT', text: 'Hidden layer sync complete. MSDS1 partition locked.' }
 ];
 

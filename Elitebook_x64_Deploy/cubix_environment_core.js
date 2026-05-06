@@ -1,4 +1,4 @@
-import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
+import * as THREE from './lib/three.module.js';
 
 function initSpiralVisualizer() {
     const container = document.getElementById('forge-spiral');
@@ -17,7 +17,7 @@ function initSpiralVisualizer() {
     const posArray = new Float32Array(particleCount * 3);
 
     for(let i = 0; i < particleCount; i++) {
-        // Parametric equation for a 3D spiral (Codemap DNA structure)
+        // Parametric equation for a 3D spiral (CubixOS DNA structure)
         const t = i * 0.1;
         const x = Math.cos(t) * (t * 0.05);
         const y = t * 0.05 - 15;
@@ -48,7 +48,7 @@ export function initCubixEnvironment() {
     
     const navContainer = document.getElementById('bottom-navigator');
     const world = document.getElementById('world');
-    const envCube = document.getElementById('environment-cube'); // Inner AGI
+    const envCube = document.getElementById('environment-cube'); // Inner GRAEI
     const outerCube = document.getElementById('outer-cube'); // Outer External
 
     // --- SYSTEM TIME UPDATER ---
@@ -84,7 +84,7 @@ export function initCubixEnvironment() {
     ctx.strokeRect(15, 15, 482, 482);
     // Radial Core Glow
     const gradient = ctx.createRadialGradient(256, 256, 20, 256, 256, 300);
-    gradient.addColorStop(0, 'rgba(112, 225, 0, 0.4)'); // Green AGI glow in center
+    gradient.addColorStop(0, 'rgba(112, 225, 0, 0.4)'); // Green GRAEI glow in center
     gradient.addColorStop(0.5, 'rgba(161, 193, 209, 0.1)'); // Blue mid
     gradient.addColorStop(1, '#0d1117');
     ctx.fillStyle = gradient;

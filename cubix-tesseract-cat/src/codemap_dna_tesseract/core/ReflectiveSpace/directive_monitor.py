@@ -1,5 +1,5 @@
 # CyberDNA: Directive Monitor (Directive-Gate)
-# Goal: Ensure AI functions (DCNA) align with contextual directives.
+# Goal: Ensure GRAEI functions (DCNA) align with contextual directives.
 
 class DirectiveMonitor:
     """

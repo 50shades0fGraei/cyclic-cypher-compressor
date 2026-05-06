@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 TEMPLATE = """
 <!doctype html>
-<title>CodemapOS Dashboard</title>
-<h1>CodemapOS Dashboard</h1>
+<title>CubixOS Dashboard</title>
+<h1>CubixOS Dashboard</h1>
 <p><a href="/functions">Functions</a> | <a href="/bindings">Data Bindings</a> | <a href="/stats">Runtime Stats</a></p>
 <hr>
 {% block body %}{% endblock %}
@@ -26,7 +26,7 @@ TEMPLATE = """
 
 @app.route("/")
 def index():
-    return render_template_string(TEMPLATE + "<p>Welcome to CodemapOS dashboard.</p>")
+    return render_template_string(TEMPLATE + "<p>Welcome to CubixOS dashboard.</p>")
 
 
 @app.route("/functions")

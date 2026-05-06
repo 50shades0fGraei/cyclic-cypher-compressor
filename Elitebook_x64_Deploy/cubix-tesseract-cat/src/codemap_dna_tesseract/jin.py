@@ -1,4 +1,4 @@
-# Codemap-DNA-tesseract/jin.py
+# CubixOS-DNA-tesseract/jin.py
 
 import argparse
 import json
@@ -35,8 +35,8 @@ class Jin:
                     self.os_instance.load_program(file_path)
         # --- End Dynamic Loading ---
 
-        self.action_directory_path = 'Codemap-DNA-tesseract/action_directory.json'
-        self.shared_data_store_path = 'Codemap-DNA-tesseract/shared_data_store.json'
+        self.action_directory_path = 'CubixOS-DNA-tesseract/action_directory.json'
+        self.shared_data_store_path = 'CubixOS-DNA-tesseract/shared_data_store.json'
         
         try:
             with open(self.action_directory_path, 'r') as f:

@@ -3,7 +3,7 @@ import time
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
 
-from core.garuda_pack import GarudaDeductiveVault
+from core.cyberdna_engine import CyberDNAVault
 from core.cyclic_hybrid import compress_realtime
 
 def benchmark_garuda():
@@ -14,7 +14,7 @@ def benchmark_garuda():
         'test_document.txt',                 # 44 bytes text
     ]
     
-    vault = GarudaDeductiveVault()
+    vault = CyberDNAVault()
     
     print("=" * 80)
     print("GARUDA V6 DEDUCTIVE COMPRESSION vs CYCLIC COMPRESSOR")
@@ -30,15 +30,15 @@ def benchmark_garuda():
         print(f"\n[FILE] {path} ({orig_size:,} bytes)")
         print("-" * 60)
         
-        # Benchmark 1: Garuda Deductive
-        out_g = path + '.gdv'
+        # Benchmark 1: CubixOS Deductive
+        out_g = path + '.cdv'
         start = time.perf_counter()
         vault.compress(path, out_g)
         t_g = time.perf_counter() - start
         size_g = os.path.getsize(out_g)
         ratio_g = (size_g / orig_size) if orig_size else 0
         
-        print(f"  => Garuda Vault (GDV6)")
+        print(f"  => CubixOS Vault (CDV6)")
         print(f"     Compressed: {size_g:,} bytes")
         print(f"     Ratio:      {ratio_g:.6f} ({ratio_g*100:.4f}%) - Looking for 0.0006")
         print(f"     Time:       {t_g:.4f}s")

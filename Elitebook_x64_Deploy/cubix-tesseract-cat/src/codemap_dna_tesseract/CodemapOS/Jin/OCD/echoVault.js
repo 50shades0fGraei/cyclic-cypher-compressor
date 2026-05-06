@@ -5,7 +5,7 @@ export function logInvocation(segment, mode, biometric) {
         mode,
         timestamp: Date.now(),
         emotionalState: biometric.state,
-        lineage: "CodemapDNA → Jin → Graei"
+        lineage: "CubixOSDNA → Jin → Graei"
     };
     saveToVault(echo);
 }

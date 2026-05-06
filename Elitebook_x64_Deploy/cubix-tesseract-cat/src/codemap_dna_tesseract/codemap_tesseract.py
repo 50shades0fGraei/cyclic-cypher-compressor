@@ -30,7 +30,7 @@ EXECUTABLE_TRAITS = {
 # --- End of New Section ---
 
 
-class CodemapTesseract:
+class CubixOSTesseract:
     def __init__(self, generation=0, parent=None):
         self.generation = generation
         self.parent = parent
@@ -54,7 +54,7 @@ class CodemapTesseract:
     def manifest_entity(self):
         # Create a symbolic print of this tesseract's identity
         return {
-            "type": "Codemap Entity",
+            "type": "CubixOS Entity",
             "generation": self.generation,
             "traits": self.traits,
             "path": self.path
@@ -63,7 +63,7 @@ class CodemapTesseract:
     # --- New: invoke Method ---
     def invoke(self):
         """
-        This is the heart of "Codemap Invocation."
+        This is the heart of "CubixOS Invocation."
         Instead of searching for and interpreting a script, it directly executes
         the action associated with this tesseract's traits via a dictionary lookup.
         This is designed to be significantly faster and more efficient.
@@ -83,5 +83,5 @@ class CodemapTesseract:
 
     def build_next_tesseract(self):
         # Recursive expansion
-        self.child = CodemapTesseract(generation=self.generation + 1, parent=self)
+        self.child = CubixOSTesseract(generation=self.generation + 1, parent=self)
         return self.child

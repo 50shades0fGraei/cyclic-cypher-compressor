@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUJAN TESSERACT | SaaS Developer Playground</title>
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --bg: #05070a;
+            --card: #0f172a;
+            --text: #e2e8f0;
+            --success: #10b981;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .playground {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 20px;
+            width: 600px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        h1 { font-size: 1.5rem; letter-spacing: 2px; color: var(--primary); text-align: center; }
+        .upload-area {
+            border: 2px dashed rgba(0, 242, 255, 0.3);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: 0.3s;
+        }
+        .upload-area:hover { background: rgba(0, 242, 255, 0.05); border-color: var(--primary); }
+        .btn {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        #response-panel {
+            margin-top: 20px;
+            background: #000;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .status-dot { height: 10px; width: 10px; background: var(--success); border-radius: 50%; display: inline-block; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="playground">
+    <h1>SAAS LIVE PLAYGROUND</h1>
+    <p style="text-align: center; opacity: 0.6; font-size: 0.9rem;">Targeting: http://localhost:8080/api/v1/store</p>
+    
+    <div style="text-align: center; margin-bottom: 20px;">
+        <span class="status-dot"></span> <span style="font-size: 0.8rem; color: var(--success);">API Server Online</span>
+    </div>
+
+    <div class="upload-area" id="drop-zone">
+        <p id="file-name">Click to select or drag a file to vault</p>
+        <input type="file" id="file-input" style="display: none;">
+    </div>
+
+    <button class="btn" id="vault-btn" disabled>Initialize Live Vault</button>
+
+    <div id="response-panel"></div>
+</div>
+
+<script>
+    const fileInput = document.getElementById('file-input');
+    const dropZone = document.getElementById('drop-zone');
+    const vaultBtn = document.getElementById('vault-btn');
+    const responsePanel = document.getElementById('response-panel');
+    let selectedFile = null;
+
+    dropZone.onclick = () => fileInput.click();
+    
+    fileInput.onchange = (e) => {
+        selectedFile = e.target.files[0];
+        if (selectedFile) {
+            document.getElementById('file-name').innerText = selectedFile.name;
+            vaultBtn.disabled = false;
+        }
+    };
+
+    vaultBtn.onclick = async () => {
+        if (!selectedFile) return;
+
+        vaultBtn.disabled = true;
+        vaultBtn.innerText = "Processing Miracle Density...";
+        responsePanel.style.display = 'block';
+        responsePanel.innerHTML = "<div>> Connecting to Sovereign Node...</div>";
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/store', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            
+            responsePanel.innerHTML += `<div style="color: #00f2ff">> SUCCESS: ${result.status}</div>`;
+            responsePanel.innerHTML += `<div>> Filename: ${result.filename}</div>`;
+            responsePanel.innerHTML += `<div>> Logic: ${result.allocation}</div>`;
+            responsePanel.innerHTML += `<div style="color: #fbbf24">> Billing: ${result.monetization}</div>`;
+            responsePanel.innerHTML += `<pre style="color: #94a3b8">${result.output}</pre>`;
+            
+        } catch (error) {
+            responsePanel.innerHTML += `<div style="color: #ef4444">> ERROR: ${error.message}</div>`;
+            responsePanel.innerHTML += `<div style="color: #64748b">> Ensure local server is running on port 8080</div>`;
+        } finally {
+            vaultBtn.disabled = false;
+            vaultBtn.innerText = "Initialize Live Vault";
+        }
+    };
+</script>
+
+</body>
+</html>

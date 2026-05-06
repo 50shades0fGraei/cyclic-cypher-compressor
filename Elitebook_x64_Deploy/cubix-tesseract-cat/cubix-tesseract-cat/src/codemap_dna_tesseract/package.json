@@ -1,0 +1,17 @@
+{
+  "name": "codemap-dna-tesseract",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A summon-based operating system.",
+  "main": "root.ts",
+  "scripts": {
+    "start": "ts-node root.ts",
+    "build": "tsc"
+  },
+  "author": "Randall Lujan, Emurica co GRAEI integrations",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

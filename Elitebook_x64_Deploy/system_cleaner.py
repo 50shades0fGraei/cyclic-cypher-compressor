@@ -12,13 +12,13 @@ def organize_sovereign_workspace():
     # Files to clear from the root as they were just test artifacts
     junk_list = [
         "integrity_test_copy.py",
-        "integrity_test_copy.gdv6",
+        "integrity_test_copy.cdv6",
         "integrity_restored.py",
         "healthcare_audit.log"
     ]
     
     # Create directories if they don't exist for better structure
-    dirs = ["vault", "logs", "agi_dna"]
+    dirs = ["vault", "logs", "graei_dna"]
     for d in dirs:
         if not os.path.exists(d):
             os.makedirs(d)
@@ -31,11 +31,11 @@ def organize_sovereign_workspace():
             print(f"[SYSTEM] 🗑️ Erased Junk: {junk}")
 
     # Move bridge/security logs to formal logs directory if they exist
-    if os.path.exists("agi_dna.vault"):
-        shutil.move("agi_dna.vault", "agi_dna/sovereign.vault")
-        if os.path.exists("agi_dna.vault.idx"):
-            shutil.move("agi_dna.vault.idx", "agi_dna/sovereign.vault.idx")
-        print("[SYSTEM] 🧬 Migrated AGI DNA Vault into protected sub-directory.")
+    if os.path.exists("graei_dna.vault"):
+        shutil.move("graei_dna.vault", "graei_dna/sovereign.vault")
+        if os.path.exists("graei_dna.vault.idx"):
+            shutil.move("graei_dna.vault.idx", "graei_dna/sovereign.vault.idx")
+        print("[SYSTEM] 🧬 Migrated GRAEI DNA Vault into protected sub-directory.")
 
     print("[SYSTEM CLEANSER] ✅ Workplace Cleanliness: 100%. Protocol: Gentleman First.\n")
 

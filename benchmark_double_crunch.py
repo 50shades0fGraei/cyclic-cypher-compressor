@@ -3,7 +3,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
-from garuda_pack import GarudaDeductiveVault
+from cyberdna_engine import CyberDNAVault
 
 def double_crunch_benchmark():
     target_file = 'lab_archives/test_iso_small.bin'
@@ -11,7 +11,7 @@ def double_crunch_benchmark():
         print("Target file not found.")
         return
 
-    gdv = GarudaDeductiveVault()
+    cdv = CyberDNAVault()
     orig_size = os.path.getsize(target_file)
     
     print("=" * 80)
@@ -20,10 +20,10 @@ def double_crunch_benchmark():
     print("=" * 80)
 
     # First Crunch
-    crunch_1 = "crunch_layer_1.gdv6"
+    crunch_1 = "crunch_layer_1.cdv6"
     print("\n[STEP 1] Executing First Crunch...")
     start_1 = time.perf_counter()
-    gdv.compress(target_file, crunch_1)
+    cdv.compress(target_file, crunch_1)
     time_1 = time.perf_counter() - start_1
     size_1 = os.path.getsize(crunch_1)
     
@@ -32,10 +32,10 @@ def double_crunch_benchmark():
     print(f"Crunch 1 Time: {time_1:.4f}s")
 
     # Second Crunch (Binary Run on the first output)
-    crunch_2 = "crunch_layer_2.gdv6"
+    crunch_2 = "crunch_layer_2.cdv6"
     print("\n[STEP 2] Executing Second Binary Crunch (Recursive)...")
     start_2 = time.perf_counter()
-    gdv.compress(crunch_1, crunch_2)
+    cdv.compress(crunch_1, crunch_2)
     time_2 = time.perf_counter() - start_2
     size_2 = os.path.getsize(crunch_2)
     
@@ -46,11 +46,11 @@ def double_crunch_benchmark():
 
     # Verification (Round Trip check for safety)
     print("\n[STEP 3] Verifying Lossless Integrity...")
-    restore_1 = "restore_1.gdv6"
+    restore_1 = "restore_1.cdv6"
     restore_orig = "restore_final.bin"
     
-    gdv.decompress(crunch_2, restore_1)
-    gdv.decompress(restore_1, restore_orig)
+    cdv.decompress(crunch_2, restore_1)
+    cdv.decompress(restore_1, restore_orig)
     
     with open(target_file, 'rb') as f1, open(restore_orig, 'rb') as f2:
         if f1.read() == f2.read():

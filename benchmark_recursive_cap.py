@@ -2,7 +2,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
-from garuda_pack import GarudaDeductiveVault
+from cyberdna_engine import CyberDNAVault
 
 def test_entropy_cap():
     target_file = 'lab_archives/test_iso_small.bin'
@@ -16,17 +16,17 @@ def test_entropy_cap():
     print("Evaluating recursive compression limits on deductive matrices.")
     print("=" * 80)
     
-    gdv = GarudaDeductiveVault()
+    cdv = CyberDNAVault()
     current_input = target_file
     orig_size = os.path.getsize(target_file)
     
     print(f"Iteration 0 (Source): {orig_size:,} bytes | Ratio: 1.000000\n")
     
     for i in range(1, 11): # Test 10 recursive layers
-        current_output = f"recursive_layer_{i}.gdv6"
+        current_output = f"recursive_layer_{i}.cdv6"
         
         # Compress the previous output
-        gdv.compress(current_input, current_output)
+        cdv.compress(current_input, current_output)
         
         # Evaluate new size
         new_size = os.path.getsize(current_output)
@@ -49,7 +49,7 @@ def test_entropy_cap():
 
     # Cleanup artifacts
     for i in range(1, 11):
-        f = f"recursive_layer_{i}.gdv6"
+        f = f"recursive_layer_{i}.cdv6"
         if os.path.exists(f):
             os.remove(f)
 

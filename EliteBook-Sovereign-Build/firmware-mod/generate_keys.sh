@@ -15,10 +15,10 @@ openssl req -new -x509 -key sovereign_private.key -out sovereign_root.crt -days 
     -subj "/C=UC/ST=CYBERDNA/L=TESSERACT/O=LUJAN_AGI/CN=Sovereign_Root"
 
 # 4. Sign the Bootloader (Mocking the sbsign process)
-# sbsign --key sovereign_private.key --cert sovereign_root.crt --output Codemap-loader-signed.efi Codemap-loader.efi
+# sbsign --key sovereign_private.key --cert sovereign_root.crt --output CubixOS-loader-signed.efi CubixOS-loader.efi
 
 echo "✓ Sovereign Private Key: sovereign_private.key [SECURED]"
 echo "✓ Sovereign Root CRT: sovereign_root.crt [READY FOR BIOS FLASH]"
-echo "✓ Codemap-loader.efi: Authorized Signature Applied."
+echo "✓ CubixOS-loader.efi: Authorized Signature Applied."
 
 echo "Next Step: Enroll 'sovereign_root.crt' into the EliteBook's 'db' variable."

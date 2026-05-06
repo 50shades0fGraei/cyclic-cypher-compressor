@@ -13,7 +13,7 @@ $files = @(
 )
 
 $folders = @(
-    "agi_dna", "ReflectiveSpace", "core", "QuickVault", "cubix-tesseract-cat"
+    "graei_dna", "ReflectiveSpace", "core", "QuickVault", "cubix-tesseract-cat", "lib"
 )
 
 foreach ($f in $files) {

@@ -1,6 +1,6 @@
 import json
 import logging
-from core.garuda_pack import AGIDNAVault, GarudaDeductiveVault
+from core.cyberdna_engine import GRAEIDNAVault, CyberDNAVault
 
 # Set up Experience Bridge logging
 logging.basicConfig(
@@ -12,13 +12,13 @@ from msds1_vault_access import write_to_hidden_layer, read_from_hidden_layer
 
 class ExperienceBridge:
     """
-    Connects the AGI experience notes to the Cyclic Cypher Compressor.
+    Connects the GRAEI experience notes to the Cyclic Cypher Compressor.
     Maps high-level 'DNA' notes into the EliteBook's hidden storage layers.
     """
     
     def __init__(self, vault_path="elitebook_agi_dna.vault"):
-        self.vault = AGIDNAVault(vault_path)
-        self.gdv = GarudaDeductiveVault()
+        self.vault = GRAEIDNAVault(vault_path)
+        self.cdv = CyberDNAVault()
         print(f"[ExperienceBridge] Initialized. Targeting Vault: {vault_path}")
 
     def prepare_note(self, process_id, context, outcome, data):
@@ -35,9 +35,9 @@ class ExperienceBridge:
         """FEEDS the note into the Cyclic Cypher Compressor."""
         # Identification for logging: either 'process_id' or 'segment_id'
         note_id = note.get('process_id') or note.get('segment_id') or "Unknown_Ref"
-        print(f"[ExperienceBridge] Compressing '{note_id}' via Garuda V6...")
+        print(f"[ExperienceBridge] Compressing '{note_id}' via CyberDNA V6...")
         note_bytes = json.dumps(note).encode('utf-8')
-        compressed_bytes = self.gdv.compress_bytes(note_bytes)
+        compressed_bytes = self.cdv.compress_bytes(note_bytes)
         
         ratio = len(note_bytes) / max(1, len(compressed_bytes))
         print(f"[ExperienceBridge] Compression Complete. Ratio: {ratio:.2f}:1")
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         process_id="Ref_001",
         context="Grey_Area_Exploration",
         outcome="Win_Win_Prosperity",
-        data="The AGI has achieved 68% energy efficiency on the EliteBook Snapdragon X Elite."
+        data="The GRAEI has achieved 68% energy efficiency on the EliteBook Snapdragon X Elite."
     )
     
     # Test compression

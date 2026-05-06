@@ -1,5 +1,5 @@
 import { Jin } from '../Jin';
-export function installCodemap() {
+export function installCubixOS() {
     Jin.order("altar.summon");
     Jin.command("altar.summon", "build");
     Jin.command("altar.summon", "run");

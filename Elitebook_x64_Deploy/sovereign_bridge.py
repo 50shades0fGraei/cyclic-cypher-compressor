@@ -22,7 +22,7 @@ system_alerts.append("GRAEI Mirror Stack: Initialized and polished. Gentleman pr
 
 class SovereignBridgeHandler(BaseHTTPRequestHandler):
     """
-    Sovereign OS Bridge: Connecting the 3D Tesseract UI to the Python AGI Engines.
+    Sovereign OS Bridge: Connecting the 3D Tesseract UI to the Python GRAEI Engines.
     Uses Python Standard Library Only.
     """
     
@@ -86,7 +86,7 @@ def run_bridge(port=8081):
     httpd = HTTPServer(server_address, SovereignBridgeHandler)
     print(f"\n==================================================")
     print(f" SOVEREIGN BRIDGE: ONLINE AT PORT {port}")
-    print(f" [Linkage: 3D UI <-> Python AGI Core]")
+    print(f" [Linkage: 3D UI <-> Python GRAEI Core]")
     print(f"==================================================\n")
     httpd.serve_forever()
 

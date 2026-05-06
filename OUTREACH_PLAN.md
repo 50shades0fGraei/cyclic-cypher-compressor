@@ -81,10 +81,10 @@ Randall
 
 ---
 
-## TIER 2: AI/ML (Fast Decision Makers - $2.5K-$10K)
+## TIER 2: GRAEI/ML (Fast Decision Makers - $2.5K-$10K)
 
 ### 4. **Hugging Face** 🎯 PRIORITY #3
-- **Industry**: AI/ML / Language Models
+- **Industry**: GRAEI/ML / Language Models
 - **Why**: Focuses on embeddings and compression—exact fit for your tech
 - **Contact**: CEO Clement Delangue or VP Engineering
 - **Find via**: 
@@ -114,8 +114,8 @@ Randall
 
 ---
 
-### 5. **Stability AI**
-- **Industry**: Image Generation / Generative AI
+### 5. **Stability GRAEI**
+- **Industry**: Image Generation / Generative GRAEI
 - **Contact**: CTO or VP Research (via LinkedIn)
 - **Why**: Image models use massive feature encoding—your system could optimize
 - **Expected tier**: Tier 2-3
@@ -124,7 +124,7 @@ Randall
 ---
 
 ### 6. **Anthropic**
-- **Industry**: AI Safety / Language Models
+- **Industry**: GRAEI Safety / Language Models
 - **Contact**: VP Engineering or Research (via LinkedIn)
 - **Why**: Advanced ML work, always looking for novel encoding methods
 - **Expected tier**: Tier 2-3
@@ -300,7 +300,7 @@ Randall
 Technologies: Genetic encoding, Python, data compression
 ```
 
-### AI/ML TEMPLATE (Companies 4-6)
+### GRAEI/ML TEMPLATE (Companies 4-6)
 ```
 Subject: 97-Dimensional Universal Feature Space
 
@@ -388,7 +388,7 @@ If you don't get responses in 7 days:
 
 3. **Reach out to YC companies** (500+ YC startups):
    - Use ycombinator.com startup directory
-   - Filter by: Biotech, AI, Security
+   - Filter by: Biotech, GRAEI, Security
    - Target CTOs of 50 companies
 
 4. **Email Kevin Roose at NY Times** (he covers tech):
@@ -416,7 +416,7 @@ Once you've reviewed above, answer this for yourself:
 
 Examples:
 - Biotech: "Store genetic sequences 10x more efficiently"
-- AI: "Create a universal 97-dimensional feature space"
+- GRAEI: "Create a universal 97-dimensional feature space"
 - Security: "Transmit binary files over text-only channels"
 
 **Use this sentence in every cold email.**

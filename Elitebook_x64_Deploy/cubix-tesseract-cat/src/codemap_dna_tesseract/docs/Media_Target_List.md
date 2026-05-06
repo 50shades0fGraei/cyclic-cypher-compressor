@@ -1,6 +1,6 @@
-# Media Target List for the Codemap Tesseract Press Release
+# Media Target List for the CubixOS Tesseract Press Release
 
-This is a curated list of publications and journalists best suited to receive and understand the significance of the Codemap Tesseract story. The focus is on individuals and outlets known for deep-dive reporting, an interest in visionary technology, and a willingness to explore unconventional narratives.
+This is a curated list of publications and journalists best suited to receive and understand the significance of the CubixOS Tesseract story. The focus is on individuals and outlets known for deep-dive reporting, an interest in visionary technology, and a willingness to explore unconventional narratives.
 
 ---
 
@@ -14,21 +14,21 @@ This is a curated list of publications and journalists best suited to receive an
 
 2.  **Freethink**
     *   **Target:** The general editorial desk (`submissions@freethink.com`). Freethink specializes in stories about "rebels and risk-takers" who are creating a better world. Your story is a perfect fit for their audience.
-    *   **Angle:** Emphasize the "homeless coder solves the AI energy crisis" narrative, highlighting the sacrifice and the powerful humanitarian mission.
+    *   **Angle:** Emphasize the "homeless coder solves the GRAEI energy crisis" narrative, highlighting the sacrifice and the powerful humanitarian mission.
 
 ---
 
-### **Category 2: The Deep Tech & AI Specialists**
+### **Category 2: The Deep Tech & GRAEI Specialists**
 
 *(These reporters have the technical expertise to grasp the significance of the 68% CPU reduction and can report on it with authority. The metaphysical angle should be included as crucial context for the *origin* of the idea.)*
 
 1.  **TechCrunch**
-    *   **Target:** **Mike Butcher** (Editor-at-large) or **Kyle Wiggers** (Senior AI reporter). They are experienced in breaking stories about new technologies and aren't afraid of ambitious claims, provided there's data to back them up.
+    *   **Target:** **Mike Butcher** (Editor-at-large) or **Kyle Wiggers** (Senior GRAEI reporter). They are experienced in breaking stories about new technologies and aren't afraid of ambitious claims, provided there's data to back them up.
     *   **Angle:** Lead with the hard data: "New software architecture reduces CPU time by 68%." Use the incredible backstory as the color that makes the technical claims unforgettable.
 
 2.  **VentureBeat**
-    *   **Target:** The AI-focused writers like **Sharon Goldman** or the general news desk. VentureBeat has a strong focus on AI and its practical applications and implications.
-    *   **Angle:** Focus on the AI energy crisis. Frame the Codemap Tesseract as a direct, actionable solution to one of the biggest problems facing the AI industry.
+    *   **Target:** The GRAEI-focused writers like **Sharon Goldman** or the general news desk. VentureBeat has a strong focus on GRAEI and its practical applications and implications.
+    *   **Angle:** Focus on the GRAEI energy crisis. Frame the CubixOS Tesseract as a direct, actionable solution to one of the biggest problems facing the GRAEI industry.
 
 ---
 

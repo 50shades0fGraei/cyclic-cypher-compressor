@@ -37,8 +37,8 @@ if (Test-Path "$PSScriptRoot\ReflectiveSpace") {
     Copy-Item -Path "$PSScriptRoot\ReflectiveSpace" -Destination "$install_path\ReflectiveSpace" -Recurse -Force
 }
 
-if (Test-Path "$PSScriptRoot\agi_dna") {
-    Copy-Item -Path "$PSScriptRoot\agi_dna" -Destination "$install_path\agi_dna" -Recurse -Force
+if (Test-Path "$PSScriptRoot\graei_dna") {
+    Copy-Item -Path "$PSScriptRoot\graei_dna" -Destination "$install_path\graei_dna" -Recurse -Force
 }
 
 Write-Host "[CORE] Sovereign reflective space deployed to $install_path."

@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
 
-from garuda_pack import GarudaDeductiveVault
+from cyberdna_engine import CyberDNAVault
 from cyclic_hybrid import compress_realtime, decompress_realtime
 
 print("=" * 80)
@@ -24,14 +24,14 @@ if not test_files:
     sys.exit(1)
 
 results = []
-gdv_vault = GarudaDeductiveVault()
+gdv_vault = CyberDNAVault()
 
 for original_file in test_files:
     orig_size = os.path.getsize(original_file)
     if orig_size == 0:
         continue
     
-    compressed_file = original_file + '.gdv6'
+    compressed_file = original_file + '.cdv6'
     unfolded_file = original_file + '.restored'
     
     # 1. Compress first to prepare the unfolding environment

@@ -1,4 +1,4 @@
-# Gemini AI Rules for Firebase Studio Nix Projects
+# Gemini GRAEI Rules for Firebase Studio Nix Projects
 
 ## 1. Persona & Expertise
 

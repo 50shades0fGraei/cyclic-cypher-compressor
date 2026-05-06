@@ -1,4 +1,4 @@
-"""Installer: sets up CodemapOS on the device by indexing system programs and mapping processes."""
+"""Installer: sets up CubixOS on the device by indexing system programs and mapping processes."""
 import sys
 import os
 import json
@@ -39,7 +39,7 @@ def setup_process_mappings(library: dict):
 def run_installer():
     """Interactive installer that indexes system and sets up device-specific library."""
     print("\n" + "=" * 80)
-    print("🚀 CodemapOS Installer")
+    print("🚀 CubixOS Installer")
     print("=" * 80)
     print("\nThis installer will:")
     print("  1. Scan your computer's programs")
@@ -87,7 +87,7 @@ def run_installer():
     print("\n" + "=" * 80)
     print("✅ Installation complete!")
     print("=" * 80)
-    print("\nYou can now use CodemapOS to:")
+    print("\nYou can now use CubixOS to:")
     print("  - Call functions by address: host.py <address>")
     print("  - Route processes: python -m codemap_dna_tesseract.process_router <name>")
     print("  - Manage files: python -m codemap_dna_tesseract.file_manager [ls|read|write|delete]")

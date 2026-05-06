@@ -1,4 +1,4 @@
-# Codemap-DNA-tesseract/parser.py
+# CubixOS-DNA-tesseract/parser.py
 
 from tree_sitter import Language, Parser
 from tree_sitter_languages import get_language, get_parser

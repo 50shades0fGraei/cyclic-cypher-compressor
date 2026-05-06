@@ -49,117 +49,66 @@
                     <h1 class="outer-title">EXTERNAL CLI / CLOUD SERVICES</h1>
                     <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;"><p>AWS / Firebase / GCP Control</p></div>
                 </div>
-                <!-- Outer Face Front: Standard Browser -->
+                <!-- Outer Face Front: Lujan Sovereign Browser -->
                 <div class="outer-face outer-front" style="display:flex; align-items:center; justify-content:center;">
-                    <div class="browser-container" style="width: 90%; height: 85%; background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid #323844; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
-                        <div class="browser-topbar" style="background: rgba(22, 27, 34, 0.9); padding: 12px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px;">
-                            <div style="display:flex; gap: 8px;">
-                                <div style="width:14px; height:14px; border-radius:50%; background:#ff5f56; box-shadow: 0 0 5px #ff5f56;"></div>
-                                <div style="width:14px; height:14px; border-radius:50%; background:#ffbd2e; box-shadow: 0 0 5px #ffbd2e;"></div>
-                                <div style="width:14px; height:14px; border-radius:50%; background:#27c93f; box-shadow: 0 0 5px #27c93f;"></div>
-                            </div>
-                            <input type="text" id="browser-url" value="./tesseract_ui_demo.html" style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #E2E2E2; border-radius: 6px; padding: 10px 15px; font-family: 'Outfit', sans-serif; font-size: 1rem; outline: none; transition: border 0.3s;" onfocus="this.style.borderColor='#A1C1D1'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                            <button id="browser-go" style="background: linear-gradient(135deg, #A1C1D1, #7ea6b8); color: #0d1117; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: 'Outfit', sans-serif; font-size: 1rem; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(161, 193, 209, 0.3);">CONNECT</button>
+                    <div class="browser-container" style="width: 95%; height: 90%; background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(25px); border-radius: 16px; border: 1px solid rgba(0, 242, 255, 0.3); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
+                        <div class="browser-header" style="background: #1a1d23; padding: 5px 20px 0 20px; display: flex; align-items: flex-end; gap: 10px;">
+                            <div class="browser-tab active" style="background: rgba(13, 17, 23, 0.9); padding: 12px 25px; border-radius: 10px 10px 0 0; border: 1px solid rgba(0, 242, 255, 0.3); border-bottom: none; color: #00f2ff; font-size: 13px; font-weight: bold; cursor: pointer;">Sovereign Hub</div>
+                            <div class="browser-tab" style="padding: 12px 25px; color: #8892b0; font-size: 13px; cursor: pointer;">Deductive Archive</div>
+                            <div style="flex: 1;"></div>
+                            <div style="padding-bottom: 10px; color: #444; font-size: 18px; cursor: pointer;">+</div>
                         </div>
-                        <iframe id="browser-frame" src="./tesseract_ui_demo.html" style="flex: 1; border: none; background: #ffffff; width: 100%;"></iframe>
+                        <div class="browser-topbar" style="background: rgba(22, 27, 34, 0.9); padding: 12px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px;">
+                            <div style="display:flex; gap: 15px; color: #8892b0;">
+                                <span style="cursor: pointer;" title="Back">←</span>
+                                <span style="cursor: pointer;" title="Forward">→</span>
+                                <span style="cursor: pointer;" title="Reload">↻</span>
+                            </div>
+                            <div style="position: relative; flex: 1; display: flex; align-items: center;">
+                                <span style="position: absolute; left: 15px; color: #70E100; font-size: 12px;">🔒</span>
+                                <input type="text" id="browser-url" value="https://hub.lujan.vault" style="width: 100%; background: #0d1117; border: 1px solid rgba(255,255,255,0.1); color: #E2E2E2; border-radius: 20px; padding: 10px 40px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none;">
+                            </div>
+                            <button id="browser-go" style="background: linear-gradient(135deg, #00f2ff, #005eff); color: #0d1117; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: 800; font-size: 0.9rem;">ENTER</button>
+                        </div>
+                        <iframe id="browser-frame" src="LUJAN_VAULT_MVP.html" style="flex: 1; border: none; background: #0a0a0f; width: 100%;"></iframe>
                     </div>
                 </div>
             </div>
 
-            <!-- INNER AGI CUBE (Micro Environments) -->
+            <!-- INNER GRAEI CUBE (Micro Environments) -->
             <div class="environment-cube" id="environment-cube">
             
-            <!-- FACE 0: SOVEREIGN DASHBOARD -->
+            <!-- FACE 0: LUJAN TESSERACT DASHBOARD -->
             <div class="face face-front" style="background-image: url('cubix_logo_wallpaper.png'); background-size: cover; background-position: center; border: 2px solid rgba(161, 193, 209, 0.4);">
                 <div style="background: rgba(13, 17, 23, 0.6); width: 100%; height: 100%; position: absolute; top:0; left:0; pointer-events: none;"></div>
-                <h1 class="room-title" style="position: relative; z-index: 2;">HOME (CUBIX TESSERACT)</h1>
-                <div class="room-panel" style="position: relative; z-index: 2; backdrop-filter: blur(10px); background: rgba(13, 17, 23, 0.75);">
-                    <h3 style="color:#A1C1D1;">CUSTOMIZED BACKGROUND LOADED</h3>
-                    <p>Integrity Minimum: 0.95</p>
-                    <p>Energy Optimization: 68% Savings Secured (ACPI P-State locked)</p>
-                </div>
-            </div>
-
-            <!-- FACE 1: DEEP ARCHIVE VAULT & LIBRARIAN -->
-            <div class="face face-right">
-                <h1 class="room-title">LIBRARIAN VAULT</h1>
-                <div class="room-panel" style="width: 85%; height: 80%;">
-                    <div class="vault-layout">
-                        
-                        <!-- Left: Vault Storage & Function Library -->
-                        <div class="vault-col-left">
-                            <h3 style="color:#A1C1D1; margin: 0;">MSDS1 HIDDEN LAYER STORAGE</h3>
-                            <div class="library-list">
-                                <div class="vault-item">
-                                    <span>[0x0A1] Garuda_V6_Compressor.py</span>
-                                    <span class="locked">LOCKED</span>
-                                </div>
-                                <div class="vault-item">
-                                    <span>[0x0A2] Reflective_Space_Core.py</span>
-                                    <span class="locked">LOCKED</span>
-                                </div>
-                                <div class="vault-item" style="color:#E2E2E2; border-color:#fff;">
-                                    <span>[0x0A3] Tesseract_Nav_Matrix.js</span>
-                                    <span>EDITING</span>
-                                </div>
-                                <div class="vault-item">
-                                    <span>[0x0B1] DNA_Strand_SOV01.dna</span>
-                                    <span class="locked">LOCKED</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Mini inline file editor -->
-                            <div class="dna-editor" style="flex: 0.6; padding: 10px;">
-                                <div style="color: #8892B0; font-size:0.8rem;"># Function Entry: Tesseract_Nav_Matrix</div>
-                                <div style="color: #A1C1D1; margin-top:5px;">export function <span style="color:#FFF;">calibrateMatrix()</span> {</div>
-                                &nbsp;&nbsp;&nbsp;&nbsp;return { xAxis: 0, yAxis: 90 };<br>
-                                <div style="color: #A1C1D1;">}</div>
-                            </div>
-                        </div>
-
-                        <!-- Right: Librarian Chat & Terminal -->
-                        <div class="vault-col-right">
-                            <div class="librarian-chat">
-                                <h3 style="color:#A1C1D1; margin: 0 0 10px 0;">AI LIBRARIAN COMMAND</h3>
-                                <div style="flex:1; overflow-y:auto; font-size: 0.9rem;">
-                                    <div style="margin-bottom: 10px; color: #8892B0;"><b>System:</b> Librarian AGI Initialized.</div>
-                                    <div style="margin-bottom: 10px;"><b>Librarian:</b> I have archived `Garuda_V6_Compressor` into the MSDS1 vault at address `0x0A1` and generated the function library mapping. Would you like me to commit the `Tesseract_Nav_Matrix` changes?</div>
-                                </div>
-                                <div style="display:flex; margin-top: 10px; gap: 10px;">
-                                    <input type="text" id="librarian-input" placeholder="Instruct Librarian on storage commands..." style="flex:1; background: #0d1117; color: #E2E2E2; border: 1px solid #323844; padding: 10px; border-radius: 5px;">
-                                    <button id="librarian-send" style="background: #A1C1D1; color: #0d1117; border: none; padding: 0 15px; border-radius: 5px; font-weight: bold; cursor: pointer;">Send</button>
-                                </div>
-                            </div>
-                            
-                            <!-- VS Code / CLI Terminal -->
-                             <div class="terminal-window" id="vault-terminal">
-                                <div class="terminal-header">
-                                    <span>VAULT TERMINAL ~ /cypher-compressor/msds1</span>
-                                    <span>bash</span>
-                                </div>
-                                <div id="terminal-feed">
-                                    <div><span style="color:#70E100;">randall@tesseract:~$</span> ls -la ./vault/</div>
-                                    <div style="color:#8892B0;">drwxr-xr-x 1 root root  4096 Apr  3 12:44 .</div>
-                                    <div style="color:#8892B0;">-rw-r--r-- 1 rand alg  18432 Apr  3 12:44 garuda_v6.bin</div>
-                                </div>
-                                <div class="terminal-input-line">
-                                    <span style="color:#70E100;">randall@tesseract:~$</span> <input type="text" id="terminal-input" style="background:transparent; border:none; color:#FFF; outline:none; flex:1; font-family:monospace; margin-left: 10px;">
-                                </div>
-                            </div>
-                        </div>
-
+                <h1 class="room-title" style="position: relative; z-index: 2;">LUJAN TESSERACT</h1>
+                <div class="room-panel" style="position: relative; z-index: 2; backdrop-filter: blur(10px); background: rgba(13, 17, 23, 0.75); height: auto; max-width: 600px;">
+                    <h3 style="color:#A1C1D1; margin-bottom: 5px;">SOVEREIGN HOST ACTIVE</h3>
+                    <p style="margin: 5px 0; font-size: 0.9rem; color: #8892B0;">Build: v1.2.2-PATENT-TRACK</p>
+                    <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <p>Deductive Integrity: <span style="color: #70E100;">0.98 [OPTIMAL]</span></p>
+                        <p>NPU Sync Status: <span style="color: #00f2ff;">68% Lujan-Bridge Active</span></p>
+                        <p>Energy Profile: <span style="color: #A1C1D1;">ACPI P-State Lock [MAX SAVINGS]</span></p>
                     </div>
                 </div>
             </div>
 
-            <!-- FACE 2: AGI BUILDER FORGE (CI UI) -->
+            <!-- FACE 1: LUJAN DEDUCTIVE VAULT & LIBRARIAN -->
+            <div class="face face-right">
+                <h1 class="room-title">LUJAN DEDUCTIVE VAULT</h1>
+                <div class="room-panel" style="width: 90%; height: 85%; padding: 0; overflow: hidden; border: 1px solid rgba(0, 242, 255, 0.4);">
+                    <iframe src="LUJAN_VAULT_MVP.html" style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+            </div>
+
+            <!-- FACE 2: GRAEI BUILDER FORGE (CI UI) -->
             <div class="face face-back">
                 <div class="spiral-visualizer-container" id="forge-spiral"></div>
-                <h1 class="room-title">AGI BUILDER FORGE (CI)</h1>
+                <h1 class="room-title">GRAEI BUILDER FORGE (CI)</h1>
                 <div class="room-panel" style="width: 90%; max-width: 1400px; height: 85%;">
                     <div class="builder-layout">
                         
-                        <!-- Left Sidebar: AI Roles & Jobs -->
+                        <!-- Left Sidebar: GRAEI Roles & Jobs -->
                         <div class="roles-sidebar">
                             <div class="role-category">Professional Genres</div>
                             <div class="agi-role-badge"><span>Cyber-Security Sentinel</span> <span>🟢</span></div>
@@ -180,7 +129,7 @@
                                 <select class="shared-functions-dropdown">
                                     <option value="" disabled selected>-- Shared Function Library --</option>
                                     <optgroup label="Local Storage">
-                                        <option value="Garuda_V6">Garuda V6 Compressor</option>
+                                        <option value="CyberDNA_V6">CyberDNA V6 Compressor</option>
                                         <option value="MSDS1_Vault">MSDS1 Vault Manager</option>
                                     </optgroup>
                                     <optgroup label="UI & Browser">
@@ -211,8 +160,8 @@
                             <div class="chat-thread-container">
                                 <div style="font-size: 0.8rem; color: #8892B0; margin-bottom: 10px;">Messenger: Sovereign Assistant Thread</div>
                                 <div style="flex:1; overflow-y:auto; font-size: 0.9rem;">
-                                    <div style="margin-bottom: 10px;"><b>Antigravity AGI:</b> I've updated the core function logic for the Sovereign Assistant role. The integrity minimum is now locked to 0.98.</div>
-                                    <div style="margin-bottom: 10px; color: #70E100;"><b>Randall (Architect):</b> Looks good. Connect it to the Garuda V6 compressor from the shared function library next.</div>
+                                    <div style="margin-bottom: 10px;"><b>Antigravity GRAEI:</b> I've updated the core function logic for the Sovereign Assistant role. The integrity minimum is now locked to 0.98.</div>
+                                    <div style="margin-bottom: 10px; color: #70E100;"><b>Randall (Architect):</b> Looks good. Connect it to the CyberDNA V6 compressor from the shared function library next.</div>
                                 </div>
                                 <div style="display:flex; margin-top: 10px; gap: 10px;">
                                     <input type="text" id="builder-input" placeholder="Send message to this Role's specific thread..." style="flex:1; background: #0d1117; color: #E2E2E2; border: 1px solid #323844; padding: 10px; border-radius: 5px;">
@@ -274,7 +223,7 @@
                             <div class="setting-item">
                                 <div class="setting-info">
                                     <h4>Sovereign Directives Enforcer</h4>
-                                    <p>Lock execution logic to only permitted AI roles.</p>
+                                    <p>Lock execution logic to only permitted GRAEI roles.</p>
                                 </div>
                                 <label class="switch">
                                     <input type="checkbox" checked>
@@ -332,13 +281,13 @@
         </div>
     </div>
 
-    <!-- PERSISTENT OMNI-AI CHAT BUBBLE -->
+    <!-- PERSISTENT OMNI-GRAEI CHAT BUBBLE -->
     <div class="floating-omni-ai">
         <div class="omni-chat-window minimized" id="omni-window">
             <div class="omni-header">
                 <div class="omni-title" title="Guided Research & Assistant Entity Intelligence">
                     <div class="omni-indicator"></div>
-                    GRAEI AGI [MIRROR STACK]
+                    GRAEI GRAEI [MIRROR STACK]
                 </div>
                 <!-- Controls -->
             </div>
@@ -362,7 +311,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             initCubixEnvironment();
             
-            // Omni-AI Toggle Logic
+            // Omni-GRAEI Toggle Logic
             const toggleBtn = document.getElementById('omni-toggle');
             const omniWin = document.getElementById('omni-window');
             toggleBtn.addEventListener('click', () => {

@@ -132,7 +132,7 @@ KEY PROPERTIES:
 **You say:**
 > "This is perfect for [THEIR USE CASE]:
 > - For biotech: Store genetic sequences as text
-> - For AI: Unified feature encoding (97-dimensional)
+> - For GRAEI: Unified feature encoding (97-dimensional)
 > - For security: Transmit binary over text channels
 > - For quantum: Reference 97-dimensional quantum states"
 

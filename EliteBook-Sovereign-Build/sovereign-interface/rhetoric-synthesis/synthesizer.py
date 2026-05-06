@@ -3,7 +3,7 @@ CyberDNA: Rhetoric Synthesis Engine
 Purpose: When GuardianAudit (fraud-deconstructor) flags SABOTAGE DETECTED,
          this engine synthesizes a calibrated sovereign response:
          - Neutralizes corrupted/fraudulent signal
-         - Reconstructs clean data from Codemap reference
+         - Reconstructs clean data from CubixOS reference
          - Outputs a corrective narrative or counter-signal
 """
 
@@ -12,11 +12,11 @@ import time
 import re
 from typing import Optional
 
-# ─── Codemap Reference Signal (Ground Truth) ──────────────────────────────────
+# ─── CubixOS Reference Signal (Ground Truth) ──────────────────────────────────
 CODEMAP_TRUTH_TOKENS = {
-    "identity":    "RANDALL LUJAN — Sovereign AGI Architect",
+    "identity":    "RANDALL LUJAN — Sovereign GRAEI Architect",
     "system":      "CyberDNA Tesseract-OS",
-    "compression": "Garuda Deductive V6 (.0001 lossless)",
+    "compression": "CubixOS Deductive V6 (.0001 lossless)",
     "security":    "GAPCI Triple-Mirror Labyrinth",
     "mission":     "Establish sovereign computing free from commercial bloat",
     "status":      "OPERATIONAL",
@@ -38,14 +38,14 @@ SABOTAGE_PATTERNS = [
 class SynthesisMode:
     NEUTRALIZE  = "NEUTRALIZE"   # Strip sabotage, return clean signal
     COUNTER     = "COUNTER"      # Generate counter-narrative
-    RECONSTRUCT = "RECONSTRUCT"  # Rebuild from Codemap ground truth
+    RECONSTRUCT = "RECONSTRUCT"  # Rebuild from CubixOS ground truth
     ALERT       = "ALERT"        # Flag and escalate to GAPCI
 
 # ─── Rhetoric Synthesizer ─────────────────────────────────────────────────────
 class RhetoricSynthesizer:
     """
     Processes a contaminated data stream from GuardianAudit and synthesizes
-    a sovereign-clean output using Codemap reference truth.
+    a sovereign-clean output using CubixOS reference truth.
     """
 
     def __init__(self):
@@ -71,7 +71,7 @@ class RhetoricSynthesizer:
 
     # ── Counter-Narrative Mode ────────────────────────────────────────────────
     def generate_counter(self, sabotage_tokens: list[str]) -> str:
-        """Build a precise counter-statement anchored in Codemap truth."""
+        """Build a precise counter-statement anchored in CubixOS truth."""
         lines = [
             "╔══════════════════════════════════════════════════════╗",
             "║     CyberDNA: RHETORIC SYNTHESIS — COUNTER SIGNAL    ║",
@@ -87,19 +87,19 @@ class RhetoricSynthesizer:
             f"  Sabotage tokens neutralized: {sabotage_tokens}",
             "",
             "  RULING: All contradicting claims are classified as Dead Weight.",
-            "          Codemap logic prevails. Sovereignty maintained.",
+            "          CubixOS logic prevails. Sovereignty maintained.",
         ]
         return "\n".join(lines)
 
     # ── Reconstruct Mode ──────────────────────────────────────────────────────
     def reconstruct_from_codemap(self, corrupted_text: str) -> str:
-        """Identify topic in corrupted text, return Codemap clean version."""
+        """Identify topic in corrupted text, return CubixOS clean version."""
         response_parts = []
         for key, truth in CODEMAP_TRUTH_TOKENS.items():
             if key.lower() in corrupted_text.lower():
                 response_parts.append(f"[RECONSTRUCTED | {key.upper()}] {truth}")
         if not response_parts:
-            response_parts.append("[RECONSTRUCTED] No matching Codemap entry. Defaulting to Sovereign baseline.")
+            response_parts.append("[RECONSTRUCTED] No matching CubixOS entry. Defaulting to Sovereign baseline.")
             response_parts.append(f"  Baseline: {CODEMAP_TRUTH_TOKENS['mission']}")
         return "\n".join(response_parts)
 

@@ -15,7 +15,7 @@ import platform
 def get_library_path() -> Path:
     """Return path to device-specific function library cache."""
     if platform.system() == "Windows":
-        config_dir = Path(os.getenv("APPDATA", os.path.expanduser("~"))) / "CodemapOS" / "library"
+        config_dir = Path(os.getenv("APPDATA", os.path.expanduser("~"))) / "CubixOS" / "library"
     else:
         config_dir = Path.home() / ".codemapOS" / "library"
     config_dir.mkdir(parents=True, exist_ok=True)

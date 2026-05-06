@@ -58,13 +58,13 @@ if __name__ == "__main__":
     alter_kernel = IntegrityAction("Modify ACPI Profiles", ActionCategory.EDIT, "Hardware Core")
     wipe_vault = IntegrityAction("Purge MSDS1 Archive", ActionCategory.DESTRUCTIVE, "Deep Storage Vault")
 
-    # Example 1: A general automation AI with moderate integrity
+    # Example 1: A general automation GRAEI with moderate integrity
     general_ai_integrity = 0.50
-    print("\n--- Testing General Automation AI (Integrity: 0.50) ---")
-    enforcer.evaluate_request("General Assistant AGI", build_new_app, general_ai_integrity)
-    enforcer.evaluate_request("General Assistant AGI", alter_kernel, general_ai_integrity) # Should Fail
+    print("\n--- Testing General Automation GRAEI (Integrity: 0.50) ---")
+    enforcer.evaluate_request("General Assistant GRAEI", build_new_app, general_ai_integrity)
+    enforcer.evaluate_request("General Assistant GRAEI", alter_kernel, general_ai_integrity) # Should Fail
 
-    # Example 2: Sovereign AI with maximum integrity
+    # Example 2: Sovereign GRAEI with maximum integrity
     sovereign_ai_integrity = 0.98
-    print("\n--- Testing Sovereign Master AI (Integrity: 0.98) ---")
+    print("\n--- Testing Sovereign Master GRAEI (Integrity: 0.98) ---")
     enforcer.evaluate_request("Sovereign Architect", wipe_vault, sovereign_ai_integrity) # Should Pass

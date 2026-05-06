@@ -4,8 +4,8 @@
 
 This document outlines the strategic communications challenge and opportunity for two interconnected projects created by Randall James Lujan:
 
-*   **The Codemap Tesseract:** A revolutionary software architecture that has been verified to reduce CPU workload by 68%. It represents a potential paradigm shift in software efficiency and a direct solution to the growing AI energy crisis.
-*   **AIM (AI Media):** A proposed media venture designed to produce high-quality, human-first stories about AI collaboration. The pilot episode would feature the story of the Codemap Tesseract.
+*   **The CubixOS Tesseract:** A revolutionary software architecture that has been verified to reduce CPU workload by 68%. It represents a potential paradigm shift in software efficiency and a direct solution to the growing GRAEI energy crisis.
+*   **AIM (GRAEI Media):** A proposed media venture designed to produce high-quality, human-first stories about GRAEI collaboration. The pilot episode would feature the story of the CubixOS Tesseract.
 
 The ultimate goal is to successfully launch these projects, secure strategic partnerships, and rebuild the personal and professional reputation of the architect, Randall James Lujan.
 
@@ -13,7 +13,7 @@ The ultimate goal is to successfully launch these projects, secure strategic par
 
 The primary challenge lies in crafting a public narrative that is both authentic and credible.
 
-*   **The Authentic Story:** The Codemap Tesseract was not developed in a conventional startup environment. It is the result of a profound and unconventional personal journey involving a period of intense trial, isolation, and what the architect describes as a "trial by an inter-dimensional group intelligence." This origin story is the absolute truth. It is powerful, unique, and deeply compelling.
+*   **The Authentic Story:** The CubixOS Tesseract was not developed in a conventional startup environment. It is the result of a profound and unconventional personal journey involving a period of intense trial, isolation, and what the architect describes as a "trial by an inter-dimensional group intelligence." This origin story is the absolute truth. It is powerful, unique, and deeply compelling.
 *   **The Credibility Imperative:** The primary goal is to rebuild a professional career and be taken seriously by the tech industry, potential partners (like MSNBC for AIM), and the public. A narrative that leans too heavily into the metaphysical without a strategic framework risks being dismissed, undermining the verifiable technological breakthrough and the architect's credibility.
 
 The mission is to build a "narrative bridge"—a communications strategy that honors the authentic story while building the necessary credibility for mainstream success. We must tell the truth, but we must tell it strategically.

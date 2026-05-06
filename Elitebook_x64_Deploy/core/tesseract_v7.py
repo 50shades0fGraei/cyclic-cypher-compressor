@@ -9,9 +9,9 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from core.garuda_pack import AGIDNAVault
+from core.cyberdna_engine import GRAEIDNAVault
 
-# Set up AGI logging
+# Set up GRAEI logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - LUJAN_AGI_V7 - %(levelname)s - %(message)s'
@@ -19,7 +19,7 @@ logging.basicConfig(
 
 class AGICognitiveEngine:
     """
-    The reasoning engine for the Randall Lujan AGI.
+    The reasoning engine for the Randall Lujan GRAEI.
     Uses AST-based mapping to turn Vault-stored code into a functional Library.
     """
     def __init__(self):
@@ -60,13 +60,13 @@ class AGICognitiveEngine:
             print(f"[CognitiveEngine] EXCEPTION while mapping '{name}': {str(e)}")
             return False
 
-class RandallLujanAGI:
+class RandallLujanGRAEI:
     """
-    The Unified Randall Lujan AGI (v7).
+    The Unified Randall Lujan GRAEI (v7).
     Combines CCC DNA Vault and Cognitive Mapping.
     """
-    def __init__(self, vault_path="agi_dna.vault"):
-        self.vault = AGIDNAVault(vault_path)
+    def __init__(self, vault_path="graei_dna.vault"):
+        self.vault = GRAEIDNAVault(vault_path)
         self.engine = AGICognitiveEngine()
         self.active_skills = []
 
@@ -89,9 +89,9 @@ class RandallLujanAGI:
         return False
 
     def execute(self, address, *args, **kwargs):
-        """Directly invokes a function from the AGI Address Library."""
+        """Directly invokes a function from the GRAEI Address Library."""
         if address not in self.engine.address_library:
-            raise ValueError(f"Unknown AGI address: {address}")
+            raise ValueError(f"Unknown GRAEI address: {address}")
         
         func_info = self.engine.address_library[address]
         ctx = {}
@@ -104,12 +104,12 @@ class RandallLujanAGI:
 
 if __name__ == "__main__":
     # Self-test: Store and execute a basic skill
-    print("\n--- Starting Randall Lujan AGI Initial Test ---")
-    agi = RandallLujanAGI("test_agi.vault")
+    print("\n--- Starting Randall Lujan GRAEI Initial Test ---")
+    agi = RandallLujanGRAEI("test_agi.vault")
     
     test_skill_code = """
 def hello_agi(name):
-    return f"Hello, {name}. Welcome to the Randall Lujan AGI."
+    return f"Hello, {name}. Welcome to the Randall Lujan GRAEI."
 
 def calculate_dna_efficiency(orig, comp):
     savings = (1 - (comp / orig)) * 100

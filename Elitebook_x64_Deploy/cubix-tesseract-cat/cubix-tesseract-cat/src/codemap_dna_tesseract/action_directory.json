@@ -1,0 +1,42 @@
+[
+  {
+    "id": "view_user_profile",
+    "description": "Retrieves and displays a user's name.",
+    "sequence": [
+      {
+        "address": "u1f0001",
+        "params": ["alovelace"]
+      }
+    ]
+  },
+  {
+    "id": "add_lovelace_as_contact_for_hopper",
+    "description": "Adds Ada Lovelace to Grace Hopper's contact list.",
+    "sequence": [
+      {
+        "address": "u1f0002",
+        "params": ["ghopper", "alovelace"]
+      }
+    ]
+  },
+  {
+    "id": "remove_lovelace_from_hopper",
+    "description": "Removes Ada Lovelace from Grace Hopper's contact list.",
+    "sequence": [
+        {
+            "address": "u1f0003",
+            "params": ["ghopper", "alovelace"]
+        }
+    ]
+  },
+  {
+    "id": "fetch_remote_data",
+    "description": "Fetches data from a public API and stores it.",
+    "sequence": [
+        {
+            "address": "a2f0001",
+            "params": ["https://jsonplaceholder.typicode.com/todos/1"]
+        }
+    ]
+  }
+]

@@ -13,7 +13,7 @@ import platform
 def get_process_rules_path() -> Path:
     """Return path to device-specific process routing rules."""
     if platform.system() == "Windows":
-        config_dir = Path(os.getenv("APPDATA", os.path.expanduser("~"))) / "CodemapOS" / "processes"
+        config_dir = Path(os.getenv("APPDATA", os.path.expanduser("~"))) / "CubixOS" / "processes"
     else:
         config_dir = Path.home() / ".codemapOS" / "processes"
     config_dir.mkdir(parents=True, exist_ok=True)
