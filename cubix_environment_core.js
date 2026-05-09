@@ -46,10 +46,14 @@ function initSpiralVisualizer() {
 export function initCubixEnvironment() {
     initSpiralVisualizer();
     
-    const navContainer = document.getElementById('bottom-navigator');
+    // --- THREE.JS BOTTOM NAVIGATOR (Bottom-Center Slot) ---
+    const navContainer = document.getElementById('nav-center-slot') || document.getElementById('bottom-navigator');
     const world = document.getElementById('world');
     const envCube = document.getElementById('environment-cube'); // Inner GRAEI
     const outerCube = document.getElementById('outer-cube'); // Outer External
+
+    // CRITICAL: world must pass clicks through to face panels
+    if (world) world.style.pointerEvents = 'none';
 
     // --- SYSTEM TIME UPDATER ---
     const timeNode = document.getElementById('sys-time');
@@ -61,17 +65,12 @@ export function initCubixEnvironment() {
     
     // --- THREE.JS BOTTOM NAVIGATOR ---
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, navContainer.clientWidth / navContainer.clientHeight, 0.1, 1000);
+    const NAV_SIZE = navContainer ? (navContainer.clientWidth || 60) : 60;
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-    // Ensure container has dimensions (logo slot = 48x48)
-    if (navContainer.clientWidth === 0) {
-        navContainer.style.width = '48px';
-        navContainer.style.height = '48px';
-    }
-
-    renderer.setSize(navContainer.clientWidth || 48, navContainer.clientHeight || 48);
-    navContainer.appendChild(renderer.domElement);
+    renderer.setSize(NAV_SIZE, NAV_SIZE);
+    if (navContainer) navContainer.appendChild(renderer.domElement);
 
     const geometry = new THREE.BoxGeometry(2, 2, 2);
 
@@ -130,9 +129,11 @@ export function initCubixEnvironment() {
 
     camera.position.z = 3.5;
 
-    // --- INTERACTION LOGIC (Dual Layer Matrix) ---
+    // --- INTERACTION LOGIC: Mouse + Touch (Swipe = rotate) ---
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
+    let touchStartX = 0;
+    let touchHeld = false;
     
     let targetRotationYInner = 0; 
     let targetRotationYOuter = 0; 
@@ -144,8 +145,8 @@ export function initCubixEnvironment() {
     };
     let targetRotationX = 0;
 
-    // --- DRAG: Rotate only, no zoom ---
-    navContainer.addEventListener('mousedown', (e) => { 
+    // --- MOUSE DRAG ---
+    if (navContainer) navContainer.addEventListener('mousedown', (e) => { 
         isDragging = true; 
         previousMousePosition = { x: e.clientX, y: e.clientY };
         navContainer.style.cursor = 'grabbing';
@@ -156,7 +157,6 @@ export function initCubixEnvironment() {
         if (!isDragging) return;
         const deltaX = e.clientX - previousMousePosition.x;
         const deltaY = e.clientY - previousMousePosition.y;
-        // Only rotate mini-cube visually during drag
         cube.rotation.y += deltaX * 0.01;
         cube.rotation.x += deltaY * 0.005; 
         previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -165,14 +165,10 @@ export function initCubixEnvironment() {
     window.addEventListener('mouseup', (e) => {
         if (!isDragging) return;
         isDragging = false;
-        navContainer.style.cursor = 'grab';
-
-        // Snap Y-axis of the mini-cube to nearest 90 degrees
+        if (navContainer) navContainer.style.cursor = 'grab';
         const snapAngle = Math.PI / 2;
         const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
         targetRotationX = 0;
-
-        // Apply rotation to the active layer only (NO zoom on drag)
         if (currentZLevel === Z_LEVELS.inner) {
             targetRotationYInner = lockedY;
             cube.rotation.y = targetRotationYInner;
@@ -182,6 +178,42 @@ export function initCubixEnvironment() {
         }
         applyMatrixState();
     });
+
+    // --- TOUCH: hold & swipe left/right to rotate ---
+    if (navContainer) {
+        navContainer.addEventListener('touchstart', (e) => {
+            touchHeld = true;
+            touchStartX = e.touches[0].clientX;
+            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            e.preventDefault();
+        }, { passive: false });
+
+        navContainer.addEventListener('touchmove', (e) => {
+            if (!touchHeld) return;
+            const deltaX = e.touches[0].clientX - previousMousePosition.x;
+            const deltaY = e.touches[0].clientY - previousMousePosition.y;
+            cube.rotation.y += deltaX * 0.015;
+            cube.rotation.x += deltaY * 0.005;
+            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            e.preventDefault();
+        }, { passive: false });
+
+        navContainer.addEventListener('touchend', (e) => {
+            if (!touchHeld) return;
+            touchHeld = false;
+            // Snap to nearest 90-degree face
+            const snapAngle = Math.PI / 2;
+            const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
+            targetRotationX = 0;
+            if (currentZLevel === Z_LEVELS.inner) {
+                targetRotationYInner = lockedY;
+            } else {
+                targetRotationYOuter = lockedY;
+            }
+            applyMatrixState();
+            e.preventDefault();
+        }, { passive: false });
+    }
 
     // --- SCROLL WHEEL ZOOM (scene element, does NOT interfere with widgets) ---
     let zoomCooldown = false;
@@ -263,7 +295,7 @@ export function initCubixEnvironment() {
         requestAnimationFrame(animate);
         
         // Smoothly snap the mini cube to its designated layer rotation
-        if (!isDragging) {
+        if (!isDragging && !touchHeld) {
             const activeTargetY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
             cube.rotation.y += (activeTargetY - cube.rotation.y) * 0.1;
             cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.1;

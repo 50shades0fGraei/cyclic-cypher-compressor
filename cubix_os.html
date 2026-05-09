@@ -11,6 +11,130 @@
             font-family: system-ui, -apple-system, sans-serif;
         }
 
+        /* ═══ BOOT SPLASH SCREEN ═══ */
+        #cubix-boot-splash {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #0d1117;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            transition: opacity 0.8s ease;
+        }
+        #cubix-boot-splash.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .splash-cube-wrap {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            perspective: 400px;
+        }
+        .splash-cube {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: splashSpin 3s linear infinite;
+        }
+        .splash-cube .sc-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(0,242,255,0.6);
+            background: rgba(0,242,255,0.04);
+            box-shadow: 0 0 18px rgba(0,242,255,0.25) inset;
+        }
+        .sc-face.f  { transform: rotateY(  0deg) translateZ(50px); }
+        .sc-face.ba { transform: rotateY(180deg) translateZ(50px); }
+        .sc-face.l  { transform: rotateY( 90deg) translateZ(50px); }
+        .sc-face.r  { transform: rotateY(-90deg) translateZ(50px); }
+        .sc-face.t  { transform: rotateX( 90deg) translateZ(50px); }
+        .sc-face.bo { transform: rotateX(-90deg) translateZ(50px); }
+        @keyframes splashSpin {
+            0%   { transform: rotateX(20deg) rotateY(0deg); }
+            100% { transform: rotateX(20deg) rotateY(360deg); }
+        }
+        .splash-title {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.35em;
+            color: #A1C1D1;
+            text-shadow: 0 0 30px rgba(161,193,209,0.5);
+        }
+        .splash-sub {
+            font-size: 0.78rem;
+            color: #8892B0;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .splash-bar-wrap {
+            width: 320px;
+            height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .splash-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #00f2ff, #70E100);
+            box-shadow: 0 0 12px rgba(0,242,255,0.6);
+            transition: width 0.25s ease;
+        }
+        .splash-status {
+            font-size: 0.72rem;
+            color: #8892B0;
+            letter-spacing: 0.1em;
+            min-height: 1.2em;
+        }
+
+        /* ═══ SCENE PADDING FOR FIXED BARS ═══ */
+        .scene {
+            padding-top: 40px;
+            padding-bottom: 80px;
+            box-sizing: border-box;
+            /* CRITICAL: allow clicks through the 3D perspective container */
+            pointer-events: none;
+        }
+        /* Re-enable clicks on everything inside the scene that needs it */
+        .scene .face,
+        .scene .outer-face,
+        .scene .room-panel,
+        .scene .env-taskbar,
+        .scene button,
+        .scene input,
+        .scene select,
+        .scene iframe,
+        .scene a,
+        .scene [onclick] {
+            pointer-events: auto !important;
+        }
+        /* Bottom-center navigator slot */
+        #nav-center-slot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            cursor: grab;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 18px rgba(112,225,0,0.4), 0 0 6px rgba(0,242,255,0.3);
+            transition: box-shadow 0.3s;
+            touch-action: none;
+        }
+        #nav-center-slot:active { cursor: grabbing; }
+        #nav-center-slot:hover {
+            box-shadow: 0 0 28px rgba(112,225,0,0.7), 0 0 14px rgba(0,242,255,0.5);
+        }
+
         /* Per-face environment taskbar */
         .env-taskbar {
             position: absolute;
@@ -229,10 +353,27 @@
 </head>
 
 <body>
+
+    <!-- ═══ BOOT SPLASH SCREEN ═══ -->
+    <div id="cubix-boot-splash">
+        <div class="splash-cube-wrap">
+            <div class="splash-cube">
+                <div class="sc-face f"></div>
+                <div class="sc-face ba"></div>
+                <div class="sc-face l"></div>
+                <div class="sc-face r"></div>
+                <div class="sc-face t"></div>
+                <div class="sc-face bo"></div>
+            </div>
+        </div>
+        <div class="splash-title">LUJAN TESSERACT</div>
+        <div class="splash-sub">Sovereign OS // CyberDNA // EliteBook i5 vPro</div>
+        <div class="splash-bar-wrap"><div class="splash-bar" id="splash-bar"></div></div>
+        <div class="splash-status" id="splash-status">Initializing kernel interface...</div>
+    </div>
     <!-- GLOBAL TOP BAR (PAGE CONTEXT) -->
     <div class="global-topbar">
         <div style="display:flex;align-items:center;gap:10px;">
-            <div id="bottom-navigator" style="width:48px;height:48px;cursor:grab;flex-shrink:0;"></div>
             <div>
                 <div class="topbar-context-title">LUJAN TESSERACT</div>
                 <div style="font-size:0.65rem;color:#8892B0;letter-spacing:0.12em;margin-top:1px;">SOVEREIGN DIRECT // CUBIX OS</div>
@@ -511,15 +652,15 @@
                             </div>
                             <h4 style="color:#8892B0;margin:0 0 10px 0;font-size:0.82rem;letter-spacing:0.1em;">SYSTEM CONTROLS</h4>
                             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:display','_blank')">🖥️ Display</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:sound','_blank')">🔊 Sound</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:bluetooth','_blank')">🔵 Bluetooth</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:printers','_blank')">🖨️ Printers</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:mousetouchpad','_blank')">🖱️ Mouse</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:batterysaver','_blank')">🔋 Battery</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:storagesense','_blank')">💾 Storage</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:taskbar','_blank')">📌 Taskbar</button>
-                                <button class="dev-ctrl-btn" onclick="window.open('ms-settings:windowsupdate','_blank')">🔄 Updates</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('xrandr --auto')">🖥️ Display</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('alsamixer')">🔊 Sound</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('bluetoothctl show')">🔵 Bluetooth</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('lpstat -p')">🖨️ Printers</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('xinput list')">🖱️ Input</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0')">🔋 Battery</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('df -h /')">💾 Storage</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('pacman -Syu --noconfirm')">🔄 pacman -Syu</button>
+                                <button class="dev-ctrl-btn" onclick="bridgeCmd('systemctl list-units --type=service --state=running')">⚙️ Services</button>
                             </div>
                         </div>
                     </div>
@@ -538,6 +679,9 @@
         <!-- LEFT: App Dock -->
         <div class="taskbar-apps">
             <div class="app-icon active" title="LUJAN TESSERACT Dashboard">⊞</div>
+
+        <!-- BOTTOM CENTER: 3D Navigator -->
+        <div id="nav-center-slot" title="Drag or swipe to rotate environment"></div>
             <div class="app-icon" title="Terminal Access">&gt;_</div>
             <div class="app-icon" title="Reflective Space">🧠</div>
             <div class="app-icon" title="Deep Archive Vault">🗄️</div>
@@ -734,22 +878,49 @@
         window.addEventListener('online', updateNetwork);
         window.addEventListener('offline', updateNetwork);
 
-        // Utility Button Launchers (ms-settings URIs)
+        // ── Boot Splash Sequence ──
+        (function runSplash() {
+            const bar = document.getElementById('splash-bar');
+            const status = document.getElementById('splash-status');
+            const splash = document.getElementById('cubix-boot-splash');
+            const steps = [
+                [10,  'Mounting sovereign vault...'],
+                [25,  'Loading Intel i915 DRM driver...'],
+                [42,  'Initializing VA-API video pipeline...'],
+                [58,  'Binding GRAEI AGI bridge...'],
+                [72,  'Deploying Tesseract 3D environment...'],
+                [88,  'Configuring Cubix OS kernel interface...'],
+                [100, 'Sovereign boot complete.']
+            ];
+            let i = 0;
+            function next() {
+                if (i >= steps.length) {
+                    setTimeout(() => {
+                        splash.classList.add('fade-out');
+                        setTimeout(() => splash.remove(), 900);
+                    }, 400);
+                    return;
+                }
+                const [pct, msg] = steps[i++];
+                bar.style.width = pct + '%';
+                status.textContent = msg;
+                setTimeout(next, pct === 100 ? 600 : 380);
+            }
+            next();
+        })();
+
+        // Utility Button Launchers (Arch Linux)
         document.getElementById('util-battery')?.addEventListener('click', () => {
-            window.open('ms-settings:batterysaver', '_blank');
+            bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0');
         });
         document.getElementById('util-network')?.addEventListener('click', () => {
-            window.open('ms-settings:network-wifi', '_blank');
+            bridgeCmd('nmcli device status');
         });
         document.getElementById('util-bluetooth')?.addEventListener('click', () => {
-            window.open('ms-settings:bluetooth', '_blank');
+            bridgeCmd('bluetoothctl devices');
         });
         document.getElementById('util-taskmgr')?.addEventListener('click', () => {
-            fetch('http://localhost:8081/system/launch', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ app: 'taskmgr' })
-            }).catch(() => { window.open('ms-settings:appsfeatures', '_blank'); });
+            bridgeCmd('top -bn1 | head -20');
         });
 
         // ===== NETWORK MANAGER =====
@@ -959,14 +1130,37 @@
             });
         });
 
+        // ── Linux bridge command helper ──
+        window.bridgeCmd = async function(cmd) {
+            try {
+                const res = await fetch('http://localhost:8081/system/exec', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: cmd })
+                });
+                const data = await res.json();
+                const out = data.output || data.error || '[no output]';
+                const overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99998;display:flex;align-items:center;justify-content:center;';
+                overlay.innerHTML = `<div style="background:#0d1117;border:1px solid rgba(0,242,255,0.4);border-radius:14px;padding:24px 28px;max-width:700px;width:90%;font-family:monospace;font-size:0.82rem;color:#A1C1D1;white-space:pre-wrap;max-height:70vh;overflow-y:auto;">
+                    <div style="color:#00f2ff;font-weight:700;margin-bottom:10px;">$ ${cmd}</div>
+                    <div style="color:#E2E2E2;">${out}</div>
+                    <button onclick="this.closest('div[style]').remove()" style="margin-top:16px;background:rgba(0,242,255,0.15);color:#00f2ff;border:1px solid rgba(0,242,255,0.4);border-radius:8px;padding:6px 18px;cursor:pointer;font-family:inherit;">✕ Close</button>
+                </div>`;
+                document.body.appendChild(overlay);
+            } catch(e) {
+                alert('Bridge offline — start sovereign_bridge.py');
+            }
+        };
+
         // ===== DEVICE MANAGEMENT =====
         const deviceContent = {
             host:      '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💻 EliteBook Host — System Overview</h3>',
-            display:   '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🖥️ Display Output — Monitor Config</h3><p style="color:#8892B0;font-size:0.88rem;">Primary: 1920×1080 @60Hz | GPU: Integrated Intel Iris | HDR: OFF</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="window.open('ms-settings:display','_blank')">Open Display Settings</button>',
-            storage:   '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💾 Storage Array</h3><p style="color:#8892B0;font-size:0.88rem;">C:\ — ~500GB | Used: ~310GB | Free: ~190GB</p><p style="color:#8892B0;font-size:0.88rem;margin-top:8px;">Vault Archives: 496GB | Active ISO Builds: 2</p>',
-            network:   '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">📡 Network Stack</h3><p style="color:#70E100;font-size:0.88rem;">Status: ONLINE</p><p style="color:#8892B0;font-size:0.88rem;margin-top:8px;">Adapter: Wi-Fi | Bridge: localhost:8081</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="window.open('ms-settings:network-wifi','_blank')">Network Settings</button>',
-            bluetooth: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🔵 Bluetooth Bus</h3><p style="color:#8892B0;font-size:0.88rem;">Status: Enabled | Paired devices: scanning...</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="window.open('ms-settings:bluetooth','_blank')">Bluetooth Settings</button>',
-            npu:       '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🧠 NPU Core</h3><p style="color:#00f2ff;font-size:0.88rem;">Sync: 68% — Lujan-Bridge Active</p><p style="color:#8892B0;font-size:0.88rem;margin-top:8px;">Mode: AI Inference | ACPI P-State: LOCK</p>'
+            display:   '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🖥️ Display Output — Monitor Config</h3><p style="color:#8892B0;font-size:0.88rem;">Primary: Intel i915 Iris Xe | Arch Linux DRM</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'xrandr --query\')">Query xrandr</button>',
+            storage:   '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💾 Storage Array</h3><button class="dev-ctrl-btn" style="margin-top:8px;" onclick="bridgeCmd(\'df -h\')">df -h (Disk Usage)</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT\')">lsblk</button>',
+            network:   '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">📡 Network Stack</h3><p style="color:#70E100;font-size:0.88rem;">Status: ONLINE</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'ip addr show\')">ip addr</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'nmcli device status\')">nmcli status</button>',
+            bluetooth: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🔵 Bluetooth Bus</h3><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'bluetoothctl devices\')">List Devices</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'systemctl status bluetooth\')">BT Service</button>',
+            npu:       '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🧠 NPU / Intel GPU Core</h3><p style="color:#00f2ff;font-size:0.88rem;">Sync: 68% — Lujan-Bridge Active</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'vainfo\')">vainfo (VA-API)</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'cat /proc/cpuinfo | grep -m1 name\')">CPU Info</button>'
         };
         window.showDevice = function(type, el) {
             document.querySelectorAll('.dev-item').forEach(i => i.classList.remove('active'));
@@ -981,17 +1175,17 @@
                     <div class="dev-stat-card"><div class="dev-stat-label">STORAGE</div><div class="dev-stat-val">~500 GB</div><div class="dev-stat-bar"><div class="dev-stat-fill" style="width:62%;background:#A1C1D1;"></div></div></div>
                     <div class="dev-stat-card"><div class="dev-stat-label">BATTERY</div><div class="dev-stat-val" id="dev-batt">Polling...</div><div class="dev-stat-bar"><div class="dev-stat-fill" id="dev-batt-bar" style="width:75%;background:#70E100;"></div></div></div>
                 </div>
-                <h4 style="color:#8892B0;margin:0 0 10px 0;font-size:0.82rem;letter-spacing:0.1em;">SYSTEM CONTROLS</h4>
+                <h4 style="color:#8892B0;margin:0 0 10px 0;font-size:0.82rem;letter-spacing:0.1em;">ARCH LINUX CONTROLS</h4>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:display','_blank')">🖥️ Display</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:sound','_blank')">🔊 Sound</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:bluetooth','_blank')">🔵 Bluetooth</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:printers','_blank')">🖨️ Printers</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:mousetouchpad','_blank')">🖱️ Mouse</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:batterysaver','_blank')">🔋 Battery</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:storagesense','_blank')">💾 Storage</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:taskbar','_blank')">📌 Taskbar</button>
-                    <button class="dev-ctrl-btn" onclick="window.open('ms-settings:windowsupdate','_blank')">🔄 Updates</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('xrandr --query')">🖥️ Display</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('amixer')">🔊 Sound</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('bluetoothctl devices')">🔵 Bluetooth</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('lsusb')">🖨️ USB Devices</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('xinput list')">🖱️ Input</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0')">🔋 Battery</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('df -h')">💾 Storage</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('pacman -Syu --noconfirm')">🔄 pacman -Syu</button>
+                    <button class="dev-ctrl-btn" onclick="bridgeCmd('systemctl list-units --type=service --state=running')">⚙️ Services</button>
                 </div>`;
                 pollDeviceStats();
             } else {
