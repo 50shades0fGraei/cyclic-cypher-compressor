@@ -242,6 +242,15 @@ export function initCubixEnvironment() {
         envCube.style.transform = `rotateY(${-(targetRotationYInner * (180 / Math.PI))}deg)`;
         outerCube.style.transform = `rotateY(${-(targetRotationYOuter * (180 / Math.PI))}deg)`;
         
+        // Ensure world has correct matrix class
+        if (currentZLevel === Z_LEVELS.inner) {
+            world.classList.add('matrix-inner-active');
+            world.classList.remove('matrix-outer-active');
+        } else {
+            world.classList.add('matrix-outer-active');
+            world.classList.remove('matrix-inner-active');
+        }
+
         // Sync navigator cube to current active layer
         const targetNavY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
         cube.rotation.y = targetNavY;
@@ -250,6 +259,9 @@ export function initCubixEnvironment() {
         targetRotationX = 0;
         cube.rotation.x = 0;
     }
+    
+    // Set initial state
+    applyMatrixState();
 
     document.getElementById('ruby-c')?.addEventListener('click', () => {
         if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = 0; else targetRotationYOuter = 0;
@@ -268,7 +280,24 @@ export function initCubixEnvironment() {
         applyMatrixState();
     });
     document.getElementById('ruby-x')?.addEventListener('click', () => {
+        const rubyX = document.getElementById('ruby-x');
+        
+        // Toggle the layer
         currentZLevel = (currentZLevel === Z_LEVELS.inner) ? Z_LEVELS.outer : Z_LEVELS.inner;
+        
+        // Update Ruby X active state
+        if (currentZLevel === Z_LEVELS.outer) {
+            rubyX.classList.add('active');
+            world.classList.add('matrix-outer-active');
+            world.classList.remove('matrix-inner-active');
+            console.log("[MATRIX] Switching to MACRO (Outer) Environment");
+        } else {
+            rubyX.classList.remove('active');
+            world.classList.add('matrix-inner-active');
+            world.classList.remove('matrix-outer-active');
+            console.log("[MATRIX] Switching to MICRO (Inner) Environment");
+        }
+        
         applyMatrixState();
     });
 
@@ -472,6 +501,151 @@ export function initCubixEnvironment() {
 
     initOmniBridge();
     initVaultBridge();
+
+    // --- INNER APP VIEW SWITCHING ---
+    window.switchInnerView = function(viewId, element) {
+        // Remove active class from all nav items
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        // Add active class to clicked item
+        element.classList.add('active');
+
+        // Hide all views
+        document.querySelectorAll('.inner-view').forEach(view => view.classList.remove('active'));
+        // Show target view
+        const targetView = document.getElementById(`view-${viewId}`);
+        if (targetView) targetView.classList.add('active');
+
+        console.log(`[SOVEREIGN] Switched to view: ${viewId}`);
+    };
+
+    // --- SIDEBAR TOGGLE LOGIC ---
+    window.toggleSidebar = function() {
+        const sidebar = document.getElementById('inner-sidebar');
+        if (sidebar) {
+            sidebar.classList.toggle('collapsed');
+            console.log(`[SOVEREIGN] Sidebar ${sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
+        }
+    };
+
+    // --- OPACITY CYCLING LOGIC ---
+    let currentOpacityLevel = 0;
+    const opacityClasses = ['bg-opaque', 'bg-soft', 'bg-glass', 'bg-clear'];
+    
+    window.cycleOpacity = function() {
+        const container = document.querySelector('.inner-app-container');
+        if (!container) return;
+
+        // Remove old class
+        container.classList.remove(opacityClasses[currentOpacityLevel]);
+        
+        // Cycle level
+        currentOpacityLevel = (currentOpacityLevel + 1) % opacityClasses.length;
+        
+        // Add new class
+        container.classList.add(opacityClasses[currentOpacityLevel]);
+        
+        // Update Ruby O active state
+        const rubyO = document.getElementById('ruby-o');
+        if (rubyO) {
+            if (currentOpacityLevel > 0) rubyO.classList.add('active');
+            else rubyO.classList.remove('active');
+        }
+
+        console.log(`[SOVEREIGN] Visibility Mode: ${opacityClasses[currentOpacityLevel]}`);
+    };
+
+    // --- SIDEBAR OPACITY CONTROL ---
+    window.setOpacity = function(level) {
+        const container = document.querySelector('.inner-app-container');
+        if (!container) return;
+
+        // Update levels
+        container.classList.remove(...opacityClasses);
+        container.classList.add(opacityClasses[level]);
+        currentOpacityLevel = level;
+
+        // Update UI pills
+        document.querySelectorAll('.pill').forEach((pill, idx) => {
+            if (idx === level) pill.classList.add('active');
+            else pill.classList.remove('active');
+        });
+
+        // Update Ruby O state
+        const rubyO = document.getElementById('ruby-o');
+        if (rubyO) {
+            if (level > 0) rubyO.classList.add('active');
+            else rubyO.classList.remove('active');
+        }
+
+        console.log(`[SOVEREIGN] Visibility Mode set to: ${opacityClasses[level]}`);
+    };
+
+    // --- SIDEBAR AI CHAT LOGIC ---
+    window.sendSidebarChat = function() {
+        const input = document.getElementById('sidebar-ai-input');
+        const feed = document.getElementById('sidebar-chat-feed');
+        if (!input || !feed || !input.value.trim()) return;
+
+        const userMsg = input.value.trim();
+        
+        // Add User Message
+        const userDiv = document.createElement('div');
+        userDiv.className = 'mini-msg msg-user';
+        userDiv.textContent = userMsg;
+        feed.appendChild(userDiv);
+        
+        // Clear input
+        input.value = '';
+        feed.scrollTop = feed.scrollHeight;
+
+        // Simulated AI Response (In production, this would hit the Bridge)
+        setTimeout(() => {
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'mini-msg msg-ai';
+            aiDiv.textContent = "Processing sovereign request... Command acknowledged.";
+            feed.appendChild(aiDiv);
+            feed.scrollTop = feed.scrollHeight;
+        }, 1000);
+    };
+
+    // Add Enter listener for chat
+    document.getElementById('sidebar-ai-input')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendSidebarChat();
+    });
+
+    // --- IN-PAGE APP DOCKING ---
+    window.dockApp = function(appName, icon) {
+        const portal = document.getElementById('library-portal');
+        if (!portal) return;
+
+        portal.innerHTML = `
+            <div style="width:100%; height:100%; display:flex; flex-direction:column;">
+                <div style="background:rgba(255,255,255,0.05); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-weight:800; font-size:0.8rem; color:#00f2ff;">${icon} ${appName.toUpperCase()}</div>
+                    <button onclick="closeDock()" style="background:none; border:none; color:#8892B0; cursor:pointer; font-weight:900;">✕</button>
+                </div>
+                <div style="flex:1; padding:20px; color:#E2E2E2; overflow-y:auto;">
+                    <h3>Sovereign Application Portal</h3>
+                    <p>Executing ${appName} in protected memory space...</p>
+                    <div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.3); border-radius:10px; border-left:4px solid #70E100;">
+                        <div style="font-family:monospace; font-size:0.85rem; color:#70E100;">
+                            > Initializing bridge connection...<br>
+                            > Validating CyberDNA handshake...<br>
+                            > Application ${appName} is now ACTIVE.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        console.log(`[SOVEREIGN] Docked app: ${appName}`);
+    };
+
+    window.closeDock = function() {
+        const portal = document.getElementById('library-portal');
+        if (portal) {
+            portal.innerHTML = '<div class="portal-placeholder">SELECT A FUNCTION TO DOCK INTO THIS VIEW</div>';
+        }
+    };
 
     console.log("[CUBIX TESSERACT] Multi-Layer Tesseract + Sovereign Bridge Initialized.");
 }

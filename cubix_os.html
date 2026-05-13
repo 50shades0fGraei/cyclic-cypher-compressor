@@ -624,8 +624,9 @@
 
         <!-- Cubix Rubys Quick Navigation -->
         <div class="cubix-ruby-container">
-            <div class="ruby-btn" id="ruby-c" title="Front Wall">C</div>
-            <div class="ruby-btn" id="ruby-u" title="Left Wall">U</div>
+            <div class="ruby-btn" id="ruby-c" title="Center View">C</div>
+            <div class="ruby-btn" id="ruby-o" title="Toggle Background Opacity (Multitasking)" onclick="cycleOpacity()">O</div>
+            <div class="ruby-btn" id="ruby-u" title="GRAEI AGI System">U</div>
             <div class="ruby-btn" id="ruby-b" title="Back Wall">B</div>
             <div class="ruby-btn" id="ruby-i" title="Right Wall">I</div>
             <div class="ruby-btn" id="ruby-x" title="Toggle Macro Matrix (Outer/Inner)">X</div>
@@ -646,18 +647,60 @@
             <div class="outer-cube" id="outer-cube">
                 <!-- Outer Face Right: Social / Entertainment -->
                 <div class="outer-face outer-right">
-                    <h1 class="outer-title">SOCIAL / ENTERTAINMENT WALL</h1>
-                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;">
-                        <p>External Media Feeds</p>
+                    <h1 class="outer-title">SOCIAL / ENTERTAINMENT</h1>
+                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.85); width: 85%; height: 80%;">
+                        <div class="social-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px;">
+                            <div class="social-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🐦</div>
+                                <h4>Twitter / X</h4>
+                                <button style="background: #1DA1F2; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; margin-top: 10px;">OPEN</button>
+                            </div>
+                            <div class="social-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🎬</div>
+                                <h4>YouTube</h4>
+                                <button style="background: #FF0000; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; margin-top: 10px;">OPEN</button>
+                            </div>
+                            <div class="social-card" style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">💬</div>
+                                <h4>Discord</h4>
+                                <button style="background: #5865F2; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; margin-top: 10px;">OPEN</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Outer Face Back: External Cloud Storage -->
+                <!-- Outer Face Back: Web Process Sign-on & Report -->
                 <div class="outer-face outer-back">
-                    <h1 class="outer-title">EXTERNAL CLOUD STORAGE</h1>
-                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.7); width: 60%;">
-                        <p>Google Drive / OneDrive Sync</p>
+                    <h1 class="outer-title">WEB SIGN-ON & TRAFFIC REPORT</h1>
+                    <div class="room-panel" style="background: rgba(13, 17, 23, 0.85); width: 85%; height: 80%;">
+                        <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                            <div class="report-section">
+                                <h3 style="color: #00f2ff;">ACTIVE WEB SESSIONS</h3>
+                                <div class="report-list" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                                    <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; border-left: 3px solid #70E100;">
+                                        <div style="font-weight: bold;">Google Authentication</div>
+                                        <div style="font-size: 0.8rem; color: #8892B0;">Active - Token: 0x82f...a1</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; border-left: 3px solid #70E100;">
+                                        <div style="font-weight: bold;">Microsoft Azure</div>
+                                        <div style="font-size: 0.8rem; color: #8892B0;">Active - Token: 0x11e...c9</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="report-section">
+                                <h3 style="color: #A1C1D1;">NETWORK TRAFFIC ANALYSIS</h3>
+                                <div style="height: 200px; background: rgba(0,0,0,0.4); border-radius: 10px; margin-top: 15px; display: flex; align-items: flex-end; padding: 10px; gap: 5px;">
+                                    <div style="flex:1; height: 30%; background: #00f2ff; border-radius: 3px 3px 0 0;"></div>
+                                    <div style="flex:1; height: 75%; background: #70E100; border-radius: 3px 3px 0 0;"></div>
+                                    <div style="flex:1; height: 45%; background: #00f2ff; border-radius: 3px 3px 0 0;"></div>
+                                    <div style="flex:1; height: 90%; background: #70E100; border-radius: 3px 3px 0 0;"></div>
+                                    <div style="flex:1; height: 60%; background: #00f2ff; border-radius: 3px 3px 0 0;"></div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: #8892B0; text-align: center; margin-top: 10px;">Outbound Traffic: 1.2 GB | Inbound Traffic: 4.8 GB</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <!-- Outer Face Left: Network Manager -->
                 <div class="outer-face outer-left"
                     style="display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:40px;">
@@ -758,205 +801,441 @@
                 </div>
             </div>
 
-                        <!-- INNER GRAEI CUBE (Micro Environments) -->
+            <!-- INNER SOVEREIGN CUBE (Unified System Environment) -->
             <div class="environment-cube" id="environment-cube">
+                <!-- ALL Inner functionality consolidated into a single unified workspace on the primary face -->
+                <div class="face face-front sovereign-inner-app" style="pointer-events:auto;">
+                    <div class="inner-app-container bg-opaque">
+                        <!-- Sidebar Navigation -->
+                        <aside class="inner-sidebar" id="inner-sidebar">
+                            <div class="sidebar-header">
+                                <div class="inner-logo" onclick="toggleSidebar()">⊞</div>
+                                <div class="inner-logo-text">SOVEREIGN</div>
+                                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">◀</button>
+                            </div>
+                            <nav class="inner-nav">
+                                <div class="nav-item active" onclick="switchInnerView('dashboard', this)">
+                                    <span class="nav-icon">📊</span> Dashboard
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('library', this)">
+                                    <span class="nav-icon">📚</span> Function Library
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('files', this)">
+                                    <span class="nav-icon">🗄️</span> File Explorer
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('devices', this)">
+                                    <span class="nav-icon">🖥️</span> Device Mgmt
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('bios', this)">
+                                    <span class="nav-icon">🛡️</span> System BIOS
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('msbridge', this)">
+                                    <span class="nav-icon">🪟</span> MS Bridge
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('manifesto', this)">
+                                    <span class="nav-icon">📜</span> Manifesto
+                                </div>
+                                <div class="nav-item" onclick="switchInnerView('agi', this)">
+                                    <span class="nav-icon">🤖</span> GRAEI AGI
+                                </div>
+                            </nav>
 
-                <!-- FACE 0: DASHBOARD -->
-                <div class="face face-front" style="background-image:url('lujan_wallpaper.png');background-size:cover;background-position:center;border:2px solid rgba(161,193,209,0.4);pointer-events:auto;">
-                    <div style="background:rgba(13,17,23,0.65);width:100%;height:100%;position:absolute;top:0;left:0;pointer-events:none;"></div>
-                    <h1 class="room-title" style="position:relative;z-index:2;">LUJAN TESSERACT</h1>
-                    <div class="room-panel" style="position:relative;z-index:2;backdrop-filter:blur(10px);background:rgba(13,17,23,0.8);height:auto;max-width:680px;width:90%;">
-                        <h3 style="color:#A1C1D1;margin:0 0 6px 0;">SOVEREIGN HOST ACTIVE</h3>
-                        <p style="margin:4px 0;font-size:0.88rem;color:#8892B0;">Build: v1.2.2-PATENT-TRACK</p>
-                        <div style="margin-top:16px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                            <div style="background:rgba(112,225,0,0.08);border:1px solid rgba(112,225,0,0.25);border-radius:10px;padding:12px;">
-                                <div style="font-size:0.72rem;color:#8892B0;margin-bottom:4px;">DEDUCTIVE INTEGRITY</div>
-                                <div style="font-size:1.5rem;font-weight:800;color:#70E100;">0.98</div>
-                                <div style="font-size:0.72rem;color:#70E100;">OPTIMAL</div>
-                            </div>
-                            <div style="background:rgba(0,242,255,0.08);border:1px solid rgba(0,242,255,0.25);border-radius:10px;padding:12px;">
-                                <div style="font-size:0.72rem;color:#8892B0;margin-bottom:4px;">NPU SYNC</div>
-                                <div style="font-size:1.5rem;font-weight:800;color:#00f2ff;">68%</div>
-                                <div style="font-size:0.72rem;color:#00f2ff;">LUJAN-BRIDGE ACTIVE</div>
-                            </div>
-                            <div style="background:rgba(161,193,209,0.08);border:1px solid rgba(161,193,209,0.25);border-radius:10px;padding:12px;">
-                                <div style="font-size:0.72rem;color:#8892B0;margin-bottom:4px;">ENERGY PROFILE</div>
-                                <div style="font-size:1rem;font-weight:700;color:#A1C1D1;">P-STATE LOCK</div>
-                                <div style="font-size:0.72rem;color:#8892B0;">MAX SAVINGS</div>
-                            </div>
-                            <div style="background:rgba(255,75,43,0.08);border:1px solid rgba(255,75,43,0.25);border-radius:10px;padding:12px;">
-                                <div style="font-size:0.72rem;color:#8892B0;margin-bottom:4px;">VAULT STATUS</div>
-                                <div style="font-size:1rem;font-weight:700;color:#FF4B2B;">ENCRYPTED</div>
-                                <div style="font-size:0.72rem;color:#8892B0;">GAPCI ENFORCED</div>
-                            </div>
-                        </div>
-                        <div style="margin-top:14px;display:flex;gap:10px;">
-                            <button onclick="document.getElementById('ruby-u').click()" style="flex:1;background:linear-gradient(135deg,#00f2ff,#005eff);color:#0d1117;border:none;padding:10px;border-radius:10px;font-weight:800;cursor:pointer;font-size:0.82rem;">🤖 AGI SYSTEM</button>
-                            <button onclick="document.getElementById('ruby-b').click()" style="flex:1;background:linear-gradient(135deg,#70E100,#3d8a00);color:#fff;border:none;padding:10px;border-radius:10px;font-weight:800;cursor:pointer;font-size:0.82rem;">📦 APP STORE</button>
-                            <button onclick="document.getElementById('ruby-i').click()" style="flex:1;background:linear-gradient(135deg,#A1C1D1,#5a7a8a);color:#0d1117;border:none;padding:10px;border-radius:10px;font-weight:800;cursor:pointer;font-size:0.82rem;">🖥️ DEVICES</button>
-                        </div>
-                    </div>
-                    <div class="env-taskbar" id="taskbar-front">
-                        <span class="env-taskbar-label">⊞ LUJAN TESSERACT</span>
-                        <div class="env-taskbar-windows" id="windows-front"></div>
-                    </div>
-                </div>
-
-                <!-- FACE 1: INTERACTIVE AGI SYSTEM -->
-                <div class="face face-right" style="pointer-events:auto;">
-                    <h1 class="room-title" style="font-size:2.2rem;">🤖 GRAEI AGI SYSTEM</h1>
-                    <div class="room-panel" style="width:93%;height:82%;padding:0;overflow:hidden;display:flex;flex-direction:row;gap:0;">
-                        <div style="width:210px;background:rgba(0,0,0,0.45);border-right:1px solid rgba(0,242,255,0.2);padding:14px;display:flex;flex-direction:column;gap:7px;flex-shrink:0;">
-                            <div style="font-size:0.7rem;color:#8892B0;letter-spacing:0.1em;margin-bottom:4px;">ACTIVE MODE</div>
-                            <div id="agi-mode-sovereign" class="agi-mode-btn agi-mode-active" onclick="setAgiMode('sovereign',this)">🔵 Sovereign Assistant</div>
-                            <div id="agi-mode-security" class="agi-mode-btn" onclick="setAgiMode('security',this)">🛡️ Cyber Sentinel</div>
-                            <div id="agi-mode-code" class="agi-mode-btn" onclick="setAgiMode('code',this)">⚙️ Code Architect</div>
-                            <div id="agi-mode-research" class="agi-mode-btn" onclick="setAgiMode('research',this)">📚 Research Librarian</div>
-                            <div id="agi-mode-creative" class="agi-mode-btn" onclick="setAgiMode('creative',this)">🎨 Creative Forge</div>
-                            <div style="margin-top:auto;border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;">
-                                <div style="font-size:0.7rem;color:#8892B0;margin-bottom:5px;">INTEGRITY LOCK</div>
-                                <div style="font-size:1.1rem;font-weight:800;color:#70E100;">0.98 ✓</div>
-                                <div style="display:flex;align-items:center;gap:6px;margin-top:8px;">
-                                    <div style="width:8px;height:8px;border-radius:50%;background:#70E100;box-shadow:0 0 6px #70E100;animation:pulse 2s infinite;"></div>
-                                    <span style="font-size:0.75rem;color:#70E100;">GRAEI ONLINE</span>
+                            <!-- Sidebar Multitasking Controls -->
+                            <div class="sidebar-controls">
+                                <label>VISIBILITY MODE</label>
+                                <div class="opacity-pills">
+                                    <div class="pill active" onclick="setOpacity(0)" title="Opaque">O</div>
+                                    <div class="pill" onclick="setOpacity(1)" title="Soft">S</div>
+                                    <div class="pill" onclick="setOpacity(2)" title="Glass">G</div>
+                                    <div class="pill" onclick="setOpacity(3)" title="Clear">C</div>
                                 </div>
                             </div>
-                        </div>
-                        <div style="flex:1;display:flex;flex-direction:column;">
-                            <div style="padding:9px 16px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(0,242,255,0.15);font-size:0.78rem;color:#00f2ff;font-weight:700;" id="agi-mode-label">MODE: SOVEREIGN ASSISTANT — Directives: Sovereign_Stewardship, Grey_Directive</div>
-                            <div id="agi-chat-feed" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;font-size:0.86rem;">
-                                <div class="chat-msg msg-ai">GRAEI AGI Online. Sovereign Assistant mode active. How can I assist you, Architect Randall?</div>
-                            </div>
-                            <div style="padding:10px 14px;background:rgba(0,0,0,0.4);border-top:1px solid rgba(255,255,255,0.07);display:flex;gap:10px;">
-                                <input type="text" id="agi-input" placeholder="Query GRAEI AGI..." style="flex:1;background:#0d1117;border:1px solid rgba(0,242,255,0.3);color:#E2E2E2;border-radius:10px;padding:9px 14px;font-family:inherit;font-size:0.86rem;outline:none;">
-                                <button id="agi-send" style="background:linear-gradient(135deg,#00f2ff,#005eff);color:#0d1117;border:none;padding:9px 20px;border-radius:10px;cursor:pointer;font-weight:800;font-size:0.84rem;">SEND</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="env-taskbar" id="taskbar-right">
-                        <span class="env-taskbar-label">🤖 GRAEI AGI SYSTEM</span>
-                        <div class="env-taskbar-windows" id="windows-right"></div>
-                    </div>
-                </div>
 
-                <!-- FACE 2: APPLICATION STORE -->
-                <div class="face face-back" style="pointer-events:auto;">
-                    <div class="spiral-visualizer-container" id="forge-spiral"></div>
-                    <h1 class="room-title" style="font-size:2.2rem;position:relative;z-index:2;">📦 SOVEREIGN APP STORE</h1>
-                    <div class="room-panel" style="width:93%;height:82%;position:relative;z-index:2;padding:0;overflow:hidden;display:flex;flex-direction:column;">
-                        <div style="padding:10px 16px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(112,225,0,0.2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                            <input type="text" id="store-search" placeholder="Search apps..." style="width:200px;background:#0d1117;border:1px solid rgba(255,255,255,0.1);color:#E2E2E2;border-radius:20px;padding:7px 14px;font-family:inherit;outline:none;font-size:0.85rem;">
-                            <span class="store-cat-btn active" onclick="filterStore('all',this)">All</span>
-                            <span class="store-cat-btn" onclick="filterStore('security',this)">🛡️ Security</span>
-                            <span class="store-cat-btn" onclick="filterStore('productivity',this)">⚡ Productivity</span>
-                            <span class="store-cat-btn" onclick="filterStore('media',this)">🎬 Media</span>
-                            <span class="store-cat-btn" onclick="filterStore('vault',this)">🗄️ Vault</span>
-                        </div>
-                        <div id="app-store-grid" style="flex:1;overflow-y:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;align-content:start;">
-                            <div class="store-app-card" data-cat="productivity"><div class="store-app-icon">🧬</div><div class="store-app-name">Agent DNA Builder</div><div class="store-app-desc">Role-based AI agent workflow creator</div><button class="store-install-btn installed" onclick="window.open('agent_dna_builder.html','dnaBuilder','width=1300,height=820')">&#9654; Open</button></div><div class="store-app-card" data-cat="security"><div class="store-app-icon">🔒</div><div class="store-app-name">Dark Encryptor</div><div class="store-app-desc">Ephemeral cypher messaging</div><button class="store-install-btn installed">✓ Installed</button></div>
-                            <div class="store-app-card" data-cat="vault"><div class="store-app-icon">🗄️</div><div class="store-app-name">Lujan Vault</div><div class="store-app-desc">Sovereign deductive archive</div><button class="store-install-btn installed">✓ Installed</button></div>
-                            <div class="store-app-card" data-cat="security"><div class="store-app-icon">🛡️</div><div class="store-app-name">GAPCI Sentinel</div><div class="store-app-desc">Security protocol enforcer</div><button class="store-install-btn installed">✓ Installed</button></div>
-                            <div class="store-app-card" data-cat="productivity"><div class="store-app-icon">🧠</div><div class="store-app-name">GRAEI Reflector</div><div class="store-app-desc">AGI mirror stack interface</div><button class="store-install-btn" onclick="installApp(this,'GRAEI Reflector')">Install</button></div>
-                            <div class="store-app-card" data-cat="productivity"><div class="store-app-icon">⚙️</div><div class="store-app-name">CI/CD Pipeline</div><div class="store-app-desc">Sovereign build automation</div><button class="store-install-btn" onclick="installApp(this,'CI/CD Pipeline')">Install</button></div>
-                            <div class="store-app-card" data-cat="media"><div class="store-app-icon">📡</div><div class="store-app-name">Cypher Stream</div><div class="store-app-desc">Encrypted broadcast studio</div><button class="store-install-btn" onclick="installApp(this,'Cypher Stream')">Install</button></div>
-                            <div class="store-app-card" data-cat="vault"><div class="store-app-icon">📊</div><div class="store-app-name">Audit Librarian</div><div class="store-app-desc">Data analytics auditor</div><button class="store-install-btn" onclick="installApp(this,'Audit Librarian')">Install</button></div>
-                            <div class="store-app-card" data-cat="media"><div class="store-app-icon">🎬</div><div class="store-app-name">Media Forge</div><div class="store-app-desc">Sovereign content creator</div><button class="store-install-btn" onclick="installApp(this,'Media Forge')">Install</button></div>
-                            <div class="store-app-card" data-cat="security"><div class="store-app-icon">🔐</div><div class="store-app-name">NPU Trust Layer</div><div class="store-app-desc">Hardware trust verification</div><button class="store-install-btn" onclick="installApp(this,'NPU Trust Layer')">Install</button></div>
-                            <div class="store-app-card" data-cat="productivity"><div class="store-app-icon">🌐</div><div class="store-app-name">Sovereign Browser</div><div class="store-app-desc">Privacy-first web engine</div><button class="store-install-btn installed">✓ Installed</button></div>
-                        </div>
-                    </div>
-                    <div class="env-taskbar" id="taskbar-back">
-                        <span class="env-taskbar-label">📦 APP STORE</span>
-                        <div class="env-taskbar-windows" id="windows-back"></div>
-                    </div>
-                </div>
-
-                <!-- FACE 3: DEVICE MANAGEMENT -->
-                <div class="face face-left" style="pointer-events:auto;">
-                    <h1 class="room-title" style="font-size:2.2rem;">🖥️ DEVICE MANAGEMENT</h1>
-                    <div class="room-panel" style="width:93%;height:82%;padding:0;overflow:hidden;display:flex;flex-direction:row;gap:0;">
-                        <div style="width:190px;background:rgba(0,0,0,0.45);border-right:1px solid rgba(161,193,209,0.2);padding:14px;display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
-                            <div style="font-size:0.7rem;color:#8892B0;letter-spacing:0.1em;margin-bottom:6px;">CONNECTED DEVICES</div>
-                            <div class="dev-item active" onclick="showDevice('host',this)">💻 EliteBook Host</div>
-                            <div class="dev-item" onclick="showDevice('display',this)">🖥️ Display Output</div>
-                            <div class="dev-item" onclick="showDevice('storage',this)">💾 Storage Array</div>
-                            <div class="dev-item" onclick="showDevice('network',this)">📡 Network Stack</div>
-                            <div class="dev-item" onclick="showDevice('bluetooth',this)">🔵 Bluetooth Bus</div>
-                            <div class="dev-item" onclick="showDevice('npu',this)">🧠 NPU Core</div>
-                        </div>
-                        <div style="flex:1;padding:18px;overflow-y:auto;" id="device-detail-panel">
-                            <h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💻 EliteBook Host — System Overview</h3>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
-                                <div class="dev-stat-card"><div class="dev-stat-label">CPU USAGE</div><div class="dev-stat-val" id="dev-cpu">Polling...</div><div class="dev-stat-bar"><div class="dev-stat-fill" id="dev-cpu-bar" style="width:42%;background:#00f2ff;"></div></div></div>
-                                <div class="dev-stat-card"><div class="dev-stat-label">MEMORY</div><div class="dev-stat-val" id="dev-mem">Polling...</div><div class="dev-stat-bar"><div class="dev-stat-fill" id="dev-mem-bar" style="width:61%;background:#70E100;"></div></div></div>
-                                <div class="dev-stat-card"><div class="dev-stat-label">STORAGE</div><div class="dev-stat-val" id="dev-storage">~500 GB</div><div class="dev-stat-bar"><div class="dev-stat-fill" style="width:62%;background:#A1C1D1;"></div></div></div>
-                                <div class="dev-stat-card"><div class="dev-stat-label">BATTERY</div><div class="dev-stat-val" id="dev-batt">Polling...</div><div class="dev-stat-bar"><div class="dev-stat-fill" id="dev-batt-bar" style="width:75%;background:#70E100;"></div></div></div>
+                            <!-- Permanent Sidebar AI Chat -->
+                            <div class="sidebar-ai-chat">
+                                <div class="ai-chat-header">
+                                    <span>GRAEI ASSISTANT</span>
+                                    <div class="status-dot"></div>
+                                </div>
+                                <div class="ai-chat-mini-feed" id="sidebar-chat-feed">
+                                    <div class="mini-msg msg-ai">Ready for interaction.</div>
+                                </div>
+                                <div class="ai-chat-input">
+                                    <input type="text" placeholder="Ask GRAEI..." id="sidebar-ai-input">
+                                    <button onclick="sendSidebarChat()">→</button>
+                                </div>
                             </div>
-                            <h4 style="color:#8892B0;margin:0 0 10px 0;font-size:0.82rem;letter-spacing:0.1em;">SYSTEM CONTROLS</h4>
-                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('xrandr --auto')">🖥️ Display</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('alsamixer')">🔊 Sound</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('bluetoothctl show')">🔵 Bluetooth</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('lpstat -p')">🖨️ Printers</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('xinput list')">🖱️ Input</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0')">🔋 Battery</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('df -h /')">💾 Storage</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('pacman -Syu --noconfirm')">🔄 pacman -Syu</button>
-                                <button class="dev-ctrl-btn" onclick="bridgeCmd('systemctl list-units --type=service --state=running')">⚙️ Services</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="env-taskbar" id="taskbar-left">
-                        <span class="env-taskbar-label">🖥️ DEVICE MANAGEMENT</span>
-                        <div class="env-taskbar-windows" id="windows-left"></div>
-                    </div>
-                </div>
 
+                            <div class="sidebar-footer">
+                                <div class="system-integrity">
+                                    <div class="integrity-dot"></div>
+                                    <span>INTEGRITY: 0.98</span>
+                                </div>
+                            </div>
+                        </aside>
+
+                        <!-- Main Content Area -->
+                        <main class="inner-main">
+                            <!-- Dashboard View -->
+                            <section id="view-dashboard" class="inner-view active">
+                                <header class="view-header">
+                                    <h1>SOVEREIGN SYSTEM CORE</h1>
+                                    <p>CyberDNA Coupled Interface | Node: EliteBook-vPro-01</p>
+                                </header>
+                                <div class="dashboard-grid">
+                                    <!-- Space Efficiency Card -->
+                                    <div class="stat-card">
+                                        <label>SPACE OPTIMIZATION (COMPRESSION)</label>
+                                        <div class="stat-value text-green">90.4%</div>
+                                        <div class="stat-sub">980GB RAW -> 94GB SOVEREIGN</div>
+                                    </div>
+                                    <!-- Power Efficiency Card -->
+                                    <div class="stat-card">
+                                        <label>POWER EFFICIENCY PROFILE</label>
+                                        <div class="stat-value text-cyan">OPTIMAL</div>
+                                        <div class="stat-sub">3.2W IDLE | P-STATE LOCK ACTIVE</div>
+                                    </div>
+                                    <!-- CyberDNA Coupling Card -->
+                                    <div class="stat-card">
+                                        <label>CYBER-DNA SYNC (AGI COUPLING)</label>
+                                        <div class="stat-value text-blue">98.2%</div>
+                                        <div class="stat-sub">GRAEI ASSISTANT ACTIVE</div>
+                                    </div>
+                                    <!-- Energy Integrity Card -->
+                                    <div class="stat-card">
+                                        <label>ENERGY INTEGRITY</label>
+                                        <div class="stat-value text-red">SECURE</div>
+                                        <div class="stat-sub">THERMAL THROTTLE: 0%</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- CyberDNA Coupling Visual -->
+                                <div class="cyberdna-coupling">
+                                    <div class="dna-visualizer">
+                                        <div class="dna-strand dna-system"></div>
+                                        <div class="dna-sync-bridge">SYNCING</div>
+                                        <div class="dna-strand dna-agi"></div>
+                                    </div>
+                                    <div class="coupling-log">
+                                        <h3>COUPLING EVENT LOG</h3>
+                                        <div class="event-item"><span>[SYNC]</span> Space metrics mapped to CyberDNA Sequence.</div>
+                                        <div class="event-item"><span>[PWR]</span> Power profile coupled with AGI energy directives.</div>
+                                        <div class="event-item"><span>[DNA]</span> CyberDNA Integrity Handshake: SUCCESS.</div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Function Library View -->
+                            <section id="view-library" class="inner-view">
+                                <header class="view-header">
+                                    <h1>FUNCTION LIBRARY</h1>
+                                    <p>Centralized Sovereign Utility DNA</p>
+                                </header>
+                                <div class="library-layout">
+                                    <div class="library-main">
+                                        <div class="library-search">
+                                            <input type="text" placeholder="Search functions (DNA, Encryption, Decompression)...">
+                                        </div>
+                                        <div class="function-grid">
+                                            <div class="function-card" onclick="dockApp('CyberDNA Mapper', '🧬')">
+                                                <div class="func-icon">🧬</div>
+                                                <div class="func-info">
+                                                    <h4>CyberDNA Mapper</h4>
+                                                    <p>Core recursive mapping logic</p>
+                                                </div>
+                                                <button class="func-btn">DOCK</button>
+                                            </div>
+                                            <div class="function-card" onclick="dockApp('Dark Encryptor', '🔒')">
+                                                <div class="func-icon">🔒</div>
+                                                <div class="func-info">
+                                                    <h4>Dark Encryptor</h4>
+                                                    <p>Ephemeral cypher generator</p>
+                                                </div>
+                                                <button class="func-btn">DOCK</button>
+                                            </div>
+                                            <div class="function-card" onclick="dockApp('Crunch Layer v2', '📦')">
+                                                <div class="func-icon">📦</div>
+                                                <div class="func-info">
+                                                    <h4>Crunch Layer v2</h4>
+                                                    <p>Recursive data compression</p>
+                                                </div>
+                                                <button class="func-btn">DOCK</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- In-Page App Portal -->
+                                    <div class="app-portal" id="library-portal">
+                                        <div class="portal-placeholder">SELECT A FUNCTION TO DOCK INTO THIS VIEW</div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- File Explorer & Storage View (Codemap Integrated) -->
+                            <section id="view-files" class="inner-view">
+                                <header class="view-header">
+                                    <h1>CODEMAP STORAGE & RECREATOR</h1>
+                                    <p>Sovereign Indexing | Space-Power Optimized Archive</p>
+                                </header>
+                                <div class="storage-layout">
+                                    <div class="storage-main">
+                                        <div class="explorer-toolbar">
+                                            <button>INDEX NEW DATA</button>
+                                            <button>RECREATE ALL</button>
+                                            <div style="flex:1"></div>
+                                            <span class="text-green">DENSITY: 124x</span>
+                                        </div>
+                                        <div class="file-grid">
+                                            <div class="file-item codemap-indexed">
+                                                <div class="file-icon">🧬</div>
+                                                <div class="file-name">CyberDNA_Project.cmap</div>
+                                                <div class="file-meta">94% Compressed</div>
+                                            </div>
+                                            <div class="file-item codemap-indexed">
+                                                <div class="file-icon">🧬</div>
+                                                <div class="file-name">Lujan_OS_Core.cmap</div>
+                                                <div class="file-meta">91% Compressed</div>
+                                            </div>
+                                            <div class="file-item">
+                                                <div class="file-icon">📁</div>
+                                                <div class="file-name">Raw_Buffer</div>
+                                                <div class="file-meta">Unindexed</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Codemap Indexer / Recreator Portal -->
+                                    <div class="codemap-portal">
+                                        <div class="portal-header">CODEMAP RECREATION ENGINE</div>
+                                        <div class="recreator-visualizer">
+                                            <div class="recreator-beam"></div>
+                                            <div class="data-particles"></div>
+                                            <div class="recreation-status">RECREATING: CyberDNA_Project...</div>
+                                        </div>
+                                        <div class="efficiency-metrics">
+                                            <div class="metric">
+                                                <label>RECREATION ENERGY</label>
+                                                <span>0.42 mJ / bit</span>
+                                            </div>
+                                            <div class="metric">
+                                                <label>STORAGE RECOVERY</label>
+                                                <span>100.0% (LOSSLESS)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Device Management View -->
+                            <section id="view-devices" class="inner-view">
+                                <header class="view-header">
+                                    <h1>DEVICE MANAGEMENT</h1>
+                                    <p>EliteBook Host & Connected Peripherals</p>
+                                </header>
+                                <div class="device-container">
+                                    <div class="device-stats">
+                                        <div class="dev-stat-item">
+                                            <label>CPU USAGE</label>
+                                            <div class="dev-bar"><div class="dev-fill" style="width:42%; background: #00f2ff;"></div></div>
+                                            <span>42% (vPro i5)</span>
+                                        </div>
+                                        <div class="dev-stat-item">
+                                            <label>MEMORY (RAM)</label>
+                                            <div class="dev-bar"><div class="dev-fill" style="width:61%; background: #70E100;"></div></div>
+                                            <span>61% (16GB)</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-controls">
+                                        <button onclick="bridgeCmd('xrandr --auto')">Display Config</button>
+                                        <button onclick="bridgeCmd('alsamixer')">Audio Mixer</button>
+                                        <button onclick="bridgeCmd('bluetoothctl')">Bluetooth Bus</button>
+                                        <button onclick="bridgeCmd('upower')">Power Mgmt</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- GRAEI AGI View -->
+                            <section id="view-agi" class="inner-view">
+                                <header class="view-header">
+                                    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                                        <div>
+                                            <h1>GRAEI AGI CONSOLE</h1>
+                                            <p>Directed by Randall Lujan | AGE-I Method</p>
+                                        </div>
+                                        <div class="age-i-badge">AGE-I COMPLIANT</div>
+                                    </div>
+                                </header>
+                                <div class="agi-layout">
+                                    <div class="agi-chat-main">
+                                        <div class="agi-chat-window">
+                                            <div class="chat-msg msg-ai">GRAEI AGI Online. Sovereign Assistant mode active. How can I assist you, Architect Randall?</div>
+                                        </div>
+                                        <div class="agi-input-bar">
+                                            <input type="text" placeholder="Query GRAEI AGI...">
+                                            <button>SEND</button>
+                                        </div>
+                                    </div>
+                                    <!-- Embedded Terminal / Code Portal -->
+                                    <div class="agi-terminal-dock">
+                                        <div class="terminal-header">GRAEI_SOVEREIGN_TERMINAL</div>
+                                        <div class="terminal-body" id="agi-terminal">
+                                            <div class="term-line">[SYSTEM] Terminal Initialized. Awaiting AI command execution...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- System BIOS View -->
+                            <section id="view-bios" class="inner-view">
+                                <header class="view-header">
+                                    <h1>SYSTEM BIOS & FIRMWARE</h1>
+                                    <p>EliteBook Low-Level Hardware Interface (vPro Interface)</p>
+                                </header>
+                                <div class="bios-container">
+                                    <div class="bios-grid">
+                                        <div class="bios-card">
+                                            <label>SECURE BOOT</label>
+                                            <div class="bios-status text-green">ENABLED</div>
+                                            <button class="bios-btn">CONFIGURE</button>
+                                        </div>
+                                        <div class="bios-card">
+                                            <label>VIRTUALIZATION (VT-x)</label>
+                                            <div class="bios-status text-cyan">ACTIVE</div>
+                                            <button class="bios-btn">CONFIGURE</button>
+                                        </div>
+                                        <div class="bios-card">
+                                            <label>NPU ACCELERATION</label>
+                                            <div class="bios-status text-blue">OPTIMIZED</div>
+                                            <button class="bios-btn">TWEAK</button>
+                                        </div>
+                                        <div class="bios-card">
+                                            <label>THERMAL PROFILE</label>
+                                            <div class="bios-status text-red">PERFORMANCE</div>
+                                            <button class="bios-btn">COOL</button>
+                                        </div>
+                                    </div>
+                                    <div class="bios-terminal">
+                                        <div class="terminal-header">BIOS_LOW_LEVEL_SHELL</div>
+                                        <div class="terminal-body">
+                                            <div class="term-line">> Accessing UEFI firmware variables...</div>
+                                            <div class="term-line">> Fetching Intel vPro Management Engine status...</div>
+                                            <div class="term-line text-green">> Hardware Handshake Verified.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Microsoft Bridge Shell View -->
+                            <section id="view-msbridge" class="inner-view">
+                                <header class="view-header">
+                                    <h1>MICROSOFT BRIDGE SHELL</h1>
+                                    <p>Sovereign Interface for Enterprise MS Assets // [AZURE_READY]</p>
+                                </header>
+                                
+                                <div class="ms-environment-layout">
+                                    <!-- Sidebar for MS Utilities -->
+                                    <div class="ms-util-sidebar">
+                                        <div class="ms-nav-card active" onclick="switchMsContext('azure')">
+                                            <div class="ms-ctx-label">CLOUD_INFRA</div>
+                                            <div class="ms-ctx-val">Azure Control Center</div>
+                                        </div>
+                                        <div class="ms-nav-card" onclick="switchMsContext('onedrive')">
+                                            <div class="ms-ctx-label">STORAGE_SYNC</div>
+                                            <div class="ms-ctx-val">OneDrive Sovereign</div>
+                                        </div>
+                                        <div class="ms-nav-card" onclick="switchMsContext('identity')">
+                                            <div class="ms-ctx-label">USER_AUTH</div>
+                                            <div class="ms-ctx-val">Identity / AD Hub</div>
+                                        </div>
+                                        <div class="ms-nav-card" onclick="switchMsContext('wsl')">
+                                            <div class="ms-ctx-label">SYSTEM_SUBSYSTEM</div>
+                                            <div class="ms-ctx-val">WSL Sovereign Shell</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Main MS Context Panel -->
+                                    <div class="ms-context-panel" id="ms-context-viewer">
+                                        <div class="context-card" id="ctx-azure">
+                                            <h3>AZURE MANAGEMENT FABRIC</h3>
+                                            <div class="azure-stats">
+                                                <div class="stat-pill">ACTIVE_NODES: 04</div>
+                                                <div class="stat-pill">REGION: US-CENTRAL-SOV</div>
+                                                <div class="stat-pill">SYNC: 100%</div>
+                                            </div>
+                                            <div class="azure-deployment-grid">
+                                                <button class="ms-btn" onclick="bridgeCmd('az group list')">QUERY_RESOURCE_GROUPS</button>
+                                                <button class="ms-btn" onclick="bridgeCmd('az vm list')">QUERY_INSTANCES</button>
+                                                <button class="ms-btn pro-btn" onclick="window.open('https://portal.azure.com')">OPEN_AZURE_PORTAL</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Sovereign Manifesto View -->
+                            <section id="view-manifesto" class="inner-view">
+                                <header class="view-header">
+                                    <h1>SOVEREIGN MANIFESTO</h1>
+                                    <p>The Foundations of Lujan Tesseract OS | By Randall Lujan</p>
+                                </header>
+                                <div class="manifesto-content">
+                                    <div class="manifesto-card">
+                                        <h3>THE CYBERDNA PRINCIPLE</h3>
+                                        <p>Data is not just storage; it is a biological sequence of intelligence. By mapping every bit to its recursive DNA origin, we achieve 124x density while consuming near-zero energy during idle states.</p>
+                                    </div>
+                                    <div class="manifesto-card">
+                                        <h3>AGE-I: ART-GEN EMOTION-INTEL</h3>
+                                        <p>Intelligence without emotion is just a calculation. AGE-I ensures that GRAEI AGI understands the aesthetic and emotional weight of the data it recreates, leading to the world's first empathic system shell.</p>
+                                    </div>
+                                    <div class="manifesto-card">
+                                        <h3>SPACE-POWER DOMINANCE</h3>
+                                        <p>The Lujan Tesseract is designed to hyper-scale. We don't build apps; we build environments. We don't read data; we RECREATE it. This is the definitive answer to the energy crisis of big-tech cloud computing.</p>
+                                    </div>
+                                    <div class="manifesto-signature">
+                                        <div class="sig-name">RANDALL LUJAN</div>
+                                        <div class="sig-title">ARCHITECT OF THE TESSERACT</div>
+                                    </div>
+                                </div>
+                            </section>
+
+                <!-- Secondary Faces (Mirrors or Auxiliary Data) -->
+                <div class="face face-right" style="background: rgba(13,17,23,0.95); opacity: 0.5;">
+                    <div style="font-size: 2rem; color: rgba(161,193,209,0.2);">SOVEREIGN MIRROR</div>
+                </div>
+                <div class="face face-back" style="background: rgba(13,17,23,0.95); opacity: 0.5;">
+                    <div style="font-size: 2rem; color: rgba(161,193,209,0.2);">SOVEREIGN MIRROR</div>
+                </div>
+                <div class="face face-left" style="background: rgba(13,17,23,0.95); opacity: 0.5;">
+                    <div style="font-size: 2rem; color: rgba(161,193,209,0.2);">SOVEREIGN MIRROR</div>
+                </div>
             </div> <!-- End of environment-cube -->
         </div> <!-- End of world -->
     </div> <!-- End of scene -->
 
-    <!-- GLOBAL TASKBAR (PERSISTENT UI) -->
-    <div class="global-taskbar">
-        <!-- LEFT: App Dock -->
-        <div class="taskbar-apps">
-            <div class="app-icon active" title="LUJAN TESSERACT Dashboard">⊞</div>
-
-        <!-- BOTTOM CENTER: 3D Navigator -->
-        <div id="nav-center-slot" title="Drag or swipe to rotate environment"></div>
-            <div class="app-icon" title="Terminal Access">&gt;_</div>
-            <div class="app-icon" title="Reflective Space">🧠</div>
-            <div class="app-icon" title="Deep Archive Vault">🗄️</div>
-            <div class="app-icon" title="Agent DNA Builder" style="color:#70E100;text-shadow:0 0 10px #70E100;" onclick="window.open('agent_dna_builder.html','dnaBuilder','width=1300,height=820')">&#129516;</div><div class="app-icon" title="Dark Encryptor Messenger" style="color: #00f2ff; text-shadow: 0 0 10px #00f2ff;" onclick="window.open('dark_encryptor_standalone/index.html', 'darkEncryptor', 'width=1000,height=800')">🔒</div>
+    <!-- GLOBAL TASKBAR (SINGLE CONSOLIDATED STRUCTURE) -->
+    <footer class="global-taskbar">
+        <div class="taskbar-left">
+            <div class="app-icon active" onclick="switchInnerView('dashboard')">SYSTEM</div>
+            <div class="app-icon" onclick="switchInnerView('files')">CYCLIC STORAGE</div>
+            <div class="app-icon" onclick="switchInnerView('agi')">GRAEI</div>
+        </div>
+        
+        <div class="taskbar-center">
+            <div id="nav-center-slot" title="Lujan Tesseract Core Navigator"></div>
+            <div class="taskbar-branding">
+                <div class="creator-name">RANDALL LUJAN</div>
+                <div class="expertise-tag">AGE-I // SOVEREIGN ARCHITECT</div>
+            </div>
         </div>
 
-        <!-- RIGHT: System Utilities (Live) -->
-        <div class="taskbar-utilities">
-            <div class="util-item util-btn" id="util-battery" title="Click to open Power Settings"
-                style="cursor:pointer;">
-                <span id="battery-icon">🔋</span>
-                <span id="battery-label">--% (P-State Lock)</span>
-            </div>
-            <div class="util-item util-btn" id="util-network" title="Click to open Network Settings"
-                style="cursor:pointer;">
-                <span id="net-icon">📡</span>
-                <span id="net-label">Checking...</span>
-            </div>
-            <div class="util-item util-btn" id="util-bluetooth" title="Click to open Bluetooth Settings"
-                style="cursor:pointer;">
-                <span>🔵</span>
-                <span id="bt-label">Bluetooth</span>
-            </div>
-            <div class="util-item util-btn" id="util-taskmgr" title="Click to open Task Manager"
-                style="cursor:pointer;">
-                <span>📊</span>
-                <span>Task Mgr</span>
-            </div>
-            <div class="util-item">
-                <span id="sys-time">00:00</span>
+        <div class="taskbar-right">
+            <div class="app-icon" onclick="switchInnerView('msbridge')">BRIDGE</div>
+            <div class="app-icon" onclick="switchInnerView('bios')">FIRMWARE</div>
+            <div class="taskbar-utilities">
+                <div class="util-item" id="util-network" title="Network Stack Status">📡 ONLINE</div>
+                <div class="util-item" id="util-battery" title="P-State Energy Management">🔋 100%</div>
+                <div class="util-item" id="sys-time">00:00</div>
             </div>
         </div>
-    </div>
+    </footer>
 
     <!-- PERSISTENT OMNI-GRAEI CHAT BUBBLE -->
     <div class="floating-omni-ai">
