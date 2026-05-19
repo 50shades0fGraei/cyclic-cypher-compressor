@@ -892,10 +892,28 @@ body, html {
 }
 
 /* Left: Open Applications */
-.taskbar-apps {
+.taskbar-left {
     display: flex;
     gap: 15px;
     align-items: center;
+    flex: 1;
+}
+
+/* Center: Branding and Navigator */
+.taskbar-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+/* Right: Utilities */
+.taskbar-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-end;
     flex: 1;
 }
 
