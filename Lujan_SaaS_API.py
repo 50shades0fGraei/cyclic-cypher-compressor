@@ -1,7 +1,7 @@
 # LUJAN TESSERACT: COMMERCIAL SaaS API (v1.0)
 # This is the marketplace-facing endpoint for Deductive Storage as a Service.
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import os
 import subprocess
 import time
@@ -40,6 +40,14 @@ def add_cors_headers(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
+
+@app.route('/', methods=['GET'])
+def index():
+    return send_from_directory('.', 'index.html')
+
+@app.route('/<path:path>', methods=['GET'])
+def static_proxy(path):
+    return send_from_directory('.', path)
 
 @app.route('/health', methods=['GET'])
 def health():

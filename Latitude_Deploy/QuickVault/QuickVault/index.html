@@ -40,6 +40,10 @@
       </div>
     </div>
     <div class="header-stats">
+      <div class="stat-pill" id="stat-wallet">
+        <span class="stat-num" id="wallet-balance">$0.00</span>
+        <span class="stat-label">Wallet</span>
+      </div>
       <div class="stat-pill" id="stat-files">
         <span class="stat-num" id="total-files">0</span>
         <span class="stat-label">Files</span>
@@ -90,6 +94,22 @@
           <span>Release to Vault</span>
         </div>
       </div>
+      
+      <!-- Sovereign Wallet / Monetization -->
+      <div class="settings-card wallet-card">
+        <h3 class="settings-title">💳 Sovereign Wallet</h3>
+        <div class="wallet-display">
+          <div class="wallet-info">
+            <span class="balance-label">Available Balance</span>
+            <span class="balance-val" id="wallet-val">$1.00</span>
+          </div>
+          <button class="btn-topup" id="btn-topup">Top Up</button>
+        </div>
+        <div class="pricing-info">
+            <span>Rate: $5.00 / GB</span>
+            <span id="cost-estimate">Est. Cost: $0.0000</span>
+        </div>
+      </div>
 
       <!-- Compression Settings -->
       <div class="settings-card">
@@ -117,7 +137,7 @@
       <!-- Vault it button -->
       <button class="btn-vault" id="btn-vault" disabled>
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="9,1 17,5 17,13 9,17 1,13 1,5" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="9" r="3" fill="currentColor"/></svg>
-        Vault Selected Files
+        Vault & Deduct Credits
       </button>
     </section>
 

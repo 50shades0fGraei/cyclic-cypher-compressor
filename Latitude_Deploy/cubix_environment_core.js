@@ -46,10 +46,14 @@ function initSpiralVisualizer() {
 export function initCubixEnvironment() {
     initSpiralVisualizer();
     
-    const navContainer = document.getElementById('bottom-navigator');
+    // --- THREE.JS BOTTOM NAVIGATOR (Bottom-Center Slot) ---
+    const navContainer = document.getElementById('nav-center-slot') || document.getElementById('bottom-navigator');
     const world = document.getElementById('world');
     const envCube = document.getElementById('environment-cube'); // Inner GRAEI
     const outerCube = document.getElementById('outer-cube'); // Outer External
+
+    // CRITICAL: world must pass clicks through to face panels
+    if (world) world.style.pointerEvents = 'none';
 
     // --- SYSTEM TIME UPDATER ---
     const timeNode = document.getElementById('sys-time');
@@ -61,17 +65,12 @@ export function initCubixEnvironment() {
     
     // --- THREE.JS BOTTOM NAVIGATOR ---
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, navContainer.clientWidth / navContainer.clientHeight, 0.1, 1000);
+    const NAV_SIZE = navContainer ? (navContainer.clientWidth || 60) : 60;
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-    // Ensure container has dimensions (logo slot = 48x48)
-    if (navContainer.clientWidth === 0) {
-        navContainer.style.width = '48px';
-        navContainer.style.height = '48px';
-    }
-
-    renderer.setSize(navContainer.clientWidth || 48, navContainer.clientHeight || 48);
-    navContainer.appendChild(renderer.domElement);
+    renderer.setSize(NAV_SIZE, NAV_SIZE);
+    if (navContainer) navContainer.appendChild(renderer.domElement);
 
     const geometry = new THREE.BoxGeometry(2, 2, 2);
 
@@ -130,22 +129,26 @@ export function initCubixEnvironment() {
 
     camera.position.z = 3.5;
 
-    // --- INTERACTION LOGIC (Dual Layer Matrix) ---
+    // --- INTERACTION LOGIC: Mouse + Touch (Swipe = rotate) ---
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
+    let touchStartX = 0;
+    let touchHeld = false;
     
     let targetRotationYInner = 0; 
     let targetRotationYOuter = 0; 
     
-    let currentZLevel = -75; 
-    const Z_LEVELS = {
-        outer: -180,
-        inner: -75
-    };
+    const Z_STAGES = [
+        { id: 'outer', z: -180, isInner: false },
+        { id: 'outer_face', z: -100, isInner: false },
+        { id: 'inner', z: -75, isInner: true },
+        { id: 'inner_face', z: -50, isInner: true }
+    ];
+    let currentStageIndex = 0; // Default to outer
     let targetRotationX = 0;
 
-    // --- DRAG: Rotate only, no zoom ---
-    navContainer.addEventListener('mousedown', (e) => { 
+    // --- MOUSE DRAG ---
+    if (navContainer) navContainer.addEventListener('mousedown', (e) => { 
         isDragging = true; 
         previousMousePosition = { x: e.clientX, y: e.clientY };
         navContainer.style.cursor = 'grabbing';
@@ -156,7 +159,6 @@ export function initCubixEnvironment() {
         if (!isDragging) return;
         const deltaX = e.clientX - previousMousePosition.x;
         const deltaY = e.clientY - previousMousePosition.y;
-        // Only rotate mini-cube visually during drag
         cube.rotation.y += deltaX * 0.01;
         cube.rotation.x += deltaY * 0.005; 
         previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -165,15 +167,11 @@ export function initCubixEnvironment() {
     window.addEventListener('mouseup', (e) => {
         if (!isDragging) return;
         isDragging = false;
-        navContainer.style.cursor = 'grab';
-
-        // Snap Y-axis of the mini-cube to nearest 90 degrees
+        if (navContainer) navContainer.style.cursor = 'grab';
         const snapAngle = Math.PI / 2;
         const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
         targetRotationX = 0;
-
-        // Apply rotation to the active layer only (NO zoom on drag)
-        if (currentZLevel === Z_LEVELS.inner) {
+        if (Z_STAGES[currentStageIndex].isInner) {
             targetRotationYInner = lockedY;
             cube.rotation.y = targetRotationYInner;
         } else {
@@ -182,6 +180,42 @@ export function initCubixEnvironment() {
         }
         applyMatrixState();
     });
+
+    // --- TOUCH: hold & swipe left/right to rotate ---
+    if (navContainer) {
+        navContainer.addEventListener('touchstart', (e) => {
+            touchHeld = true;
+            touchStartX = e.touches[0].clientX;
+            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            e.preventDefault();
+        }, { passive: false });
+
+        navContainer.addEventListener('touchmove', (e) => {
+            if (!touchHeld) return;
+            const deltaX = e.touches[0].clientX - previousMousePosition.x;
+            const deltaY = e.touches[0].clientY - previousMousePosition.y;
+            cube.rotation.y += deltaX * 0.015;
+            cube.rotation.x += deltaY * 0.005;
+            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            e.preventDefault();
+        }, { passive: false });
+
+        navContainer.addEventListener('touchend', (e) => {
+            if (!touchHeld) return;
+            touchHeld = false;
+            // Snap to nearest 90-degree face
+            const snapAngle = Math.PI / 2;
+            const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
+            targetRotationX = 0;
+            if (Z_STAGES[currentStageIndex].isInner) {
+                targetRotationYInner = lockedY;
+            } else {
+                targetRotationYOuter = lockedY;
+            }
+            applyMatrixState();
+            e.preventDefault();
+        }, { passive: false });
+    }
 
     // --- SCROLL WHEEL ZOOM (scene element, does NOT interfere with widgets) ---
     let zoomCooldown = false;
@@ -194,11 +228,15 @@ export function initCubixEnvironment() {
         setTimeout(() => { zoomCooldown = false; }, 600);
 
         if (e.deltaY > 0) {
-            // Scroll down = zoom OUT to outer layer
-            currentZLevel = Z_LEVELS.outer;
+            // Scroll down = zoom OUT
+            if (currentStageIndex > 0) {
+                currentStageIndex--;
+            }
         } else {
-            // Scroll up = zoom INTO inner layer
-            currentZLevel = Z_LEVELS.inner;
+            // Scroll up = zoom IN
+            if (currentStageIndex < Z_STAGES.length - 1) {
+                currentStageIndex++;
+            }
         }
         applyMatrixState();
         e.preventDefault();
@@ -206,37 +244,67 @@ export function initCubixEnvironment() {
 
     // --- CUBIX RUBYS (QUICK NAV) LOGIC ---
     function applyMatrixState() {
-        world.style.transform = `translateZ(${currentZLevel}vw)`;
+        const stage = Z_STAGES[currentStageIndex];
+        world.style.transform = `translateZ(${stage.z}vw)`;
         envCube.style.transform = `rotateY(${-(targetRotationYInner * (180 / Math.PI))}deg)`;
         outerCube.style.transform = `rotateY(${-(targetRotationYOuter * (180 / Math.PI))}deg)`;
         
+        // Ensure world has correct matrix class
+        if (stage.isInner) {
+            world.classList.add('matrix-inner-active');
+            world.classList.remove('matrix-outer-active');
+        } else {
+            world.classList.add('matrix-outer-active');
+            world.classList.remove('matrix-inner-active');
+        }
+
         // Sync navigator cube to current active layer
-        const targetNavY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
+        const targetNavY = stage.isInner ? targetRotationYInner : targetRotationYOuter;
         cube.rotation.y = targetNavY;
 
         // Reset X (pitch) to level
         targetRotationX = 0;
         cube.rotation.x = 0;
     }
+    
+    // Set initial state
+    applyMatrixState();
 
     document.getElementById('ruby-c')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = 0; else targetRotationYOuter = 0;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = 0; else targetRotationYOuter = 0;
         applyMatrixState();
     });
     document.getElementById('ruby-u')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = Math.PI / 2; else targetRotationYOuter = Math.PI / 2;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = Math.PI / 2; else targetRotationYOuter = Math.PI / 2;
         applyMatrixState();
     });
     document.getElementById('ruby-b')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = Math.PI; else targetRotationYOuter = Math.PI;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = Math.PI; else targetRotationYOuter = Math.PI;
         applyMatrixState();
     });
     document.getElementById('ruby-i')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = -Math.PI / 2; else targetRotationYOuter = -Math.PI / 2;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = -Math.PI / 2; else targetRotationYOuter = -Math.PI / 2;
         applyMatrixState();
     });
     document.getElementById('ruby-x')?.addEventListener('click', () => {
-        currentZLevel = (currentZLevel === Z_LEVELS.inner) ? Z_LEVELS.outer : Z_LEVELS.inner;
+        const rubyX = document.getElementById('ruby-x');
+        
+        // Toggle the layer
+        currentStageIndex = (currentStageIndex + 2) % 4;
+        
+        // Update Ruby X active state
+        if (!Z_STAGES[currentStageIndex].isInner) {
+            rubyX.classList.add('active');
+            world.classList.add('matrix-outer-active');
+            world.classList.remove('matrix-inner-active');
+            console.log("[MATRIX] Switching to MACRO (Outer) Environment");
+        } else {
+            rubyX.classList.remove('active');
+            world.classList.add('matrix-inner-active');
+            world.classList.remove('matrix-outer-active');
+            console.log("[MATRIX] Switching to MICRO (Inner) Environment");
+        }
+        
         applyMatrixState();
     });
 
@@ -249,12 +317,12 @@ export function initCubixEnvironment() {
             icon.classList.add('active');
 
             // Map index to rotation (Front, Right, Back, Left)
-            if (currentZLevel === Z_LEVELS.inner) {
+            if (Z_STAGES[currentStageIndex].isInner) {
                 targetRotationYInner = (index * Math.PI / 2);
             } else {
                 targetRotationYOuter = (index * Math.PI / 2);
             }
-            console.log(`[CUBIX NAV] Icon clicked: ${index}, Target Rotation: ${currentZLevel === Z_LEVELS.inner ? targetRotationYInner : targetRotationYOuter}`);
+            console.log(`[CUBIX NAV] Icon clicked: ${index}, Target Rotation: ${Z_STAGES[currentStageIndex].isInner ? targetRotationYInner : targetRotationYOuter}`);
             applyMatrixState();
         });
     });
@@ -263,8 +331,8 @@ export function initCubixEnvironment() {
         requestAnimationFrame(animate);
         
         // Smoothly snap the mini cube to its designated layer rotation
-        if (!isDragging) {
-            const activeTargetY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
+        if (!isDragging && !touchHeld) {
+            const activeTargetY = Z_STAGES[currentStageIndex].isInner ? targetRotationYInner : targetRotationYOuter;
             cube.rotation.y += (activeTargetY - cube.rotation.y) * 0.1;
             cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.1;
         }
@@ -440,6 +508,151 @@ export function initCubixEnvironment() {
 
     initOmniBridge();
     initVaultBridge();
+
+    // --- INNER APP VIEW SWITCHING ---
+    window.switchInnerView = function(viewId, element) {
+        // Remove active class from all nav items
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        // Add active class to clicked item
+        element.classList.add('active');
+
+        // Hide all views
+        document.querySelectorAll('.inner-view').forEach(view => view.classList.remove('active'));
+        // Show target view
+        const targetView = document.getElementById(`view-${viewId}`);
+        if (targetView) targetView.classList.add('active');
+
+        console.log(`[SOVEREIGN] Switched to view: ${viewId}`);
+    };
+
+    // --- SIDEBAR TOGGLE LOGIC ---
+    window.toggleSidebar = function() {
+        const sidebar = document.getElementById('inner-sidebar');
+        if (sidebar) {
+            sidebar.classList.toggle('collapsed');
+            console.log(`[SOVEREIGN] Sidebar ${sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
+        }
+    };
+
+    // --- OPACITY CYCLING LOGIC ---
+    let currentOpacityLevel = 0;
+    const opacityClasses = ['bg-opaque', 'bg-soft', 'bg-glass', 'bg-clear'];
+    
+    window.cycleOpacity = function() {
+        const container = document.querySelector('.inner-app-container');
+        if (!container) return;
+
+        // Remove old class
+        container.classList.remove(opacityClasses[currentOpacityLevel]);
+        
+        // Cycle level
+        currentOpacityLevel = (currentOpacityLevel + 1) % opacityClasses.length;
+        
+        // Add new class
+        container.classList.add(opacityClasses[currentOpacityLevel]);
+        
+        // Update Ruby O active state
+        const rubyO = document.getElementById('ruby-o');
+        if (rubyO) {
+            if (currentOpacityLevel > 0) rubyO.classList.add('active');
+            else rubyO.classList.remove('active');
+        }
+
+        console.log(`[SOVEREIGN] Visibility Mode: ${opacityClasses[currentOpacityLevel]}`);
+    };
+
+    // --- SIDEBAR OPACITY CONTROL ---
+    window.setOpacity = function(level) {
+        const container = document.querySelector('.inner-app-container');
+        if (!container) return;
+
+        // Update levels
+        container.classList.remove(...opacityClasses);
+        container.classList.add(opacityClasses[level]);
+        currentOpacityLevel = level;
+
+        // Update UI pills
+        document.querySelectorAll('.pill').forEach((pill, idx) => {
+            if (idx === level) pill.classList.add('active');
+            else pill.classList.remove('active');
+        });
+
+        // Update Ruby O state
+        const rubyO = document.getElementById('ruby-o');
+        if (rubyO) {
+            if (level > 0) rubyO.classList.add('active');
+            else rubyO.classList.remove('active');
+        }
+
+        console.log(`[SOVEREIGN] Visibility Mode set to: ${opacityClasses[level]}`);
+    };
+
+    // --- SIDEBAR AI CHAT LOGIC ---
+    window.sendSidebarChat = function() {
+        const input = document.getElementById('sidebar-ai-input');
+        const feed = document.getElementById('sidebar-chat-feed');
+        if (!input || !feed || !input.value.trim()) return;
+
+        const userMsg = input.value.trim();
+        
+        // Add User Message
+        const userDiv = document.createElement('div');
+        userDiv.className = 'mini-msg msg-user';
+        userDiv.textContent = userMsg;
+        feed.appendChild(userDiv);
+        
+        // Clear input
+        input.value = '';
+        feed.scrollTop = feed.scrollHeight;
+
+        // Simulated AI Response (In production, this would hit the Bridge)
+        setTimeout(() => {
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'mini-msg msg-ai';
+            aiDiv.textContent = "Processing sovereign request... Command acknowledged.";
+            feed.appendChild(aiDiv);
+            feed.scrollTop = feed.scrollHeight;
+        }, 1000);
+    };
+
+    // Add Enter listener for chat
+    document.getElementById('sidebar-ai-input')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendSidebarChat();
+    });
+
+    // --- IN-PAGE APP DOCKING ---
+    window.dockApp = function(appName, icon) {
+        const portal = document.getElementById('library-portal');
+        if (!portal) return;
+
+        portal.innerHTML = `
+            <div style="width:100%; height:100%; display:flex; flex-direction:column;">
+                <div style="background:rgba(255,255,255,0.05); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-weight:800; font-size:0.8rem; color:#00f2ff;">${icon} ${appName.toUpperCase()}</div>
+                    <button onclick="closeDock()" style="background:none; border:none; color:#8892B0; cursor:pointer; font-weight:900;">✕</button>
+                </div>
+                <div style="flex:1; padding:20px; color:#E2E2E2; overflow-y:auto;">
+                    <h3>Sovereign Application Portal</h3>
+                    <p>Executing ${appName} in protected memory space...</p>
+                    <div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.3); border-radius:10px; border-left:4px solid #70E100;">
+                        <div style="font-family:monospace; font-size:0.85rem; color:#70E100;">
+                            > Initializing bridge connection...<br>
+                            > Validating CyberDNA handshake...<br>
+                            > Application ${appName} is now ACTIVE.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        console.log(`[SOVEREIGN] Docked app: ${appName}`);
+    };
+
+    window.closeDock = function() {
+        const portal = document.getElementById('library-portal');
+        if (portal) {
+            portal.innerHTML = '<div class="portal-placeholder">SELECT A FUNCTION TO DOCK INTO THIS VIEW</div>';
+        }
+    };
 
     console.log("[CUBIX TESSERACT] Multi-Layer Tesseract + Sovereign Bridge Initialized.");
 }

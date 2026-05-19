@@ -267,7 +267,8 @@ let state = {
   queue: [],       // { file, name, size } — staged, not yet vaulted
   activeCategory: 'all',
   searchQuery: '',
-  selectedId: null
+  selectedId: null,
+  walletBalance: 1.00 // Default demo balance
 };
 
 // =====================================================
@@ -338,9 +339,16 @@ function loadVault() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) state.vault = JSON.parse(raw);
+    
+    const bal = localStorage.getItem('quickvault_balance');
+    if (bal) state.walletBalance = parseFloat(bal);
   } catch (e) {
     state.vault = [];
   }
+}
+
+function saveBalance() {
+  localStorage.setItem('quickvault_balance', state.walletBalance.toString());
 }
 
 // =====================================================
@@ -426,12 +434,21 @@ function addFilesToQueue(files) {
   }
   if (added) showToast(`${added} file${added > 1 ? 's' : ''} queued for vaulting`, 'info');
   renderQueue();
+  updateCostEstimate();
   document.getElementById('btn-vault').disabled = state.queue.length === 0;
+}
+
+function updateCostEstimate() {
+  const totalQueueSize = state.queue.reduce((s, f) => s + f.size, 0);
+  const cost = (totalQueueSize / (1024 * 1024 * 1024)) * 5.0; // $5/GB
+  document.getElementById('cost-estimate').textContent = `Est. Cost: $${cost.toFixed(4)}`;
+  return cost;
 }
 
 function removeFromQueue(idx) {
   state.queue.splice(idx, 1);
   renderQueue();
+  updateCostEstimate();
   document.getElementById('btn-vault').disabled = state.queue.length === 0;
 }
 
@@ -491,8 +508,20 @@ async function vaultAllQueued() {
   const level = parseInt(document.getElementById('compress-level').value);
   const tag   = document.getElementById('vault-tag').value.trim() || 'General';
 
+  const totalCost = updateCostEstimate();
+  
+  if (state.walletBalance < totalCost) {
+    showToast(`Insufficient balance. Cost: $${totalCost.toFixed(4)}`, 'error');
+    return;
+  }
+
   btn.textContent = '⏳ Vaulting...';
   btn.disabled = true;
+
+  // Deduct from wallet
+  state.walletBalance -= totalCost;
+  saveBalance();
+  updateStats();
 
   let successCount = 0;
 
@@ -655,6 +684,9 @@ function updateStats() {
   document.getElementById('total-saved').textContent  = formatBytes(Math.max(0, totalSaved));
   document.getElementById('compress-ratio').textContent = avgRatio + '%';
   document.getElementById('storage-used-label').textContent = formatBytes(totalComp);
+  
+  document.getElementById('wallet-balance').textContent = `$${state.walletBalance.toFixed(2)}`;
+  document.getElementById('wallet-val').textContent = `$${state.walletBalance.toFixed(4)}`;
 
   // Fill bar based on 100MB "soft" cap for display
   const cappedPct = Math.min((totalComp / (100 * 1024 * 1024)) * 100, 100);
@@ -792,6 +824,21 @@ function initEvents() {
     renderVault();
     updateStats();
     showToast('Vault cleared', 'info');
+  });
+
+  // Top up
+  document.getElementById('btn-topup').addEventListener('click', () => {
+    const amount = prompt("PAYPAL BUSINESS GATEWAY\nEnter amount to add to your Sovereign Wallet (USD):", "10.00");
+    if (!amount) return;
+    
+    // Simulate PayPal redirect / settlement
+    showToast(`Initiating PayPal settlement for $${amount}...`, 'info');
+    setTimeout(() => {
+        state.walletBalance += parseFloat(amount);
+        saveBalance();
+        updateStats();
+        showToast(`Settlement Success: $${amount} added to wallet`, 'success');
+    }, 1500);
   });
 
   // Modal

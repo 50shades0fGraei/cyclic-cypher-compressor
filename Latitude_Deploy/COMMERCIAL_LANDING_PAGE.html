@@ -99,203 +99,9 @@
         .btn-outline {
             border: 1px solid #444;
             color: white;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .features {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid #222;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-        }
-
-        .feature-card h3 {
-            color: var(--primary);
-            margin-top: 0;
-        }
-
-        .pricing {
-            padding: 100px 20px;
-            background: #0f0f12;
-            text-align: center;
-        }
-
-        .pricing-grid {
-            max-width: 1000px;
-            margin: 50px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .price-card {
-            background: #16161a;
-            padding: 50px;
-            border-radius: 15px;
-            border: 1px solid #333;
-            position: relative;
-        }
-
-        .price-card.featured {
-            border: 2px solid var(--primary);
-            transform: scale(1.05);
-            z-index: 1;
-        }
-
-        .price-value {
-            font-size: 3rem;
-            font-weight: 800;
-            margin: 20px 0;
-        }
-
-        .price-value span {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        footer {
-            padding: 50px;
-            text-align: center;
-            border-top: 1px solid #222;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .pricing-grid { transform: none; }
-            .price-card.featured { transform: none; }
-        }
-    </style>
-</head>
-<body>
-    <section class="hero">
-        <div class="hero-content">
-            <div class="badge">Hardware Sovereignty Redefined</div>
-            <h1>CubixOS Vault</h1>
-            <p class="subtitle">Eliminate 'Digital Silence' and reclaim 90%+ of your healthcare data storage footprint. 100% loss-less. 100% On-Premise.</p>
-            <div class="cta-group">
-                <a href="#pricing" class="btn btn-primary">Purchase License</a>
-                <a href="#" class="btn btn-outline">Watch Demo</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="feature-card">
-            <h3>Deductive Compression</h3>
-            <p>Proprietary CyberDNA algorithms specialized for DICOM, EHR, and medical binary data streams. Reconstruct data bit-perfectly with zero overhead.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Mirror Sovereignty</h3>
-            <p>Keep your data on your hardware. No cloud egress fees, no external APIs, no data leaks. Compliance by design (HIPAA/GDPR Ready).</p>
-        </div>
-        <div class="feature-card">
-            padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(rgba(10, 10, 12, 0.8), rgba(10, 10, 12, 0.8)), 
-                        url('lujan_wallpaper.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            padding: 20px;
-            z-index: 2;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(0, 210, 255, 0.2);
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            background: linear-gradient(to right, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: #aaa;
-            margin: 20px 0 40px;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 15px 40px;
-            border-radius: 5px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary), #3a7bd5);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.5);
-        }
-
-        .btn-outline {
-            border: 1px solid #444;
-            color: white;
-        }
-
         .btn-outline:hover {
             border-color: var(--primary);
             color: var(--primary);
@@ -380,6 +186,69 @@
             .pricing-grid { transform: none; }
             .price-card.featured { transform: none; }
         }
+
+        /* Video Modal Styles */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: #000;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            border: 1px solid var(--primary);
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .video-modal.active .video-modal-content {
+            transform: scale(1);
+        }
+
+        .video-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            transition: color 0.2s;
+        }
+
+        .video-close:hover {
+            color: var(--primary);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -390,7 +259,7 @@
             <p class="subtitle">Eliminate 'Digital Silence' and reclaim 90%+ of your healthcare data storage footprint. 100% loss-less. 100% On-Premise.</p>
             <div class="cta-group">
                 <a href="#pricing" class="btn btn-primary">Purchase License</a>
-                <a href="#" class="btn btn-outline">Watch Demo</a>
+                <button onclick="openVideoModal()" class="btn btn-outline" style="background: transparent;">Watch Demo</button>
             </div>
         </div>
     </section>
@@ -491,5 +360,54 @@
     <footer style="text-align: center; padding: 4rem 2rem; color: #8892b0; border-top: 1px solid #233554;">
         <p>&copy; 2026 CubixOS & GRAEI Systems. All Rights Reserved.</p>
     </footer>
+
+    <!-- Video Modal -->
+    <div id="demoModal" class="video-modal">
+        <div class="video-modal-content">
+            <span class="video-close" onclick="closeVideoModal()">&times;</span>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe id="demoVideo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/6a6wwKAFvYc?enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openVideoModal() {
+            const modal = document.getElementById('demoModal');
+            modal.style.display = 'flex';
+            // small delay to allow display to apply before opacity for smooth fade
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            // Autoplay the YouTube video when modal opens
+            const iframe = document.getElementById('demoVideo');
+            if(iframe) {
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            }
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('demoModal');
+            modal.classList.remove('active');
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300); // match the transition time
+            
+            // Pause the YouTube video when modal closes
+            const iframe = document.getElementById('demoVideo');
+            if(iframe) {
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            }
+        }
+
+        // Close on clicking outside the video
+        document.getElementById('demoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+    </script>
 </body>
 </html>

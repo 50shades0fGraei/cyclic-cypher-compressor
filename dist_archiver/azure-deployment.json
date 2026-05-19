@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webAppName": {
+      "type": "string",
+      "defaultValue": "dark-encryptor-saas",
+      "metadata": { "description": "Sovereign Messenger App Name" }
+    },
+    "microsoftAccount": {
+      "type": "string",
+      "defaultValue": "meta2graei@gmail.com"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "darkcyphervaultstorage",
+      "metadata": { "description": "Storage Account for Dark Cypher Vault" }
+    },
+    "privacyPolicyUrl": {
+      "type": "string",
+      "defaultValue": "https://meta2graei.com/privacy",
+      "metadata": { "description": "URL for the Application Privacy Policy" }
+    }
+  },
+  "variables": {
+    "hostingPlanName": "[concat(parameters('webAppName'), '-plan')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2021-03-01",
+      "name": "[variables('hostingPlanName')]",
+      "location": "East US",
+      "sku": { "name": "F1", "tier": "Free" },
+      "kind": "linux"
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-03-01",
+      "name": "[parameters('webAppName')]",
+      "location": "East US",
+      "kind": "app,linux",
+      "dependsOn": [ "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]" ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "DOCKER|rejectedev/dark-encrypter:latest",
+          "appSettings": [
+            { "name": "PAYPAL_ID", "value": "emuricagraei.rjl@gmail.com" },
+            { "name": "STORAGE_RATE", "value": "0.05" },
+            { "name": "AZURE_STORAGE_ACCOUNT", "value": "[parameters('storageAccountName')]" },
+            { "name": "PRIVACY_POLICY_URL", "value": "[parameters('privacyPolicyUrl')]" }
+          ]
+        }
+      },
+      "tags": {
+        "PrivacyPolicy": "[parameters('privacyPolicyUrl')]"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2022-09-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "East US",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2022-09-01",
+      "name": "[format('{0}/default/vault-storage', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    }
+  ]
+}

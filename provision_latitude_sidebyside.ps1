@@ -45,7 +45,7 @@ if (Test-Path "S:\") {
     if (-not (Test-Path $browserPath)) { $browserPath = "msedge.exe" }
     
     $Shortcut.TargetPath = $browserPath
-    $Shortcut.Arguments = "--app=file:///S:/cubix_os.html --start-fullscreen"
+    $Shortcut.Arguments = "--allow-file-access-from-files --app=file:///S:/cubix_os.html --start-fullscreen"
     $Shortcut.Description = "Launch Cubix OS Sovereign Environment"
     $Shortcut.Save()
     

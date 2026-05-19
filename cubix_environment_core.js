@@ -138,11 +138,13 @@ export function initCubixEnvironment() {
     let targetRotationYInner = 0; 
     let targetRotationYOuter = 0; 
     
-    let currentZLevel = -75; 
-    const Z_LEVELS = {
-        outer: -180,
-        inner: -75
-    };
+    const Z_STAGES = [
+        { id: 'outer', z: -180, isInner: false },
+        { id: 'outer_face', z: -100, isInner: false },
+        { id: 'inner', z: -75, isInner: true },
+        { id: 'inner_face', z: -50, isInner: true }
+    ];
+    let currentStageIndex = 0; // Default to outer
     let targetRotationX = 0;
 
     // --- MOUSE DRAG ---
@@ -169,7 +171,7 @@ export function initCubixEnvironment() {
         const snapAngle = Math.PI / 2;
         const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
         targetRotationX = 0;
-        if (currentZLevel === Z_LEVELS.inner) {
+        if (Z_STAGES[currentStageIndex].isInner) {
             targetRotationYInner = lockedY;
             cube.rotation.y = targetRotationYInner;
         } else {
@@ -205,7 +207,7 @@ export function initCubixEnvironment() {
             const snapAngle = Math.PI / 2;
             const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
             targetRotationX = 0;
-            if (currentZLevel === Z_LEVELS.inner) {
+            if (Z_STAGES[currentStageIndex].isInner) {
                 targetRotationYInner = lockedY;
             } else {
                 targetRotationYOuter = lockedY;
@@ -226,11 +228,15 @@ export function initCubixEnvironment() {
         setTimeout(() => { zoomCooldown = false; }, 600);
 
         if (e.deltaY > 0) {
-            // Scroll down = zoom OUT to outer layer
-            currentZLevel = Z_LEVELS.outer;
+            // Scroll down = zoom OUT
+            if (currentStageIndex > 0) {
+                currentStageIndex--;
+            }
         } else {
-            // Scroll up = zoom INTO inner layer
-            currentZLevel = Z_LEVELS.inner;
+            // Scroll up = zoom IN
+            if (currentStageIndex < Z_STAGES.length - 1) {
+                currentStageIndex++;
+            }
         }
         applyMatrixState();
         e.preventDefault();
@@ -238,12 +244,13 @@ export function initCubixEnvironment() {
 
     // --- CUBIX RUBYS (QUICK NAV) LOGIC ---
     function applyMatrixState() {
-        world.style.transform = `translateZ(${currentZLevel}vw)`;
+        const stage = Z_STAGES[currentStageIndex];
+        world.style.transform = `translateZ(${stage.z}vw)`;
         envCube.style.transform = `rotateY(${-(targetRotationYInner * (180 / Math.PI))}deg)`;
         outerCube.style.transform = `rotateY(${-(targetRotationYOuter * (180 / Math.PI))}deg)`;
         
         // Ensure world has correct matrix class
-        if (currentZLevel === Z_LEVELS.inner) {
+        if (stage.isInner) {
             world.classList.add('matrix-inner-active');
             world.classList.remove('matrix-outer-active');
         } else {
@@ -252,7 +259,7 @@ export function initCubixEnvironment() {
         }
 
         // Sync navigator cube to current active layer
-        const targetNavY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
+        const targetNavY = stage.isInner ? targetRotationYInner : targetRotationYOuter;
         cube.rotation.y = targetNavY;
 
         // Reset X (pitch) to level
@@ -264,29 +271,29 @@ export function initCubixEnvironment() {
     applyMatrixState();
 
     document.getElementById('ruby-c')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = 0; else targetRotationYOuter = 0;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = 0; else targetRotationYOuter = 0;
         applyMatrixState();
     });
     document.getElementById('ruby-u')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = Math.PI / 2; else targetRotationYOuter = Math.PI / 2;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = Math.PI / 2; else targetRotationYOuter = Math.PI / 2;
         applyMatrixState();
     });
     document.getElementById('ruby-b')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = Math.PI; else targetRotationYOuter = Math.PI;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = Math.PI; else targetRotationYOuter = Math.PI;
         applyMatrixState();
     });
     document.getElementById('ruby-i')?.addEventListener('click', () => {
-        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = -Math.PI / 2; else targetRotationYOuter = -Math.PI / 2;
+        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = -Math.PI / 2; else targetRotationYOuter = -Math.PI / 2;
         applyMatrixState();
     });
     document.getElementById('ruby-x')?.addEventListener('click', () => {
         const rubyX = document.getElementById('ruby-x');
         
         // Toggle the layer
-        currentZLevel = (currentZLevel === Z_LEVELS.inner) ? Z_LEVELS.outer : Z_LEVELS.inner;
+        currentStageIndex = (currentStageIndex + 2) % 4;
         
         // Update Ruby X active state
-        if (currentZLevel === Z_LEVELS.outer) {
+        if (!Z_STAGES[currentStageIndex].isInner) {
             rubyX.classList.add('active');
             world.classList.add('matrix-outer-active');
             world.classList.remove('matrix-inner-active');
@@ -310,12 +317,12 @@ export function initCubixEnvironment() {
             icon.classList.add('active');
 
             // Map index to rotation (Front, Right, Back, Left)
-            if (currentZLevel === Z_LEVELS.inner) {
+            if (Z_STAGES[currentStageIndex].isInner) {
                 targetRotationYInner = (index * Math.PI / 2);
             } else {
                 targetRotationYOuter = (index * Math.PI / 2);
             }
-            console.log(`[CUBIX NAV] Icon clicked: ${index}, Target Rotation: ${currentZLevel === Z_LEVELS.inner ? targetRotationYInner : targetRotationYOuter}`);
+            console.log(`[CUBIX NAV] Icon clicked: ${index}, Target Rotation: ${Z_STAGES[currentStageIndex].isInner ? targetRotationYInner : targetRotationYOuter}`);
             applyMatrixState();
         });
     });
@@ -325,7 +332,7 @@ export function initCubixEnvironment() {
         
         // Smoothly snap the mini cube to its designated layer rotation
         if (!isDragging && !touchHeld) {
-            const activeTargetY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
+            const activeTargetY = Z_STAGES[currentStageIndex].isInner ? targetRotationYInner : targetRotationYOuter;
             cube.rotation.y += (activeTargetY - cube.rotation.y) * 0.1;
             cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.1;
         }

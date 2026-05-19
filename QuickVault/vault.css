@@ -277,6 +277,55 @@ body {
 .drop-zone.drag-over .drop-overlay { display: flex; }
 
 /* =====================================================
+   WALLET & MONETIZATION
+   ===================================================== */
+.wallet-card {
+  background: linear-gradient(135deg, var(--bg-3), rgba(123,97,255,0.05));
+  border-color: rgba(123,97,255,0.2);
+}
+
+.wallet-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.wallet-info { display: flex; flex-direction: column; }
+.balance-label { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.balance-val { font-size: 1.4rem; font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+
+.btn-topup {
+  background: var(--accent-2);
+  color: white;
+  border: none;
+  border-radius: 99px;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-topup:hover {
+  background: #8a74ff;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(123,97,255,0.3);
+}
+
+.pricing-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-3);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+#cost-estimate { color: var(--accent-warm); font-weight: 600; }
+
+/* =====================================================
    SETTINGS CARD
    ===================================================== */
 .settings-card {
