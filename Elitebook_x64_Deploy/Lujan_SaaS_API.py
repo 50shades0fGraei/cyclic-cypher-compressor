@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # LUJAN TESSERACT: COMMERCIAL SaaS API (v1.0)
 # This is the marketplace-facing endpoint for Deductive Storage as a Service.
 

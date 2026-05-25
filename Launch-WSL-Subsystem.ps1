@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # Launch Tesseract OS Build in WSL (Windows Subsystem for Linux)
 # This will simulate the bare-metal Linux environment hosted natively via Windows Subsystem.
 

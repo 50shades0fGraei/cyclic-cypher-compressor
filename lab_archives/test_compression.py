@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 """
 Comprehensive test suite for the Cyclic Cypher Compressor.
 Tests compression/decompression roundtrip and case preservation.

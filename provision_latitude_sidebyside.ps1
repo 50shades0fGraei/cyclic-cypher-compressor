@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # CyberDNA: Latitude Side-by-Side Provisioner (Diskpart Version)
 # Creates a Native VHD for Cubix OS files using diskpart for compatibility.
 

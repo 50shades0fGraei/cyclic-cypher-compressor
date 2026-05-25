@@ -207,26 +207,28 @@ We'll prepare a custom license agreement covering:
 - Receive license key/certificate
 - Full commercial rights to deploy
 
----
+# LICENSING AGREEMENT
 
-## WHAT'S PROTECTED
+**THIS IS A PROPRIETARY SYSTEM. ALL RIGHTS RESERVED.**
 
-### ✅ You Own
-- All commercial deployment rights (with proper license)
-- Your implementations and modifications (with license)
-- Your products built using this (with license)
+## 1. LICENSING MODEL
+This software is licensed exclusively on a **CONTRACT-ONLY** basis. There is no public, trial, or open-source license available for this repository.
 
-### ⚠️ Creator Retains
-- Core algorithm patent (when granted)
-- Algorithm improvements (but not your derivative code)
-- Right to license to others (non-exclusive licenses)
-- Attribution requirement (your use must credit the creator)
+## 2. OWNER
+- **Full Legal Name:** Randall James Lujan
+- **Project:** Cyclic Cypher Compressor (and associated sub-systems)
 
-### ❌ You Cannot Do (Even With License)
-- Claim you invented the original algorithm
-- Remove creator attribution from licenses you distribute
-- Sell the source code without also selling your product/service
-- Exclusively license to prevent others (only with Tier 4 Exclusive)
+## 3. USAGE TERMS
+- **Direct Contract Required:** Any use, reproduction, or deployment of this software requires a signed **Private License Agreement (PLA)** with Randall James Lujan.
+- **Revocability:** All licenses granted under private contract are subject to the terms of said contract and may be revoked if terms are violated.
+- **Intellectual Property:** This project incorporates **PATENT PENDING** technology. Any unauthorized implementation of the core architecture is a direct infringement.
+
+## 4. RESTRICTIONS
+- **NO** Redistribution.
+- **NO** Modification for non-contracted use.
+- **NO** Commercial use without explicit written consent.
+
+For further information, see [LEGAL.md](file:///home/sovereign/cyclic-cypher-compressor/LEGAL.md).
 
 ---
 

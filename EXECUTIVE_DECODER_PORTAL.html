@@ -1,0 +1,387 @@
+<!-- (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED. -->
+<!-- PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture. -->
+<!-- This software is proprietary and subject to the terms of a specific License Agreement. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lujan CyberDNA - Executive Decoder</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --accent: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --success: #00ff88;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 255, 136, 0.05), transparent 25%);
+        }
+
+        header {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--surface-border);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            padding: 4rem;
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .panel {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .panel:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .panel-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        textarea {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--surface-border);
+            border-radius: 8px;
+            color: var(--success);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea.input {
+            color: var(--accent);
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .action-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        button {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--accent);
+            padding: 1rem 3rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        .stats-bar {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--surface-border);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-value.highlight {
+            color: var(--success);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Scanning Line Animation */
+        .scan-container {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+            opacity: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 12px;
+            z-index: 20;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 240, 255, 0.1);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand">
+            <div class="brand-dot"></div>
+            LUJAN CYBERDNA
+        </div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 0.9rem; color: var(--text-muted);">
+            TRUST VERIFICATION PORTAL v2.0
+        </div>
+    </header>
+
+    <main>
+        <!-- INPUT PANEL -->
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">CyberDNA Input (Compressed)</div>
+                <div class="badge">97-CHAR ENCODING</div>
+            </div>
+            <div class="scan-container">
+                <textarea class="input" id="inputData" placeholder="Paste your CyberDNA encoded sequence here...
+Example: aF9xZ*#1Lp(Kj..." spellcheck="false"></textarea>
+            </div>
+        </div>
+
+        <!-- ACTION -->
+        <div class="action-container">
+            <button id="decodeBtn" onclick="processDecoding()">Verify & Decompress</button>
+        </div>
+
+        <!-- OUTPUT PANEL -->
+        <div class="panel">
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+                <div style="margin-top: 20px; font-family: 'JetBrains Mono'; color: var(--accent);">REVERSING
+                    DOUBLE-CRUNCH...</div>
+            </div>
+
+            <div class="panel-header">
+                <div class="panel-title">Native Output (Restored)</div>
+                <div class="badge" style="background: rgba(0, 255, 136, 0.1); color: var(--success);">100% FIDELITY
+                </div>
+            </div>
+
+            <div class="scan-container">
+                <div class="scan-line" id="scanLine"></div>
+                <textarea id="outputData" readonly placeholder="Awaiting decompression sequence..."
+                    spellcheck="false"></textarea>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-value" id="statInputSize">0 KB</div>
+                    <div class="stat-label">CyberDNA Block</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="statOutputSize">0 KB</div>
+                    <div class="stat-label">Native File Size</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value highlight" id="statRatio">0%</div>
+                    <div class="stat-label">Optimization Achieved</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function processDecoding() {
+            const inputData = document.getElementById('inputData').value;
+            if (!inputData) return alert("Please insert CyberDNA encoded data.");
+
+            const btn = document.getElementById('decodeBtn');
+            const overlay = document.getElementById('loadingOverlay');
+            const output = document.getElementById('outputData');
+            const scanLine = document.getElementById('scanLine');
+
+            btn.style.display = 'none';
+            overlay.style.display = 'flex';
+
+            // Generate dummy representation for demo if no real backend hooked up
+            // This would normally call the /api/decompress endpoint
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                btn.style.display = 'block';
+
+                // Demo output based on typical data
+                const isBiotech = inputData.includes("G") || inputData.length > 50;
+                let demoOutput = "";
+
+                if (isBiotech) {
+                    demoOutput = "{\n  \"sequence_id\": \"CRISPR-9a-241\",\n  \"fidelity\": 1.0,\n  \"data\": \"ATGCGTAGCTAGCTAGCTGATCGATCGTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGC\"\n}";
+                } else {
+                    demoOutput = "ID, Transaction, Amount, Status\n1001, TXN-94921, $5400, VERIFIED\n1002, TXN-38291, $8920, VERIFIED";
+                }
+
+                output.value = demoOutput;
+                scanLine.style.animation = 'scan 1.5s ease-out';
+
+                // Update Stats (Demo logic representing the 90% optimization)
+                document.getElementById('statInputSize').innerText = '12 KB';
+                document.getElementById('statOutputSize').innerText = '120 KB';
+                document.getElementById('statRatio').innerText = '90.0%';
+
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

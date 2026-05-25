@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # LUJAN DEDUCTIVE VAULT: Latitude Quick-Drop Utility
 # Drag and drop any file onto this script to secure it in the Vault.
 

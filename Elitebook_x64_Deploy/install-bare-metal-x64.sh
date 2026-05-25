@@ -1,4 +1,8 @@
 #!/bin/bash
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # ═══════════════════════════════════════════════════════════════════════
 #  CyberDNA: Bare-Metal EFI Stub Installer
 #  Target: HP EliteBook (x86_64 / amd64 architecture)

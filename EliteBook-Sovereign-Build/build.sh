@@ -1,4 +1,8 @@
 #!/bin/bash
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # ═══════════════════════════════════════════════════════════════════
 #  CyberDNA: EliteBook Sovereign Build — Full Compile Pipeline
 #  Target: HP EliteBook 6 G2q (Snapdragon / ARM64)

@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 """Process address mapper: maps process names/commands to function addresses.
 
 Allows replacing traditional process execution with function dispatch.

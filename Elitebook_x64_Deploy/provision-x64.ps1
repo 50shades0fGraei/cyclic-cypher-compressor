@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # CyberDNA: Sovereign Provisioner for HP EliteBook (x64 / Older Gen)
 # Target: Bypassing commercial OS and establishing Tesseract-OS on the metal.
 

@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 """Simple Flask dashboard for viewing function library, data bindings, and manual control."""
 from flask import Flask, jsonify, request, render_template_string
 

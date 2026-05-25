@@ -1,4 +1,8 @@
 #!/bin/bash
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # CyberDNA: Sovereign Key Generator (Sovereign-Root)
 # Goal: Create the RSA-4096 keys for signing the Tesseract-OS Bootloader.
 

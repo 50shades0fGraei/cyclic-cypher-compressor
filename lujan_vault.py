@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 import os
 import sys
 import sqlite3
@@ -72,6 +76,17 @@ class LujanVaultCLI:
         print(f"  Lujan Miracle (Premium): {monetized_savings:.2f}%")
         print(f"  Artifact: {os.path.basename(output_path)}")
 
+    def restore(self, filepath, output_path):
+        """Decompress a .cypher/.cdv6 file back to the original."""
+        if not os.path.exists(filepath):
+            print(f"Error: File {filepath} not found.")
+            sys.exit(1)
+        print(f"Restoring: {os.path.basename(filepath)} -> {os.path.basename(output_path)}")
+        self.engine.decompress(filepath, output_path)
+        restored_size = os.path.getsize(output_path)
+        print(f"\nVault Restore Complete.")
+        print(f"  Restored: {restored_size:,} bytes -> {output_path}")
+
     def list_vault(self):
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.execute("SELECT * FROM vault_registry ORDER BY created_at DESC")
@@ -119,6 +134,11 @@ if __name__ == "__main__":
     store_parser.add_argument("--deep", action="store_true", help="Enable deep triangulation")
     store_parser.add_argument("--double", action="store_true", help="Enable double-crunch logic")
 
+    # Restore command
+    restore_parser = subparsers.add_parser("restore")
+    restore_parser.add_argument("path", help="Path to .cypher file to restore")
+    restore_parser.add_argument("output", help="Output path for restored file")
+
     # List command
     subparsers.add_parser("list")
 
@@ -127,6 +147,8 @@ if __name__ == "__main__":
 
     if args.command == "store":
         cli.store(args.path, deep=args.deep, double=args.double)
+    elif args.command == "restore":
+        cli.restore(args.path, args.output)
     elif args.command == "list":
         cli.list_vault()
     else:

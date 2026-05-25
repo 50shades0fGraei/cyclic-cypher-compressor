@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 # Launch Cubix OS as a standalone desktop application using MS Edge / Chrome App Mode
 Write-Host "Initializing Sovereign Bridge & HTTP Server..." -ForegroundColor Cyan
 

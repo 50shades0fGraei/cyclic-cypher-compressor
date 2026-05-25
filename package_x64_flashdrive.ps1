@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 $deployDir = "c:\Users\randall\cyclic-cypher-compressor\Elitebook_x64_Deploy"
 
 Write-Host "Packaging Cubix UI and Antigravity Matrix for x64 EliteBook to $deployDir..."

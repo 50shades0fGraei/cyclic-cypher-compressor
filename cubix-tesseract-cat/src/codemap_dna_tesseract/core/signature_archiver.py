@@ -1,3 +1,7 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# This software is proprietary and subject to the terms of a specific License Agreement.
+
 """
 Cyclic Cypher Compressor - Signature-Based Archiver (CCA)
 For long-term data storage and archiving with multi-cypher system.
