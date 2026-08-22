@@ -1,0 +1,27 @@
+# Use a lightweight python image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies for the flask app
+# We use gunicorn for a production WSGI server
+RUN pip install --no-cache-dir flask werkzeug gunicorn
+
+# Copy all local project files including the core library
+COPY . /app/
+
+# Expose the API port
+EXPOSE 5000
+
+# Set required permission on storage dirs
+RUN mkdir -p vault_storage restored_storage temp_storage \
+    && chmod -R 777 vault_storage restored_storage temp_storage
+
+# Launch via gunicorn
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "vault_app:app"]

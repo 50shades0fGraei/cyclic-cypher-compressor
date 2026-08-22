@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  vault-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.vaultUI
+    image: lujan-vault-ui:latest
+    container_name: lujan-vault-web
+    ports:
+      - "5000:5000"
+    volumes:
+      # Map storage out to preserve state explicitly
+      - ./vault_storage:/app/vault_storage
+      - ./restored_storage:/app/restored_storage
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=production

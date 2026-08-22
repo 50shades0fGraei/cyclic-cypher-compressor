@@ -1,0 +1,513 @@
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# True Cypher Gap Sum Architecture (0-9 Symbol Reduction).
+
+import os
+import struct
+import time
+import logging
+import json
+
+AUDIT_LOG_FILE = "healthcare_audit.log"
+logging.basicConfig(
+    filename=AUDIT_LOG_FILE,
+    level=logging.INFO,
+    format='%(asctime)s - CYBERDNA_ENGINE_V6 - %(levelname)s - %(message)s'
+)
+
+class CyberDNAVault:
+    """
+    Deductive CyberDNA Vault (v6 Architecture).
+    Implements the True Cypher Gap Sum Architecture.
+    
+    1. Iterates cyphers 0-255.
+    2. Counts the number between non-alignments (Gaps).
+    3. Builds the First Data Sheet.
+    4. Performs Symbol Reduction map to construct the original layout.
+    """
+    
+    def __init__(self, chunk_size=10 * 1024 * 1024):
+        self.chunk_size = chunk_size
+
+    def encode_chunk(self, chunk):
+        """
+        True Cypher Gap Sum Architecture.
+        Transforms all binary symbols into gap sums (the First Data Sheet).
+        """
+        orig_len = len(chunk)
+        
+        # Header: Original length (4 bytes)
+        packed = bytearray(struct.pack('<I', orig_len))
+        data_sheet = bytearray()
+        active_cyphers = 0
+
+        # We need fast lookups for all 256 cyphers
+        cypher_positions = {i: [] for i in range(256)}
+        for pos, byte_val in enumerate(chunk):
+            cypher_positions[byte_val].append(pos)
+
+        # 1. Build the First Data Sheet out of the gap sums
+        for cypher_byte in range(256):
+            positions = cypher_positions[cypher_byte]
+            if not positions:
+                continue
+                
+            active_cyphers += 1
+            
+            # Map the specific cypher set
+            data_sheet.append(cypher_byte)
+            data_sheet.extend(struct.pack('<I', len(positions))) # Count of occurrences
+            
+            # Count the number between non-alignments (Gaps)
+            last_pos = -1
+            for pos in positions:
+                gap = pos - last_pos - 1 # non-alignments between matches
+                if gap < 254:
+                    data_sheet.append(gap)
+                else:
+                    # Escape large gaps to maintain lineal mapping
+                    data_sheet.append(255)
+                    data_sheet.extend(struct.pack('<I', gap))
+                last_pos = pos
+
+        # Pack Number of Active Cyphers + First Data Sheet
+        packed.extend(struct.pack('<H', active_cyphers))
+        packed.extend(data_sheet)
+        
+        return packed
+
+    def decode_chunk(self, packed_data):
+        """
+        Reconstructs deductively following the Gap Sum Data Sheet.
+        Rebuilds original 256-level binary from collapsed gap lengths.
+        """
+        orig_len = struct.unpack('<I', packed_data[0:4])[0]
+        active_cyphers = struct.unpack('<H', packed_data[4:6])[0]
+        
+        chunk = bytearray(orig_len)
+        ptr = 6
+        
+        # Lineal Deductive Parsing of the First Data Sheet
+        for _ in range(active_cyphers):
+            cypher_byte = packed_data[ptr]
+            count = struct.unpack('<I', packed_data[ptr + 1 : ptr + 5])[0]
+            ptr += 5
+            
+            last_pos = -1
+            for _ in range(count):
+                flag = packed_data[ptr]
+                ptr += 1
+                if flag < 254:
+                    gap = flag
+                else:
+                    gap = struct.unpack('<I', packed_data[ptr : ptr + 4])[0]
+                    ptr += 4
+                
+                pos = last_pos + gap + 1
+                if pos < orig_len:
+                    chunk[pos] = cypher_byte
+                last_pos = pos
+                    
+        return chunk
+
+    def compress(self, input_path, output_path):
+        start_time = time.time()
+        file_size = os.path.getsize(input_path)
+        with open(input_path, 'rb') as fin, open(output_path, 'wb') as fout:
+            fout.write(b'CDV6') # CyberDNA Deductive Vault V6
+            fout.write(struct.pack('<Q', file_size))
+            processed = 0
+            while True:
+                chunk = fin.read(self.chunk_size)
+                if not chunk: break
+                packed = self.encode_chunk(chunk)
+                fout.write(struct.pack('<I', len(packed)))
+                fout.write(packed)
+                processed += len(chunk)
+                if (processed // self.chunk_size) % 5 == 0:
+                    pass # Silenced for clean API output
+        
+        comp_size = os.path.getsize(output_path)
+        print(f"  Gap Sum Engine Applied: {(1 - comp_size / file_size) * 100:.2f}% Layer Variance")
+        return output_path
+
+    def decompress(self, input_path, output_path):
+        with open(input_path, 'rb') as fin, open(output_path, 'wb') as fout:
+            magic = fin.read(4)
+            if magic != b'CDV6': raise ValueError("Invalid format")
+            orig_total = struct.unpack('<Q', fin.read(8))[0]
+            while True:
+                header = fin.read(4)
+                if not header: break
+                packed_len = struct.unpack('<I', header)[0]
+                packed_body = fin.read(packed_len)
+                fout.write(self.decode_chunk(packed_body))
+        return output_path
+
+    # --- AGIVaultBridge: Direct Byte-Stream Interface ---
+    
+    def compress_bytes(self, data: bytes) -> bytes:
+        packed_payload = bytearray()
+        for i in range(0, len(data), self.chunk_size):
+            chunk = data[i : i + self.chunk_size]
+            packed_chunk = self.encode_chunk(chunk)
+            packed_payload.extend(struct.pack('<I', len(packed_chunk)))
+            packed_payload.extend(packed_chunk)
+        
+        header = b'CDV6' + struct.pack('<Q', len(data))
+        return bytes(header + packed_payload)
+
+    def decompress_bytes(self, packed_data: bytes) -> bytes:
+        orig_total = struct.unpack('<Q', packed_data[4:12])[0]
+        result = bytearray()
+        ptr = 12
+        while ptr < len(packed_data):
+            if ptr + 4 > len(packed_data): break
+            packed_len = struct.unpack('<I', packed_data[ptr : ptr + 4])[0]
+            ptr += 4
+            
+            chunk_body = packed_data[ptr : ptr + packed_len]
+            ptr += packed_len
+            decoded_chunk = self.decode_chunk(chunk_body)
+            result.extend(decoded_chunk)
+            
+        return bytes(result[:orig_total])
+
+class GRAEIDNAVault:
+    def __init__(self, vault_path="graei_dna.vault"):
+        self.vault_path = vault_path
+        self.cdv = CyberDNAVault()
+        self.index = {} 
+        self._load_index()
+
+    def _load_index(self):
+        if os.path.exists(self.vault_path):
+            with open(self.vault_path, 'rb') as f:
+                index_path = self.vault_path + ".idx"
+                if os.path.exists(index_path):
+                    with open(index_path, 'r') as fix:
+                        self.index = json.load(fix)
+
+    def store_skill(self, name, code_bytes):
+        compressed = self.cdv.compress_bytes(code_bytes)
+        with open(self.vault_path, 'ab') as f:
+            offset = f.tell()
+            f.write(compressed)
+            self.index[name] = (offset, len(compressed))
+        
+        with open(self.vault_path + ".idx", 'w') as fix:
+            json.dump(self.index, fix)
+
+    def retrieve_skill(self, name):
+        if name not in self.index:
+            return None
+        offset, length = self.index[name]
+        with open(self.vault_path, 'rb') as f:
+            f.seek(offset)
+            compressed = f.read(length)
+        return self.cdv.decompress_bytes(compressed)
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("cmd", choices=['compress', 'decompress'])
+    parser.add_argument("input")
+    parser.add_argument("output")
+    args = parser.parse_args()
+    cdv = CyberDNAVault()
+    if args.cmd == 'compress': cdv.compress(args.input, args.output)
+    else: cdv.decompress(args.input, args.output)
+#!/usr/bin/env python3
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# Marketplace Release: Double Crunch API Module
+
+import os
+import sys
+import argparse
+import time
+
+# Ensure we can import from core framework
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
+try:
+    from core.cyberdna_engine import CyberDNAVault
+except ImportError:
+    print("Error: Could not import core.cyberdna_engine. Ensure 'core' folder is present in the working directory.")
+    sys.exit(1)
+
+def double_crunch_compress(input_path, output_path):
+    """
+    Executes the 'Double Crunch' recursive deductive transformation.
+    First pass establishes the pattern logic, the second pass compresses the matrix output.
+    """
+    if not os.path.exists(input_path):
+        print(f"Error: Target file {input_path} not found.")
+        return None
+
+    cdv = CyberDNAVault()
+    orig_size = os.path.getsize(input_path)
+    
+    print("=" * 80)
+    print("LUJAN DEDUCTIVE VAULT - MARKETPLACE DOUBLE CRUNCH")
+    print(f"Source: {input_path} ({orig_size:,} bytes)")
+    print("=" * 80)
+
+    # First Crunch Pass
+    crunch_1 = input_path + ".layer1.tmp"
+    print("\n[STEP 1] Executing First Crunch Layer...")
+    start_1 = time.perf_counter()
+    cdv.compress(input_path, crunch_1)
+    time_1 = time.perf_counter() - start_1
+    
+    if not os.path.exists(crunch_1):
+        print("Error: First crunch failed.")
+        return None
+        
+    size_1 = os.path.getsize(crunch_1)
+    
+    print(f"Crunch 1 Size: {size_1:,} bytes")
+    if orig_size > 0:
+        print(f"Crunch 1 Ratio: {100 * (1 - size_1/orig_size):.2f}% Space Savings")
+    print(f"Crunch 1 Time: {time_1:.4f}s")
+
+    # Second Crunch Pass (Double Crunch)
+    print("\n[STEP 2] Executing Second Binary Crunch (Recursive)...")
+    start_2 = time.perf_counter()
+    cdv.compress(crunch_1, output_path)
+    time_2 = time.perf_counter() - start_2
+    
+    if os.path.exists(crunch_1):
+        os.remove(crunch_1)
+        
+    if not os.path.exists(output_path):
+        print("Error: Second crunch failed.")
+        return None
+        
+    size_2 = os.path.getsize(output_path)
+    
+    print(f"\n[SUMMARY] Double Crunch Operations Finished:")
+    print(f"Final Artifact Size: {size_2:,} bytes")
+    if size_1 > 0:
+        print(f"Incremental Ratio (Pass 2): {100 * (1 - size_2/size_1):.2f}% Space Savings")
+    if orig_size > 0:
+        print(f"ULTIMATE TOTAL RATIO: {100 * (1 - size_2/orig_size):.2f}% Space Savings")
+    print(f"Total Computation Time: {time_1 + time_2:.4f}s")
+        
+    print(f"\nFinal artifact successfully deployed to: {output_path}")
+    return output_path
+
+def iterative_decompress(input_path, output_path):
+    """
+    Restores the original file by detecting and peeling back all layers 
+    of Cypher recursion automatically until the raw file is exposed.
+    """
+    if not os.path.exists(input_path):
+        print(f"Error: Target file {input_path} not found.")
+        sys.exit(1)
+        
+    cdv = CyberDNAVault()
+    current_input = input_path
+    current_output = output_path
+    
+    print("\n[RESTORE] Initializing iterative extraction protocol...")
+    
+    # First extraction
+    cdv.decompress(current_input, current_output)
+    
+    # Look for nested layers
+    iteration = 1
+    while True:
+        try:
+            with open(current_output, 'rb') as f:
+                magic = f.read(4)
+            if magic == b'CDV6':
+                print(f"  Pass {iteration} complete. Detected nested compression layer, extracting recursively...")
+                temp_input = current_output + ".tmp"
+                os.rename(current_output, temp_input)
+                cdv.decompress(temp_input, current_output)
+                if os.path.exists(temp_input):
+                    os.remove(temp_input)
+                iteration += 1
+            else:
+                print(f"  Extraction complete. No further nested headers detected.")
+                break
+        except Exception as e:
+            print(f"  System break gracefully on read check: {e}")
+            break
+            
+    restored_size = os.path.getsize(current_output)
+    print(f"\nExtraction Protocol Complete.")
+    print(f"  Artifact Restored: {restored_size:,} bytes -> {current_output}")
+    return current_output
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Lujan Deductive Vault API - Marketplace Double Crunch Protocol",
+        epilog="Developed by Randall Lujan | Sovereign Tesseract Technology | Patent Pending"
+    )
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    
+    # Compress subcommand
+    comp_parser = subparsers.add_parser("compress", help="Perform recursive Double Crunch on a target file")
+    comp_parser.add_argument("input", help="Target file to compress")
+    comp_parser.add_argument("output", help="Output .cdv6 artifact path")
+    
+    # Decompress subcommand
+    decomp_parser = subparsers.add_parser("decompress", help="Perform iterative extraction of a Double Crunched file")
+    decomp_parser.add_argument("input", help="Target .cdv6 artifact to decompress")
+    decomp_parser.add_argument("output", help="Output path for the restored file")
+    
+    args = parser.parse_args()
+    
+    if args.command == "compress":
+        double_crunch_compress(args.input, args.output)
+    elif args.command == "decompress":
+        iterative_decompress(args.input, args.output)
+#!/usr/bin/env python3
+# (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED.
+# PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
+# Marketplace Release: Double Crunch API Module
+
+import os
+import sys
+import argparse
+import time
+
+# Ensure we can import from core framework
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
+try:
+    from core.cyberdna_engine import CyberDNAVault
+except ImportError:
+    print("Error: Could not import core.cyberdna_engine. Ensure 'core' folder is present in the working directory.")
+    sys.exit(1)
+
+def double_crunch_compress(input_path, output_path):
+    """
+    Executes the 'Double Crunch' recursive deductive transformation.
+    First pass establishes the pattern logic, the second pass compresses the matrix output.
+    """
+    if not os.path.exists(input_path):
+        print(f"Error: Target file {input_path} not found.")
+        return None
+
+    cdv = CyberDNAVault()
+    orig_size = os.path.getsize(input_path)
+    
+    print("=" * 80)
+    print("LUJAN DEDUCTIVE VAULT - MARKETPLACE DOUBLE CRUNCH")
+    print(f"Source: {input_path} ({orig_size:,} bytes)")
+    print("=" * 80)
+
+    # First Crunch Pass
+    crunch_1 = input_path + ".layer1.tmp"
+    print("\n[STEP 1] Executing First Crunch Layer...")
+    start_1 = time.perf_counter()
+    cdv.compress(input_path, crunch_1)
+    time_1 = time.perf_counter() - start_1
+    
+    if not os.path.exists(crunch_1):
+        print("Error: First crunch failed.")
+        return None
+        
+    size_1 = os.path.getsize(crunch_1)
+    
+    print(f"Crunch 1 Size: {size_1:,} bytes")
+    if orig_size > 0:
+        print(f"Crunch 1 Ratio: {100 * (1 - size_1/orig_size):.2f}% Space Savings")
+    print(f"Crunch 1 Time: {time_1:.4f}s")
+
+    # Second Crunch Pass (Double Crunch)
+    print("\n[STEP 2] Executing Second Binary Crunch (Recursive)...")
+    start_2 = time.perf_counter()
+    cdv.compress(crunch_1, output_path)
+    time_2 = time.perf_counter() - start_2
+    
+    if os.path.exists(crunch_1):
+        os.remove(crunch_1)
+        
+    if not os.path.exists(output_path):
+        print("Error: Second crunch failed.")
+        return None
+        
+    size_2 = os.path.getsize(output_path)
+    
+    print(f"\n[SUMMARY] Double Crunch Operations Finished:")
+    print(f"Final Artifact Size: {size_2:,} bytes")
+    if size_1 > 0:
+        print(f"Incremental Ratio (Pass 2): {100 * (1 - size_2/size_1):.2f}% Space Savings")
+    if orig_size > 0:
+        print(f"ULTIMATE TOTAL RATIO: {100 * (1 - size_2/orig_size):.2f}% Space Savings")
+    print(f"Total Computation Time: {time_1 + time_2:.4f}s")
+        
+    print(f"\nFinal artifact successfully deployed to: {output_path}")
+    return output_path
+
+def iterative_decompress(input_path, output_path):
+    """
+    Restores the original file by detecting and peeling back all layers 
+    of Cypher recursion automatically until the raw file is exposed.
+    """
+    if not os.path.exists(input_path):
+        print(f"Error: Target file {input_path} not found.")
+        sys.exit(1)
+        
+    cdv = CyberDNAVault()
+    current_input = input_path
+    current_output = output_path
+    
+    print("\n[RESTORE] Initializing iterative extraction protocol...")
+    
+    # First extraction
+    cdv.decompress(current_input, current_output)
+    
+    # Look for nested layers
+    iteration = 1
+    while True:
+        try:
+            with open(current_output, 'rb') as f:
+                magic = f.read(4)
+            if magic == b'CDV6':
+                print(f"  Pass {iteration} complete. Detected nested compression layer, extracting recursively...")
+                temp_input = current_output + ".tmp"
+                os.rename(current_output, temp_input)
+                cdv.decompress(temp_input, current_output)
+                if os.path.exists(temp_input):
+                    os.remove(temp_input)
+                iteration += 1
+            else:
+                print(f"  Extraction complete. No further nested headers detected.")
+                break
+        except Exception as e:
+            print(f"  System break gracefully on read check: {e}")
+            break
+            
+    restored_size = os.path.getsize(current_output)
+    print(f"\nExtraction Protocol Complete.")
+    print(f"  Artifact Restored: {restored_size:,} bytes -> {current_output}")
+    return current_output
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Lujan Deductive Vault API - Marketplace Double Crunch Protocol",
+        epilog="Developed by Randall Lujan | Sovereign Tesseract Technology | Patent Pending"
+    )
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    
+    # Compress subcommand
+    comp_parser = subparsers.add_parser("compress", help="Perform recursive Double Crunch on a target file")
+    comp_parser.add_argument("input", help="Target file to compress")
+    comp_parser.add_argument("output", help="Output .cdv6 artifact path")
+    
+    # Decompress subcommand
+    decomp_parser = subparsers.add_parser("decompress", help="Perform iterative extraction of a Double Crunched file")
+    decomp_parser.add_argument("input", help="Target .cdv6 artifact to decompress")
+    decomp_parser.add_argument("output", help="Output path for the restored file")
+    
+    args = parser.parse_args()
+    
+    if args.command == "compress":
+        double_crunch_compress(args.input, args.output)
+    elif args.command == "decompress":
+        iterative_decompress(args.input, args.output)

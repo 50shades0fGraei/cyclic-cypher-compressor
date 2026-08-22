@@ -1,4 +1,6 @@
-# Cyclic Cypher Compressor Requirements
-# Core dependencies
-flask
-stripe
+# Core Engine
+numpy==1.26.4
+# Web Application 
+flask==3.0.0
+werkzeug==3.0.0
+gunicorn==21.2.0

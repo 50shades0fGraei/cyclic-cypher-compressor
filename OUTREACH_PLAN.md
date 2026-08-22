@@ -46,12 +46,12 @@ Randall
 
 ### 2. **Synthego Corp** 🎯 PRIORITY #2
 - **Industry**: CRISPR Gene Editing / Genetic Engineering
-- **Why**: Heavy genomic data workflow, always optimizing gene operations
-- **Contact**: CEO Cory Berkland or VP Engineering
-- **Find via**: LinkedIn company page → engineering team
-- **Expected tier**: Tier 2-3 ($2.5K-$25K/year)
-- **Location**: Los Angeles, CA
-- **Timeline**: 1-2 week decision
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                - **Why**: Heavy genomic data workflow, always optimizing gene operations
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                - **Contact**: CEO Cory Berkland or VP Engineering
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                - **Find via**: LinkedIn company page → engineering team
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                - **Expected tier**: Tier 2-3 ($2.5K-$25K/year)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                - **Location**: Los Angeles, CA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                - **Timeline**: 1-2 week decision
 
 **Email Template:**
 ```
@@ -134,21 +134,16 @@ Randall
 
 ## TIER 3: DATA/SECURITY (Quick Implementation - $500-$5K)
 
-### 7. **Cloudflare** 🎯 PRIORITY #4
+ ### 7. **Cloudflare** 🎯 PRIORITY #4
 - **Industry**: Data Security / Network Performance
 - **Why**: Binary-to-text transmission is direct use case
 - **Contact**: VP Product or Engineering
 - **Find via**: LinkedIn company page
-- **Expected tier**: Tier 1-2 ($500-$2.5K) for evaluation
-- **Timeline**: 1-2 weeks
-
-**Email Template:**
-```
 Subject: Binary File Transmission - Text Channel Solution
 
 Hi [Name],
 
-Built a system that converts ANY binary file to keyboard text (97-char alphabet)
+Built a system that converts ANY binary file                                                                                                                                                                                                    to keyboard text (97-char alphabet)
 with zero loss. Perfect for transmitting binary over text-only channels.
 
 Could integrate into Cloudflare's data transmission pipeline.
@@ -157,7 +152,7 @@ Demo at: [GitHub link]
 
 Interested?
 
-Randall
+Randall lujan
 ```
 
 ---
@@ -216,7 +211,7 @@ Randall
 ```
 For each company:
 1. LinkedIn: Find CTO, VP Engineering, VP Product
-2. Hunter.io: Search firstname.lastname@[company domain]
+2. Hunter.po: Search firstname.lastname@[company domain]
 3. Create spreadsheet with:
    - Company name
    - Contact name

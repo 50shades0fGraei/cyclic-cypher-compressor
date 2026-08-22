@@ -50,7 +50,14 @@ class LujanVaultCLI:
         if deep: print("Mode: Deep Triangulation Enabled")
         if double: print("Mode: Double-Crunch Core Active (Target 90%)")
         
-        self.engine.compress(filepath, output_path)
+        if double:
+            temp_path = filepath + ".cdv6.tmp"
+            self.engine.compress(filepath, temp_path)
+            self.engine.compress(temp_path, output_path)
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+        else:
+            self.engine.compress(filepath, output_path)
         
         stored_size = os.path.getsize(output_path)
         savings = original_size - stored_size
@@ -82,7 +89,31 @@ class LujanVaultCLI:
             print(f"Error: File {filepath} not found.")
             sys.exit(1)
         print(f"Restoring: {os.path.basename(filepath)} -> {os.path.basename(output_path)}")
-        self.engine.decompress(filepath, output_path)
+        
+        current_input = filepath
+        current_output = output_path
+        
+        self.engine.decompress(current_input, current_output)
+        
+        iteration = 1
+        while True:
+            try:
+                with open(current_output, 'rb') as f:
+                    magic = f.read(4)
+                if magic == b'CDV6':
+                    print(f"  Pass {iteration} complete. Detected dual compression layer...")
+                    temp_input = current_output + ".tmp"
+                    os.rename(current_output, temp_input)
+                    self.engine.decompress(temp_input, current_output)
+                    if os.path.exists(temp_input):
+                        os.remove(temp_input)
+                    iteration += 1
+                else:
+                    break
+            except Exception as e:
+                # If we can't read magic bytes, or something goes wrong, break out.
+                break
+                
         restored_size = os.path.getsize(output_path)
         print(f"\nVault Restore Complete.")
         print(f"  Restored: {restored_size:,} bytes -> {output_path}")

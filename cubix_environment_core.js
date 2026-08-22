@@ -11,7 +11,7 @@ function initSpiralVisualizer() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    
+
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
@@ -20,15 +20,15 @@ function initSpiralVisualizer() {
     const particleCount = 1000;
     const posArray = new Float32Array(particleCount * 3);
 
-    for(let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < particleCount; i++) {
         // Parametric equation for a 3D spiral (CubixOS DNA structure)
         const t = i * 0.1;
         const x = Math.cos(t) * (t * 0.05);
         const y = t * 0.05 - 15;
         const z = Math.sin(t) * (t * 0.05);
-        posArray[i*3] = x;
-        posArray[i*3+1] = y;
-        posArray[i*3+2] = z;
+        posArray[i * 3] = x;
+        posArray[i * 3 + 1] = y;
+        posArray[i * 3 + 2] = z;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
@@ -49,7 +49,7 @@ function initSpiralVisualizer() {
 
 export function initCubixEnvironment() {
     initSpiralVisualizer();
-    
+
     // --- THREE.JS BOTTOM NAVIGATOR (Bottom-Center Slot) ---
     const navContainer = document.getElementById('nav-center-slot') || document.getElementById('bottom-navigator');
     const world = document.getElementById('world');
@@ -66,7 +66,7 @@ export function initCubixEnvironment() {
         timeNode.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }, 1000);
     timeNode.innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    
+
     // --- THREE.JS BOTTOM NAVIGATOR ---
     const scene = new THREE.Scene();
     const NAV_SIZE = navContainer ? (navContainer.clientWidth || 60) : 60;
@@ -112,9 +112,9 @@ export function initCubixEnvironment() {
     ctx.fillText('• SOVEREIGN •', 256, 420);
 
     const logoTexture = new THREE.CanvasTexture(canvas);
-    
+
     // Physical material to look like glowing machinery
-    const material = new THREE.MeshStandardMaterial({ 
+    const material = new THREE.MeshStandardMaterial({
         map: logoTexture,
         metalness: 0.8,
         roughness: 0.2,
@@ -123,7 +123,7 @@ export function initCubixEnvironment() {
 
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
-    
+
     // Add lighting to make the cube visible and shiny
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     const pointLight = new THREE.PointLight(0xA1C1D1, 2, 50);
@@ -138,109 +138,142 @@ export function initCubixEnvironment() {
     let previousMousePosition = { x: 0, y: 0 };
     let touchStartX = 0;
     let touchHeld = false;
-    
-    let targetRotationYInner = 0; 
-    let targetRotationYOuter = 0; 
-    
-    const Z_STAGES = [
-        { id: 'outer', z: -180, isInner: false },
-        { id: 'outer_face', z: -100, isInner: false },
-        { id: 'inner', z: -75, isInner: true },
-        { id: 'inner_face', z: -50, isInner: true }
-    ];
-    let currentStageIndex = 0; // Default to outer
+
+    let targetRotationYInner = 0;
+    let targetRotationYOuter = 0;
+
+    let currentZLevel = -75;
+    const Z_LEVELS = {
+        outer: -180,
+        inner: -75
+    };
     let targetRotationX = 0;
 
-    // --- MOUSE DRAG ---
-    if (navContainer) navContainer.addEventListener('mousedown', (e) => { 
-        isDragging = true; 
-        previousMousePosition = { x: e.clientX, y: e.clientY };
-        navContainer.style.cursor = 'grabbing';
-        e.stopPropagation();
-    });
+    // --- REFINED INTERACTION: Single Click (Zoom), Double Click (Home), Drag Axis Logic ---
+    let clickTimer = null;
+    let dragThreshold = 5;
+    let hasMoved = false;
+    let startX = 0, startY = 0;
 
-    window.addEventListener('mousemove', (e) => {
+    const handleSingleClick = () => {
+        if (currentZLevel === Z_LEVELS.inner) {
+            currentZLevel = Z_LEVELS.outer;
+        } else if (currentZLevel === Z_LEVELS.outer) {
+            currentZLevel = -300; // Tesseract Full View
+        } else {
+            currentZLevel = Z_LEVELS.inner; // Back to Page View
+        }
+        applyMatrixState();
+    };
+
+    const handleDoubleClick = () => {
+        if (typeof window.switchInnerView === 'function') {
+            window.switchInnerView('home');
+        }
+    };
+
+    const onPointerDown = (clientX, clientY) => {
+        isDragging = true;
+        hasMoved = false;
+        startX = clientX;
+        startY = clientY;
+        previousMousePosition = { x: clientX, y: clientY };
+        if (navContainer) navContainer.style.cursor = 'grabbing';
+    };
+
+    const onPointerMove = (clientX, clientY) => {
         if (!isDragging) return;
-        const deltaX = e.clientX - previousMousePosition.x;
-        const deltaY = e.clientY - previousMousePosition.y;
-        cube.rotation.y += deltaX * 0.01;
-        cube.rotation.x += deltaY * 0.005; 
-        previousMousePosition = { x: e.clientX, y: e.clientY };
-    });
+        const deltaX = clientX - previousMousePosition.x;
+        const deltaY = clientY - previousMousePosition.y;
 
-    window.addEventListener('mouseup', (e) => {
+        if (Math.abs(clientX - startX) > dragThreshold || Math.abs(clientY - startY) > dragThreshold) {
+            hasMoved = true;
+        }
+
+        // Improved AXIS LOCK: Only rotate if horizontal movement is dominant
+        if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+            const rotFactor = 0.008;
+            cube.rotation.y += deltaX * rotFactor;
+
+            // GHOST SYNC: Rotate the background layer slightly to maintain the "Visible System" link
+            if (currentZLevel === Z_LEVELS.inner) {
+                targetRotationYInner = cube.rotation.y;
+                // Outer follows at 40% speed for perspective depth
+                targetRotationYOuter += deltaX * rotFactor * 0.4;
+            } else if (currentZLevel === Z_LEVELS.outer) {
+                targetRotationYOuter = cube.rotation.y;
+                // Inner follows at 60% speed for better alignment
+                targetRotationYInner += deltaX * rotFactor * 0.6;
+            }
+            applyMatrixState();
+        }
+        previousMousePosition = { x: clientX, y: clientY };
+    };
+
+    const onPointerUp = () => {
         if (!isDragging) return;
         isDragging = false;
         if (navContainer) navContainer.style.cursor = 'grab';
-        const snapAngle = Math.PI / 2;
-        const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
-        targetRotationX = 0;
-        if (Z_STAGES[currentStageIndex].isInner) {
-            targetRotationYInner = lockedY;
-            cube.rotation.y = targetRotationYInner;
-        } else {
-            targetRotationYOuter = lockedY;
-            cube.rotation.y = targetRotationYOuter;
-        }
-        applyMatrixState();
-    });
 
-    // --- TOUCH: hold & swipe left/right to rotate ---
-    if (navContainer) {
-        navContainer.addEventListener('touchstart', (e) => {
-            touchHeld = true;
-            touchStartX = e.touches[0].clientX;
-            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            e.preventDefault();
-        }, { passive: false });
-
-        navContainer.addEventListener('touchmove', (e) => {
-            if (!touchHeld) return;
-            const deltaX = e.touches[0].clientX - previousMousePosition.x;
-            const deltaY = e.touches[0].clientY - previousMousePosition.y;
-            cube.rotation.y += deltaX * 0.015;
-            cube.rotation.x += deltaY * 0.005;
-            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            e.preventDefault();
-        }, { passive: false });
-
-        navContainer.addEventListener('touchend', (e) => {
-            if (!touchHeld) return;
-            touchHeld = false;
-            // Snap to nearest 90-degree face
-            const snapAngle = Math.PI / 2;
-            const lockedY = Math.round(cube.rotation.y / snapAngle) * snapAngle;
-            targetRotationX = 0;
-            if (Z_STAGES[currentStageIndex].isInner) {
-                targetRotationYInner = lockedY;
+        if (!hasMoved) {
+            // Click Handler
+            if (clickTimer === null) {
+                clickTimer = setTimeout(() => {
+                    handleSingleClick();
+                    clickTimer = null;
+                }, 200); // Shorter click timeout
             } else {
-                targetRotationYOuter = lockedY;
+                clearTimeout(clickTimer);
+                clickTimer = null;
+                handleDoubleClick();
             }
+        } else {
+            // DRAG END: Snap to nearest face (90-degree increments)
+            const snapAngle = Math.PI / 2;
+
+            // Snap BOTH to keep the "Visible System" aligned
+            targetRotationYInner = Math.round(targetRotationYInner / snapAngle) * snapAngle;
+            targetRotationYOuter = Math.round(targetRotationYOuter / snapAngle) * snapAngle;
+
             applyMatrixState();
+        }
+    };
+
+    if (navContainer) {
+        navContainer.addEventListener('mousedown', (e) => {
+            onPointerDown(e.clientX, e.clientY);
+            e.stopPropagation();
+        });
+        window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY));
+        window.addEventListener('mouseup', onPointerUp);
+
+        navContainer.addEventListener('touchstart', (e) => {
+            onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
+            e.preventDefault();
+        }, { passive: false });
+        navContainer.addEventListener('touchmove', (e) => {
+            onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+            e.preventDefault();
+        }, { passive: false });
+        navContainer.addEventListener('touchend', (e) => {
+            onPointerUp();
             e.preventDefault();
         }, { passive: false });
     }
 
-    // --- SCROLL WHEEL ZOOM (scene element, does NOT interfere with widgets) ---
+    // --- SCROLL WHEEL ZOOM (Secondary) ---
     let zoomCooldown = false;
     document.querySelector('.scene')?.addEventListener('wheel', (e) => {
-        // Only zoom if not over a widget (input, button, select, textarea, iframe)
         const tag = e.target.tagName.toLowerCase();
-        if (['input','button','select','textarea','iframe','a'].includes(tag)) return;
+        if (['input', 'button', 'select', 'textarea', 'iframe', 'a'].includes(tag)) return;
         if (zoomCooldown) return;
         zoomCooldown = true;
         setTimeout(() => { zoomCooldown = false; }, 600);
 
         if (e.deltaY > 0) {
-            // Scroll down = zoom OUT
-            if (currentStageIndex > 0) {
-                currentStageIndex--;
-            }
+            currentZLevel = (currentZLevel === Z_LEVELS.inner) ? Z_LEVELS.outer : -300;
         } else {
-            // Scroll up = zoom IN
-            if (currentStageIndex < Z_STAGES.length - 1) {
-                currentStageIndex++;
-            }
+            currentZLevel = (currentZLevel === -300) ? Z_LEVELS.outer : Z_LEVELS.inner;
         }
         applyMatrixState();
         e.preventDefault();
@@ -248,13 +281,12 @@ export function initCubixEnvironment() {
 
     // --- CUBIX RUBYS (QUICK NAV) LOGIC ---
     function applyMatrixState() {
-        const stage = Z_STAGES[currentStageIndex];
-        world.style.transform = `translateZ(${stage.z}vw)`;
+        world.style.transform = `translateZ(${currentZLevel}vw)`;
         envCube.style.transform = `rotateY(${-(targetRotationYInner * (180 / Math.PI))}deg)`;
         outerCube.style.transform = `rotateY(${-(targetRotationYOuter * (180 / Math.PI))}deg)`;
-        
+
         // Ensure world has correct matrix class
-        if (stage.isInner) {
+        if (currentZLevel === Z_LEVELS.inner) {
             world.classList.add('matrix-inner-active');
             world.classList.remove('matrix-outer-active');
         } else {
@@ -263,41 +295,41 @@ export function initCubixEnvironment() {
         }
 
         // Sync navigator cube to current active layer
-        const targetNavY = stage.isInner ? targetRotationYInner : targetRotationYOuter;
+        const targetNavY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
         cube.rotation.y = targetNavY;
 
         // Reset X (pitch) to level
         targetRotationX = 0;
         cube.rotation.x = 0;
     }
-    
+
     // Set initial state
     applyMatrixState();
 
     document.getElementById('ruby-c')?.addEventListener('click', () => {
-        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = 0; else targetRotationYOuter = 0;
+        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = 0; else targetRotationYOuter = 0;
         applyMatrixState();
     });
     document.getElementById('ruby-u')?.addEventListener('click', () => {
-        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = Math.PI / 2; else targetRotationYOuter = Math.PI / 2;
+        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = Math.PI / 2; else targetRotationYOuter = Math.PI / 2;
         applyMatrixState();
     });
     document.getElementById('ruby-b')?.addEventListener('click', () => {
-        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = Math.PI; else targetRotationYOuter = Math.PI;
+        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = Math.PI; else targetRotationYOuter = Math.PI;
         applyMatrixState();
     });
     document.getElementById('ruby-i')?.addEventListener('click', () => {
-        if (Z_STAGES[currentStageIndex].isInner) targetRotationYInner = -Math.PI / 2; else targetRotationYOuter = -Math.PI / 2;
+        if (currentZLevel === Z_LEVELS.inner) targetRotationYInner = -Math.PI / 2; else targetRotationYOuter = -Math.PI / 2;
         applyMatrixState();
     });
     document.getElementById('ruby-x')?.addEventListener('click', () => {
         const rubyX = document.getElementById('ruby-x');
-        
+
         // Toggle the layer
-        currentStageIndex = (currentStageIndex + 2) % 4;
-        
+        currentZLevel = (currentZLevel === Z_LEVELS.inner) ? Z_LEVELS.outer : Z_LEVELS.inner;
+
         // Update Ruby X active state
-        if (!Z_STAGES[currentStageIndex].isInner) {
+        if (currentZLevel === Z_LEVELS.outer) {
             rubyX.classList.add('active');
             world.classList.add('matrix-outer-active');
             world.classList.remove('matrix-inner-active');
@@ -308,7 +340,7 @@ export function initCubixEnvironment() {
             world.classList.remove('matrix-outer-active');
             console.log("[MATRIX] Switching to MICRO (Inner) Environment");
         }
-        
+
         applyMatrixState();
     });
 
@@ -321,26 +353,26 @@ export function initCubixEnvironment() {
             icon.classList.add('active');
 
             // Map index to rotation (Front, Right, Back, Left)
-            if (Z_STAGES[currentStageIndex].isInner) {
+            if (currentZLevel === Z_LEVELS.inner) {
                 targetRotationYInner = (index * Math.PI / 2);
             } else {
                 targetRotationYOuter = (index * Math.PI / 2);
             }
-            console.log(`[CUBIX NAV] Icon clicked: ${index}, Target Rotation: ${Z_STAGES[currentStageIndex].isInner ? targetRotationYInner : targetRotationYOuter}`);
+            console.log(`[CUBIX NAV] Icon clicked: ${index}, Target Rotation: ${currentZLevel === Z_LEVELS.inner ? targetRotationYInner : targetRotationYOuter}`);
             applyMatrixState();
         });
     });
 
     function animate() {
         requestAnimationFrame(animate);
-        
+
         // Smoothly snap the mini cube to its designated layer rotation
         if (!isDragging && !touchHeld) {
-            const activeTargetY = Z_STAGES[currentStageIndex].isInner ? targetRotationYInner : targetRotationYOuter;
+            const activeTargetY = (currentZLevel === Z_LEVELS.inner) ? targetRotationYInner : targetRotationYOuter;
             cube.rotation.y += (activeTargetY - cube.rotation.y) * 0.1;
             cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.1;
         }
-        
+
         renderer.render(scene, camera);
     }
     animate();
@@ -350,7 +382,7 @@ export function initCubixEnvironment() {
 
     function initOmniBridge() {
         const chatFeed = document.getElementById('omni-chat-feed');
-        
+
         // Poll for security/system alerts from GAPCI/Librarian
         setInterval(async () => {
             try {
@@ -366,7 +398,7 @@ export function initCubixEnvironment() {
                         chatFeed.scrollTop = chatFeed.scrollHeight;
                     });
                 }
-            } catch(e) {}
+            } catch (e) { }
         }, 3000);
 
         // Omni Chat Send Logic
@@ -374,8 +406,8 @@ export function initCubixEnvironment() {
         const omniSend = document.getElementById('omni-send');
         const handleOmniSubmit = async () => {
             const text = omniInput.value.trim();
-            if(!text) return;
-            
+            if (!text) return;
+
             // Add user message
             const div = document.createElement('div');
             div.className = "chat-msg msg-user";
@@ -405,7 +437,7 @@ export function initCubixEnvironment() {
             }
         };
         omniSend?.addEventListener('click', handleOmniSubmit);
-        omniInput?.addEventListener('keydown', (e) => { if(e.key === 'Enter') handleOmniSubmit(); });
+        omniInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleOmniSubmit(); });
     }
 
     function initVaultBridge() {
@@ -416,7 +448,7 @@ export function initCubixEnvironment() {
             if (e.key === 'Enter') {
                 const cmd = terminalInput.value.trim();
                 terminalInput.value = "";
-                
+
                 // Append local command to feed
                 const line = document.createElement('div');
                 line.innerHTML = `<span style="color:#70E100;">randall@tesseract:~$</span> ${cmd}`;
@@ -435,7 +467,7 @@ export function initCubixEnvironment() {
                         out.style.color = "#8892B0";
                         out.innerText = `[SYSTEM] Execution Result: ${data.result}`;
                         terminalFeed.appendChild(out);
-                    } catch(err) {
+                    } catch (err) {
                         const errLine = document.createElement('div');
                         errLine.style.color = "red";
                         errLine.innerText = "[ERROR] Bridge Offline.";
@@ -447,11 +479,11 @@ export function initCubixEnvironment() {
                     out.innerText = "drwxr-xr-x  -  . \n-rw-r--r--  -  garuda_v6.bin\n-rw-r--r--  -  dna_store.vlt";
                     terminalFeed.appendChild(out);
                 }
-                
+
                 terminalFeed.parentElement.scrollTop = terminalFeed.parentElement.scrollHeight;
             }
         });
-        
+
         // Librarian Chat — powered by Gemini 1.5 Pro via Sovereign Bridge
         const librarianInput = document.getElementById('librarian-input');
         const librarianSend = document.getElementById('librarian-send');
@@ -490,14 +522,14 @@ export function initCubixEnvironment() {
             librarianFeed.scrollTop = librarianFeed.scrollHeight;
         };
         librarianSend?.addEventListener('click', handleLibrarianSubmit);
-        librarianInput?.addEventListener('keydown', (e) => { if(e.key === 'Enter') handleLibrarianSubmit(); });
+        librarianInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLibrarianSubmit(); });
 
         // Builder/Forge Thread logic
         const builderInput = document.getElementById('builder-input');
         const builderSend = document.getElementById('builder-send');
         const builderFeed = document.querySelector('.chat-thread-container > div:nth-child(2)');
         const handleBuilderSubmit = () => {
-            if(!builderInput.value.trim()) return;
+            if (!builderInput.value.trim()) return;
             const div = document.createElement('div');
             div.style.marginBottom = "10px";
             div.style.color = "#70E100";
@@ -507,18 +539,123 @@ export function initCubixEnvironment() {
             builderFeed.scrollTop = builderFeed.scrollHeight;
         };
         builderSend?.addEventListener('click', handleBuilderSubmit);
-        builderInput?.addEventListener('keydown', (e) => { if(e.key === 'Enter') handleBuilderSubmit(); });
+        builderInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleBuilderSubmit(); });
     }
 
+    function initDarkEncryptorBridge() {
+        const sealBtn = document.getElementById('seal-btn');
+        const openBtn = document.getElementById('open-btn');
+        const BRIDGE_URL = "http://localhost:8081";
+
+        if (sealBtn) {
+            sealBtn.addEventListener('click', async () => {
+                const content = document.getElementById('seal-content').value;
+                const ttl = document.getElementById('seal-ttl').value;
+                const resultDiv = document.getElementById('seal-result');
+
+                if (!content) {
+                    resultDiv.innerText = "Error: Missing content.";
+                    return;
+                }
+
+                resultDiv.innerText = "Sealing packet...";
+
+                try {
+                    const res = await fetch(`${BRIDGE_URL}/ephemeral/seal`, {
+                        method: "POST",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ content: content, ttl: parseInt(ttl) })
+                    });
+                    const data = await res.json();
+
+                    if (data.status === "SEALED") {
+                        resultDiv.innerHTML = `✅ <b>SEALED</b><br><br><b>BUNDLE:</b><br>${data.bundle}<br><br><b>DOOR KEY:</b><br>${data.door}<br><br><i>Send bundle over insecure channel. Send door key over secure channel.</i>`;
+                        document.getElementById('seal-content').value = "";
+                    } else {
+                        resultDiv.innerText = `Error: ${data.error}`;
+                    }
+                } catch (e) {
+                    resultDiv.innerText = "Bridge offline.";
+                }
+            });
+        }
+
+        if (openBtn) {
+            openBtn.addEventListener('click', async () => {
+                const bundle = document.getElementById('open-bundle').value;
+                const door = document.getElementById('open-key').value;
+                const resultDiv = document.getElementById('open-result');
+
+                if (!bundle || !door) {
+                    resultDiv.innerText = "Error: Missing bundle or key.";
+                    return;
+                }
+
+                resultDiv.innerText = "Decrypting...";
+
+                try {
+                    const res = await fetch(`${BRIDGE_URL}/ephemeral/open`, {
+                        method: "POST",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ bundle: bundle, door: door })
+                    });
+                    const data = await res.json();
+
+                    if (data.status === "DELIVERED") {
+                        resultDiv.innerHTML = `✅ <b>DECRYPTED & BURNED</b><br><br><b>CONTENT:</b><br>${data.content}`;
+                        document.getElementById('open-bundle').value = "";
+                        document.getElementById('open-key').value = "";
+                    } else {
+                        resultDiv.innerText = `Error: ${data.error}`;
+                    }
+                } catch (e) {
+                    resultDiv.innerText = "Bridge offline.";
+                }
+            });
+        }
+    }
+
+    initDarkEncryptorBridge();
     initOmniBridge();
+
     initVaultBridge();
 
+    // --- FULL SCREEN & LOGIN BOOTSTRAP ---
+    window.triggerLoginRequestFullscreen = function () {
+        // Request fullscreen on user gesture
+        const elem = document.documentElement;
+        try {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        } catch (e) { console.warn("Fullscreen request failed", e); }
+
+        // Then trigger the original login flow
+        if (typeof window.triggerLogin === 'function') {
+            window.triggerLogin();
+        }
+    };
+
     // --- INNER APP VIEW SWITCHING ---
-    window.switchInnerView = function(viewId, element) {
-        // Remove active class from all nav items
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    window.switchInnerView = function (viewId, element) {
+        // Handle element if not provided
+        if (!element) {
+            const navItems = document.querySelectorAll('.nav-item, .app-icon');
+            navItems.forEach(item => {
+                if (item.onclick && item.onclick.toString().includes(viewId)) {
+                    element = item;
+                }
+            });
+        }
+
+        // Remove active class from all nav items and taskbar icons
+        document.querySelectorAll('.nav-item, .app-icon').forEach(item => item.classList.remove('active'));
         // Add active class to clicked item
-        element.classList.add('active');
+        if (element) element.classList.add('active');
 
         // Hide all views
         document.querySelectorAll('.inner-view').forEach(view => view.classList.remove('active'));
@@ -526,11 +663,31 @@ export function initCubixEnvironment() {
         const targetView = document.getElementById(`view-${viewId}`);
         if (targetView) targetView.classList.add('active');
 
+        // Rotate Cube to corresponding face
+        const viewRotationMap = {
+            'home': 0, 'dashboard': 0,
+            'files': Math.PI / 2, 'agi': Math.PI,
+            'network': -Math.PI / 2, 'msbridge': Math.PI / 2, 'bios': Math.PI
+        };
+
+        if (viewRotationMap[viewId] !== undefined) {
+            const targetRot = viewRotationMap[viewId];
+            if (typeof targetRotationYInner !== 'undefined') {
+                if (currentZLevel > Z_LEVELS.outer + 10) {
+                    targetRotationYInner = targetRot;
+                    cube.rotation.y = targetRotationYInner;
+                } else {
+                    targetRotationYOuter = targetRot;
+                    cube.rotation.y = targetRotationYOuter;
+                }
+                applyMatrixState();
+            }
+        }
         console.log(`[SOVEREIGN] Switched to view: ${viewId}`);
     };
 
     // --- SIDEBAR TOGGLE LOGIC ---
-    window.toggleSidebar = function() {
+    window.toggleSidebar = function () {
         const sidebar = document.getElementById('inner-sidebar');
         if (sidebar) {
             sidebar.classList.toggle('collapsed');
@@ -541,20 +698,20 @@ export function initCubixEnvironment() {
     // --- OPACITY CYCLING LOGIC ---
     let currentOpacityLevel = 0;
     const opacityClasses = ['bg-opaque', 'bg-soft', 'bg-glass', 'bg-clear'];
-    
-    window.cycleOpacity = function() {
+
+    window.cycleOpacity = function () {
         const container = document.querySelector('.inner-app-container');
         if (!container) return;
 
         // Remove old class
         container.classList.remove(opacityClasses[currentOpacityLevel]);
-        
+
         // Cycle level
         currentOpacityLevel = (currentOpacityLevel + 1) % opacityClasses.length;
-        
+
         // Add new class
         container.classList.add(opacityClasses[currentOpacityLevel]);
-        
+
         // Update Ruby O active state
         const rubyO = document.getElementById('ruby-o');
         if (rubyO) {
@@ -566,7 +723,7 @@ export function initCubixEnvironment() {
     };
 
     // --- SIDEBAR OPACITY CONTROL ---
-    window.setOpacity = function(level) {
+    window.setOpacity = function (level) {
         const container = document.querySelector('.inner-app-container');
         if (!container) return;
 
@@ -592,19 +749,19 @@ export function initCubixEnvironment() {
     };
 
     // --- SIDEBAR AI CHAT LOGIC ---
-    window.sendSidebarChat = function() {
+    window.sendSidebarChat = function () {
         const input = document.getElementById('sidebar-ai-input');
         const feed = document.getElementById('sidebar-chat-feed');
         if (!input || !feed || !input.value.trim()) return;
 
         const userMsg = input.value.trim();
-        
+
         // Add User Message
         const userDiv = document.createElement('div');
         userDiv.className = 'mini-msg msg-user';
         userDiv.textContent = userMsg;
         feed.appendChild(userDiv);
-        
+
         // Clear input
         input.value = '';
         feed.scrollTop = feed.scrollHeight;
@@ -625,7 +782,7 @@ export function initCubixEnvironment() {
     });
 
     // --- IN-PAGE APP DOCKING ---
-    window.dockApp = function(appName, icon) {
+    window.dockApp = function (appName, icon) {
         const portal = document.getElementById('library-portal');
         if (!portal) return;
 
@@ -651,13 +808,107 @@ export function initCubixEnvironment() {
         console.log(`[SOVEREIGN] Docked app: ${appName}`);
     };
 
-    window.closeDock = function() {
+    window.closeDock = function () {
         const portal = document.getElementById('library-portal');
         if (portal) {
             portal.innerHTML = '<div class="portal-placeholder">SELECT A FUNCTION TO DOCK INTO THIS VIEW</div>';
         }
     };
 
-    console.log("[CUBIX TESSERACT] Multi-Layer Tesseract + Sovereign Bridge Initialized.");
+    // --- SYSTEM TRAY LOGIC ---
+    window.toggleTray = function (id) {
+        // Close other flyouts first
+        document.querySelectorAll('.tray-flyout').forEach(f => {
+            if (f.id !== id) f.classList.remove('active');
+        });
+        const flyout = document.getElementById(id);
+        if (flyout) flyout.classList.toggle('active');
+        console.log(`[TRAY] Toggled: ${id}`);
+    };
+
+    window.setVolume = function (val) {
+        console.log(`[TRAY] Setting Volume: ${val}%`);
+        if (typeof window.bridgeCmd === 'function') {
+            window.bridgeCmd(`amixer sset Master ${val}%`);
+        }
+        const label = document.getElementById('tray-vol-label');
+        if (label) label.textContent = `${val}%`;
+    };
+
+    window.setBrightness = function (val) {
+        console.log(`[TRAY] Setting Brightness: ${val}%`);
+        if (typeof window.bridgeCmd === 'function') {
+            // Adjusting for Arch Linux brightnessctl
+            window.bridgeCmd(`brightnessctl set ${val}%`);
+        }
+        const label = document.getElementById('tray-bright-label');
+        if (label) label.textContent = `${val}%`;
+    };
+
+    window.setBluetooth = function (state) {
+        if (typeof window.bridgeCmd === 'function') {
+            const cmd = state === 'on' ? 'bluetoothctl power on' : 'bluetoothctl power off';
+            window.bridgeCmd(cmd);
+        }
+    };
+
+    window.sysPower = function (action) {
+        const confirmMsg = `Initiate System ${action.toUpperCase()}?`;
+        if (!confirm(confirmMsg)) return;
+
+        const cmdMap = {
+            'sleep': 'systemctl suspend',
+            'reboot': 'systemctl reboot',
+            'shutdown': 'systemctl poweroff'
+        };
+        if (typeof window.bridgeCmd === 'function' && cmdMap[action]) {
+            window.bridgeCmd(cmdMap[action]);
+        }
+    };
+
+    // --- GLOBAL SYSTEM TRAY POLLER ---
+    const pollSystemState = async () => {
+        // Time & Date
+        const now = new Date();
+        const timeEl = document.getElementById('sys-time');
+        const dateEl = document.getElementById('sys-date');
+        if (timeEl) timeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (dateEl) dateEl.textContent = now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase();
+
+        // Battery (Browser API)
+        if ('getBattery' in navigator) {
+            const battery = await navigator.getBattery();
+            const pct = Math.round(battery.level * 100);
+            const charging = battery.charging;
+
+            const batLabel = document.getElementById('tray-bat-label');
+            const batFill = document.getElementById('bat-fill-svg');
+            const batDetail = document.getElementById('bat-detail');
+
+            if (batLabel) batLabel.textContent = `${pct}%`;
+            if (batFill) {
+                batFill.setAttribute('width', (pct / 100) * 12);
+                batFill.style.color = pct < 20 ? '#FF4B2B' : (charging ? '#70E100' : '#E2E2E2');
+            }
+            if (batDetail) batDetail.innerHTML = `Charge: ${pct}%<br>Status: ${charging ? 'Charging' : 'Discharging'}`;
+        }
+
+        // WiFi SSID (from Bridge)
+        try {
+            const res = await fetch('http://localhost:8081/network/scan'); // Re-use scan for active ssid
+            const data = await res.json();
+            const activeNet = data.networks?.find(n => n.connected);
+            const netLabel = document.getElementById('tray-net-label');
+            const netSsid = document.getElementById('flyout-net-ssid');
+            if (netLabel) netLabel.textContent = activeNet ? 'WIFI' : 'OFF';
+            if (netSsid) netSsid.textContent = activeNet ? `SSID: ${activeNet.ssid}` : 'Disconnected';
+        } catch (e) { }
+    };
+
+    // Initial poll and set interval
+    pollSystemState();
+    setInterval(pollSystemState, 15000); // Poll every 15s
+
+    console.log("[CUBIX TESSERACT] Sovereign Desktop Interface & System Tray Ready.");
 }
 
