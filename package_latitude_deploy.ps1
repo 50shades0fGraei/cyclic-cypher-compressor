@@ -19,11 +19,11 @@ $files = @(
     "lujan_vault.py", "Lujan_Windows_Bridge.py", "Lujan_SaaS_API.py",
     "LUJAN_VAULT_MVP.html", "COMMERCIAL_LANDING_PAGE.html",
     "lujan_wallpaper.png", "system_cleaner.py", "system_polish.py",
-    "agent_dna_builder.html", "function_library_mapper.py"
+    "agent_dna_builder.html", "function_library_mapper.py", "vault_app.py", "Dockerfile.vaultUI", "docker-compose.vault.yml"
 )
 
 $folders = @(
-    "QuickVault", "core", "lib", "cloud_landing_page"
+    "QuickVault", "core", "lib", "cloud_landing_page", "templates", "static"
 )
 
 foreach ($f in $files) {
