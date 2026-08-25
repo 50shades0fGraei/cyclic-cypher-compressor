@@ -391,21 +391,21 @@ async function compressAndVault(file, tag, level) {
     if (again.length < compressed.length) compressed = again;
   }
 
-  const origSize  = file.size;
-  const compSize  = Math.ceil(compressed.length * 0.75); // base64 → bytes approx
-  const ratio     = origSize > 0 ? Math.round((1 - compSize / origSize) * 100) : 0;
-  const ext       = file.name.split('.').pop();
+  const origSize = file.size;
+  const compSize = Math.ceil(compressed.length * 0.75); // base64 → bytes approx
+  const ratio = origSize > 0 ? Math.round((1 - compSize / origSize) * 100) : 0;
+  const ext = file.name.split('.').pop();
 
   return {
-    id:       uid(),
-    name:     file.name,
-    ext:      ext,
-    tag:      tag || 'General',
+    id: uid(),
+    name: file.name,
+    ext: ext,
+    tag: tag || 'General',
     origSize: origSize,
     compSize: Math.max(compSize, 1),
-    ratio:    Math.max(0, ratio),
-    data:     compressed,
-    addedAt:  Date.now()
+    ratio: Math.max(0, ratio),
+    data: compressed,
+    addedAt: Date.now()
   };
 }
 
@@ -458,7 +458,7 @@ function renderQueue() {
   `;
 
   const leftPanel = document.querySelector('.left-panel');
-  const vaultBtn  = document.getElementById('btn-vault');
+  const vaultBtn = document.getElementById('btn-vault');
   leftPanel.insertBefore(section, vaultBtn);
 
   document.getElementById('queue-clear-btn').addEventListener('click', () => {
@@ -491,9 +491,9 @@ function renderQueue() {
 async function vaultAllQueued() {
   if (state.queue.length === 0) return;
 
-  const btn   = document.getElementById('btn-vault');
+  const btn = document.getElementById('btn-vault');
   const level = parseInt(document.getElementById('compress-level').value);
-  const tag   = document.getElementById('vault-tag').value.trim() || 'General';
+  const tag = document.getElementById('vault-tag').value.trim() || 'General';
 
   btn.textContent = '⏳ Vaulting...';
   btn.disabled = true;
@@ -589,7 +589,7 @@ function createFileCard(entry) {
   card.dataset.id = entry.id;
 
   const color = getFileColor(entry.ext);
-  const icon  = getFileIcon(entry.ext);
+  const icon = getFileIcon(entry.ext);
   const saved = entry.origSize - entry.compSize;
 
   card.innerHTML = `
@@ -650,13 +650,13 @@ function createTab(label, value) {
 // =====================================================
 function updateStats() {
   const totalFiles = state.vault.length;
-  const totalOrig  = state.vault.reduce((s, e) => s + e.origSize, 0);
-  const totalComp  = state.vault.reduce((s, e) => s + e.compSize, 0);
+  const totalOrig = state.vault.reduce((s, e) => s + e.origSize, 0);
+  const totalComp = state.vault.reduce((s, e) => s + e.compSize, 0);
   const totalSaved = totalOrig - totalComp;
-  const avgRatio   = totalOrig > 0 ? Math.round((1 - totalComp / totalOrig) * 100) : 0;
+  const avgRatio = totalOrig > 0 ? Math.round((1 - totalComp / totalOrig) * 100) : 0;
 
   document.getElementById('total-files').textContent = totalFiles;
-  document.getElementById('total-saved').textContent  = formatBytes(Math.max(0, totalSaved));
+  document.getElementById('total-saved').textContent = formatBytes(Math.max(0, totalSaved));
   document.getElementById('compress-ratio').textContent = avgRatio + '%';
   document.getElementById('storage-used-label').textContent = formatBytes(totalComp);
 
@@ -673,7 +673,7 @@ let modalEntry = null;
 function openModal(entry) {
   modalEntry = entry;
   const overlay = document.getElementById('modal-overlay');
-  const saved   = entry.origSize - entry.compSize;
+  const saved = entry.origSize - entry.compSize;
 
   document.getElementById('modal-title').textContent = entry.name;
   document.getElementById('modal-body').innerHTML = `
@@ -714,12 +714,12 @@ function closeModal() {
 // =====================================================
 function exportAllEntries() {
   if (state.vault.length === 0) { showToast('Vault is empty', 'info'); return; }
-  const data     = JSON.stringify(state.vault, null, 2);
-  const blob     = new Blob([data], { type: 'application/json' });
-  const url      = URL.createObjectURL(blob);
-  const a        = document.createElement('a');
-  a.href         = url;
-  a.download     = `quickvault_export_${Date.now()}.json`;
+  const data = JSON.stringify(state.vault, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `quickvault_export_${Date.now()}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -743,6 +743,41 @@ function initEvents() {
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('file-input');
 
+  async function handleFilesInput(fileList) {
+    const bundleEnabled = document.getElementById('bundle-images')?.checked;
+    let files = [...fileList];
+
+    if (bundleEnabled && files.length > 0) {
+      const isImage = f => f.type.startsWith('image/');
+      const imgs = files.filter(isImage);
+      const others = files.filter(f => !isImage(f));
+
+      if (imgs.length > 6) {
+        showToast(`Max 6 pictures allowed for bundling. You selected ${imgs.length}.`, 'error');
+        return;
+      }
+
+      if (imgs.length > 1) {
+        const parts = [];
+        for (let i = 0; i < imgs.length; i++) {
+          const mark = `\n######## LUJAN_FILE_BOUNDARY: [${imgs[i].name}] ########\n`;
+          parts.push(new Blob([mark], { type: 'text/plain' }));
+          parts.push(imgs[i]);
+        }
+        parts.push(new Blob(['\n######## LUJAN_FILE_BOUNDARY_END ########\n'], { type: 'text/plain' }));
+
+        const bundleBlob = new Blob(parts);
+        const bundleFile = new File([bundleBlob], "Image_Bundle.bin", {
+          type: 'application/octet-stream',
+          lastModified: Date.now()
+        });
+        files = [...others, bundleFile];
+      }
+    }
+
+    addFilesToQueue(files);
+  }
+
   dropZone.addEventListener('dragover', e => {
     e.preventDefault();
     dropZone.classList.add('drag-over');
@@ -755,7 +790,7 @@ function initEvents() {
   dropZone.addEventListener('drop', e => {
     e.preventDefault();
     dropZone.classList.remove('drag-over');
-    if (e.dataTransfer.files.length) addFilesToQueue([...e.dataTransfer.files]);
+    if (e.dataTransfer.files.length) handleFilesInput([...e.dataTransfer.files]);
   });
 
   dropZone.addEventListener('click', () => fileInput.click());
@@ -766,7 +801,7 @@ function initEvents() {
   });
 
   fileInput.addEventListener('change', () => {
-    if (fileInput.files.length) addFilesToQueue([...fileInput.files]);
+    if (fileInput.files.length) handleFilesInput([...fileInput.files]);
     fileInput.value = '';
   });
 

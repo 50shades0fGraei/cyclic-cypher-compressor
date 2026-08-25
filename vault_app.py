@@ -1,6 +1,7 @@
 import os
 import uuid
 import json
+import tarfile
 from flask import Flask, request, jsonify, render_template, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from double_crunch_marketplace import double_crunch_compress, iterative_decompress
@@ -54,20 +55,33 @@ def list_files():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
+    files = request.files.getlist('files')
+    if not files or files[0].filename == '':
         return jsonify({'error': 'No selected file'}), 400
         
-    label = request.form.get('label', 'Unnamed File')
-    
-    filename = secure_filename(file.filename)
+    label = request.form.get('label', 'Unnamed Bundle')
     file_id = str(uuid.uuid4())
-    temp_path = os.path.join(TEMP_STORAGE, filename)
     cdv6_path = os.path.join(VAULT_STORAGE, f"{file_id}.cdv6")
     
-    file.save(temp_path)
+    if len(files) == 1:
+        # Single File Injection
+        file = files[0]
+        filename = secure_filename(file.filename)
+        temp_path = os.path.join(TEMP_STORAGE, filename)
+        file.save(temp_path)
+        original_name = filename
+    else:
+        # 6+ File Bundle Injection
+        filename = f"bundle_{file_id[:8]}.tar"
+        original_name = filename
+        temp_path = os.path.join(TEMP_STORAGE, filename)
+        with tarfile.open(temp_path, "w") as tar:
+            for f in files:
+                sf = secure_filename(f.filename)
+                fp = os.path.join(TEMP_STORAGE, f"sub_{sf}")
+                f.save(fp)
+                tar.add(fp, arcname=sf)
+                os.remove(fp)
     
     # Run Double Crunch
     result = double_crunch_compress(temp_path, cdv6_path)
@@ -82,7 +96,7 @@ def upload_file():
     metadata = get_metadata()
     metadata[file_id] = {
         'label': label,
-        'original_filename': filename
+        'original_filename': original_name
     }
     save_metadata(metadata)
     

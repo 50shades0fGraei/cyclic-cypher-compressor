@@ -22,8 +22,9 @@
                 <h2>Import Asset</h2>
                 <div class="drop-zone" id="drop-zone">
                     <span class="drop-icon">✧</span>
-                    <p>Drag & Drop or <strong>Click to Browse</strong></p>
-                    <input type="file" id="file-input" hidden>
+                    <p>Drag & Drop or <strong>Click to Browse</strong><br /><small>(Select 6+ items for Max Density
+                            Bundling)</small></p>
+                    <input type="file" id="file-input" multiple hidden>
                 </div>
 
                 <div class="input-group">
@@ -50,7 +51,7 @@
         const crunchBtn = document.getElementById('crunch-btn');
         const fileList = document.getElementById('file-list');
 
-        let selectedFile = null;
+        let selectedFiles = [];
 
         // Fetch and render files
         async function loadFiles() {
@@ -107,35 +108,40 @@
             e.preventDefault();
             dropZone.classList.remove('dragover');
             if (e.dataTransfer.files.length) {
-                selectedFile = e.dataTransfer.files[0];
+                selectedFiles = Array.from(e.dataTransfer.files);
                 updateDropZoneText();
             }
         });
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length) {
-                selectedFile = e.target.files[0];
+                selectedFiles = Array.from(e.target.files);
                 updateDropZoneText();
             }
         });
 
         function updateDropZoneText() {
-            if (selectedFile) {
-                dropZone.querySelector('p').innerText = `Selected: ${selectedFile.name}`;
-                if (!fileLabel.value) fileLabel.value = selectedFile.name.split('.')[0];
+            if (selectedFiles.length > 0) {
+                if (selectedFiles.length === 1) {
+                    dropZone.querySelector('p').innerText = `Selected: ${selectedFiles[0].name}`;
+                    if (!fileLabel.value) fileLabel.value = selectedFiles[0].name.split('.')[0];
+                } else {
+                    dropZone.querySelector('p').innerHTML = `Selected: ${selectedFiles.length} files <strong style="color:#aa44ff">[BUNDLE READY]</strong>`;
+                    if (!fileLabel.value) fileLabel.value = `Asset Bundle (${selectedFiles.length} items)`;
+                }
                 crunchBtn.removeAttribute('disabled');
             }
         }
 
         // Upload
         crunchBtn.addEventListener('click', async () => {
-            if (!selectedFile) return;
+            if (selectedFiles.length === 0) return;
 
             crunchBtn.innerText = 'Crunching...';
             crunchBtn.setAttribute('disabled', true);
 
             const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('label', fileLabel.value || 'Unnamed');
+            selectedFiles.forEach(f => formData.append('files', f));
+            formData.append('label', fileLabel.value || 'Unnamed Asset');
 
             try {
                 const res = await fetch('/api/upload', {
@@ -144,10 +150,10 @@
                 });
 
                 if (res.ok) {
-                    selectedFile = null;
+                    selectedFiles = [];
                     fileInput.value = '';
                     fileLabel.value = '';
-                    dropZone.querySelector('p').innerHTML = 'Drag & Drop or <strong>Click to Browse</strong>';
+                    dropZone.querySelector('p').innerHTML = 'Drag & Drop or <strong>Click to Browse</strong><br/><small>(Select 6+ items for Max Density Bundling)</small>';
                     crunchBtn.innerText = 'Execute Double Crunch';
                     loadFiles();
                 } else {

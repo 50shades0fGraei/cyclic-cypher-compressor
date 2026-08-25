@@ -1,7 +1,0 @@
-{
-  "segment_id": "SOV_AUDIT_001",
-  "reflections": "The audit correctly identified the 'Sabotage' signature in a 1.2GB stream. Low energy spike (4.2% total machine draw).",
-  "performance_score": 0.98,
-  "implications": "Integrity confirmed for EliteBook G11 NPU deployment.",
-  "timestamp": 1775239386.663212
-}

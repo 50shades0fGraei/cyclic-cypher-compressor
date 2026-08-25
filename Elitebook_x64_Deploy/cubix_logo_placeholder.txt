@@ -1,2 +1,0 @@
-CUBIX OS LOGO SAVE (IMAGE_TRANSFER)
-The image provided by the user will be saved as cubix_logo.png in the project.

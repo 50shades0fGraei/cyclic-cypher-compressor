@@ -1,4 +1,0 @@
-# Cyclic Cypher Compressor Requirements
-# Core dependencies
-flask
-stripe

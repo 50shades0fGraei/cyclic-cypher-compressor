@@ -6,13 +6,20 @@ import os
 import sys
 import threading
 import tkinter as tk
-from tkinter import filedialog, scrolledtext, messagebox
+from tkinter import filedialog, scrolledtext, messagebox, simpledialog
+
+try:
+    import licensing_engine
+except ImportError:
+    licensing_engine = None
 
 # Fallback safely if run directly without Double Crunch logic installed
 try:
     import double_crunch_marketplace as lujan_core
 except ImportError:
     lujan_core = None
+
+APP_TYPE = "UNIVERSAL" # Can be UNIVERSAL, MEDIA, or DOCUMENT
 
 # --- UI CONSTANTS ---
 BG_COLOR = "#05050A"
@@ -41,7 +48,13 @@ class SovereignVaultApp(tk.Tk):
     def __init__(self):
         super().__init__()
         
-        self.title("Sovereign Double Crunch Vault")
+        if APP_TYPE == "MEDIA":
+            self.title("Sovereign Media Vault")
+        elif APP_TYPE == "DOCUMENT":
+            self.title("Sovereign Document Vault")
+        else:
+            self.title("Sovereign Double Crunch Vault")
+            
         self.geometry("800x600")
         self.configure(bg=BG_COLOR)
         
@@ -62,9 +75,46 @@ class SovereignVaultApp(tk.Tk):
         if lujan_core is None:
             print("[WARNING] core files missing! Ensure cyberdna_engine.py is present.")
             
+        
+        if not self.check_license():
+            self.destroy()
+            return
+            
+    def check_license(self):
+        if licensing_engine is None:
+            print("[WARNING] licensing module missing.")
+            return True
+            
+        if licensing_engine.verify_license():
+            self.terminal.configure(state='normal')
+            self.terminal.insert(tk.END, "DEVICE LICENSE VERIFIED. Welcome Sovereign.\n\n")
+            self.terminal.configure(state='disabled')
+            return True
+            
+        # Prompt for key
+        messagebox.showinfo("Lujan Licensing", "This application requires a 1-Device Purchase Key.\nPlease enter it to unlock.")
+        purchase_key = simpledialog.askstring("Activation", "Enter your $80 Sovereign Purchase Key:")
+        
+        if purchase_key and len(purchase_key) > 5:
+            licensing_engine.activate_license(purchase_key)
+            messagebox.showinfo("Success", "Device Licensed successfully. Engine Unlocked.")
+            self.terminal.configure(state='normal')
+            self.terminal.insert(tk.END, "DEVICE LICENSE ACTIVATED.\n\n")
+            self.terminal.configure(state='disabled')
+            return True
+        else:
+            messagebox.showerror("Error", "Invalid Purchase Key. The application will close.")
+            return False
+
     def setup_ui(self):
         # Header
-        header = tk.Label(self, text="LUJAN DOUBLE CRUNCH VAULT", bg=BG_COLOR, fg=ACCENT_COLOR, font=FONT_TITLE)
+        title_text = "LUJAN DOUBLE CRUNCH VAULT"
+        if APP_TYPE == "MEDIA":
+            title_text = "LUJAN MEDIA VAULT"
+        elif APP_TYPE == "DOCUMENT":
+            title_text = "LUJAN DOCUMENT VAULT"
+            
+        header = tk.Label(self, text=title_text, bg=BG_COLOR, fg=ACCENT_COLOR, font=FONT_TITLE)
         header.pack(pady=(30, 20))
         
         # Button Frame
@@ -118,7 +168,13 @@ class SovereignVaultApp(tk.Tk):
             print("ERROR: Engine core not loaded.")
             return
 
-        target_file = filedialog.askopenfilename(title="Select File to Crunch")
+        filetypes = [("All Files", "*.*")]
+        if APP_TYPE == "MEDIA":
+            filetypes = [("Media Files", "*.mp4 *.avi *.mkv *.jpg *.png *.jpeg")]
+        elif APP_TYPE == "DOCUMENT":
+            filetypes = [("Document Files", "*.pdf *.docx *.txt *.xlsx *.csv")]
+            
+        target_file = filedialog.askopenfilename(title="Select File to Crunch", filetypes=filetypes)
         if not target_file: return
         
         output_file = target_file + ".cdv6"
