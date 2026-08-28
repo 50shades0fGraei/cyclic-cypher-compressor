@@ -3,11 +3,11 @@
 # This software is proprietary and subject to the terms of a specific License Agreement.
 
 # Launch Cubix OS as a standalone desktop application using MS Edge / Chrome App Mode
-Write-Host "Initializing Sovereign Bridge & HTTP Server..." -ForegroundColor Cyan
+Write-Host "Initializing Randall Bridge & HTTP Server..." -ForegroundColor Cyan
 
 # Start the background Python servers
 Start-Process python -ArgumentList "-m http.server 8000" -WindowStyle Hidden
-Start-Process python -ArgumentList "sovereign_bridge.py" -WindowStyle Hidden
+Start-Process python -ArgumentList "randall_bridge.py" -WindowStyle Hidden
 
 Start-Sleep -Seconds 2
 

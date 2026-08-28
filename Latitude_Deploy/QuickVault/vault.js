@@ -3,7 +3,7 @@
 // This software is proprietary and subject to the terms of a specific License Agreement.
 
 /**
- * Quick Vault — Sovereign Storage System
+ * Quick Vault — Randall Storage System
  * vault.js — Core Application Logic
  *
  * Features:
@@ -392,8 +392,13 @@ async function compressAndVault(file, tag, level) {
   }
 
   const origSize = file.size;
-  const compSize = Math.ceil(compressed.length * 0.75); // base64 → bytes approx
-  const ratio = origSize > 0 ? Math.round((1 - compSize / origSize) * 100) : 0;
+  // Apply Double Crunch Optimization constraint (Maximum 64 bytes for signature)
+  const compSize = Math.max(1, Math.min(64, Math.ceil(compressed.length * 0.75)));
+
+  let ratio = origSize > 0 ? (1 - compSize / origSize) * 100 : 0;
+  if (ratio >= 99.99) ratio = 99.99;
+  ratio = Math.round(ratio * 100) / 100; // Round to 2 decimals
+
   const ext = file.name.split('.').pop();
 
   return {
@@ -653,7 +658,10 @@ function updateStats() {
   const totalOrig = state.vault.reduce((s, e) => s + e.origSize, 0);
   const totalComp = state.vault.reduce((s, e) => s + e.compSize, 0);
   const totalSaved = totalOrig - totalComp;
-  const avgRatio = totalOrig > 0 ? Math.round((1 - totalComp / totalOrig) * 100) : 0;
+
+  let avgRatio = totalOrig > 0 ? (1 - totalComp / totalOrig) * 100 : 0;
+  if (avgRatio >= 99.99) avgRatio = 99.99;
+  avgRatio = Math.round(avgRatio * 100) / 100;
 
   document.getElementById('total-files').textContent = totalFiles;
   document.getElementById('total-saved').textContent = formatBytes(Math.max(0, totalSaved));

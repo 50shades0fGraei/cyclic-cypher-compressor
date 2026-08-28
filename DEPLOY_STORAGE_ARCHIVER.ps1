@@ -1,10 +1,10 @@
-# SOVEREIGN STORAGE ARCHIVER: DEPLOYMENT SCRIPT
+# RANDALL STORAGE ARCHIVER: DEPLOYMENT SCRIPT
 # This script packages the QuickVault and its monetization bridge for deployment.
 
 $projectName = "StorageArchiveDrop"
 $distDir = "c:\Users\randall\cyclic-cypher-compressor\dist_archiver"
 
-Write-Host "--- Initializing Sovereign Archive Deployment ---" -ForegroundColor Cyan
+Write-Host "--- Initializing Randall Archive Deployment ---" -ForegroundColor Cyan
 
 # 1. Prepare Distribution Directory
 if (Test-Path $distDir) {
@@ -16,8 +16,8 @@ New-Item -ItemType Directory -Path $distDir
 Write-Host "Packaging QuickVault Frontend..." -ForegroundColor Yellow
 Copy-Item -Path "c:\Users\randall\cyclic-cypher-compressor\QuickVault\*" -Destination $distDir -Recurse -Force
 
-# 3. Package Sovereign Backend (Lujan Vault & API)
-Write-Host "Packaging Sovereign API Backend..." -ForegroundColor Yellow
+# 3. Package Randall Backend (Lujan Vault & API)
+Write-Host "Packaging Randall API Backend..." -ForegroundColor Yellow
 $backendFiles = @(
     "lujan_vault.py",
     "Lujan_SaaS_API.py",
@@ -40,11 +40,11 @@ Copy-Item -Path "c:\Users\randall\cyclic-cypher-compressor\dark_encryptor_standa
 $launchScript = @"
 @echo off
 echo ========================================================
-echo   SOVEREIGN STORAGE ARCHIVER: STARTING REVENUE NODE
+echo   RANDALL STORAGE ARCHIVER: STARTING REVENUE NODE
 echo   Partner: meta2graei@gmail.com
 echo ========================================================
 echo.
-echo 1. Starting Local Sovereign API (Port 8080)...
+echo 1. Starting Local Randall API (Port 8080)...
 start /B python Lujan_SaaS_API.py
 echo.
 echo 2. Your Archive Drop is now active at: http://localhost:8080

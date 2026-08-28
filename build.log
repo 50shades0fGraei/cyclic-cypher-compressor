@@ -1,2 +1,2 @@
-./EliteBook-Sovereign-Build/build.sh: line 8: $'\r': command not found
-./EliteBook-Sovereign-Build/build.sh: line 10: $'\r': command not found
+./EliteBook-Randall-Build/build.sh: line 8: $'\r': command not found
+./EliteBook-Randall-Build/build.sh: line 10: $'\r': command not found

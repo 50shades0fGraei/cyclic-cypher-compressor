@@ -5,7 +5,7 @@
 """
 EPHEMERAL CYCLIC CYPHER ENGINE
 ================================
-Sovereign One-Time Transmission System — Lujan Tesseract OS
+Randall One-Time Transmission System — Lujan Tesseract OS
 
 Cryptographic Strength Per Transmission:
   • 256² possibilities per code pair  (key layer)
@@ -221,7 +221,7 @@ class EphemeralCypher:
 # ─────────────────────────────────────────────
 #  TRANSMISSION PACKET BUILDER
 #  Wraps seal() with routing metadata for
-#  sovereign dark-channel transmission
+#  randall dark-channel transmission
 # ─────────────────────────────────────────────
 
 class EphemeralPacket:
@@ -235,7 +235,7 @@ class EphemeralPacket:
     """
 
     @staticmethod
-    def build(plaintext: str, ttl_seconds: int = 300, label: str = "SOVEREIGN_MSG") -> dict:
+    def build(plaintext: str, ttl_seconds: int = 300, label: str = "RANDALL_MSG") -> dict:
         """
         Build a one-time transmission packet.
 
@@ -319,7 +319,7 @@ if __name__ == "__main__":
     print(f"[KEYSPACE]  (256^2)^{msg_len} x 128^16 = ~10^{total_log10:,} combinations")
     print(f"            An attacker must guess 1 in 10^{total_log10:,} — no machine can brute-force this.\n")
 
-    message = "SOVEREIGN TRANSMISSION: Lujan Protocol Alpha — Eyes Only."
+    message = "RANDALL TRANSMISSION: Lujan Protocol Alpha — Eyes Only."
     print(f"[ORIGINAL]  {message}\n")
 
     packet = EphemeralPacket.build(message, ttl_seconds=120, label="DEMO")

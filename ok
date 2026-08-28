@@ -48,18 +48,18 @@ sudo systemctl restart lightdm
 
 ---
 
-**For the Sovereign branding look** — set the user avatar too:
+**For the Randall branding look** — set the user avatar too:
 ```bash
-# Copy a profile picture for the sovereign user
-sudo cp /mnt/usb/avatar.jpg /var/lib/AccountsService/icons/sovereign
+# Copy a profile picture for the randall user
+sudo cp /mnt/usb/avatar.jpg /var/lib/AccountsService/icons/randall
 
 # Tell AccountsService to use it
-sudo nano /var/lib/AccountsService/users/sovereign
+sudo nano /var/lib/AccountsService/users/randall
 ```
 Add:
 ```ini
 [User]
-Icon=/var/lib/AccountsService/icons/sovereign
+Icon=/var/lib/AccountsService/icons/randall
 ```
 
 ---

@@ -1,6 +1,6 @@
 a⚙️ CubixOS DNA Efficiency Scroll
 
-Chapter: Invocation as Sovereign Optimization
+Chapter: Invocation as Randall Optimization
 
 ---
 
@@ -87,13 +87,13 @@ Result:
 - Procedural, contextless, fragile
 
 🌀 CubixOS Invocation
-- Ritualized, lineage-bound, sovereign  
+- Ritualized, lineage-bound, randall  
 - Every call is traceable, meaningful, and protected
 
 Result:  
 - Invocation becomes a symbolic act  
 - Stewardship replaces guesswork  
-- Sovereignty replaces fragmentation
+- Randallty replaces fragmentation
 
 ---
 
@@ -105,7 +105,7 @@ Result:
 | Energy | ~35–60% power savings  
 | Temporal | ~35–50% faster execution  
 | Cognitive | ~40–60% dev time saved  
-| Symbolic | 100% traceable, sovereign invocation
+| Symbolic | 100% traceable, randall invocation
 
 
 

@@ -1,7 +1,3 @@
-<!-- (c) 2026 Randall James Lujan. ALL RIGHTS RESERVED. -->
-<!-- PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture. -->
-<!-- This software is proprietary and subject to the terms of a specific License Agreement. -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -442,27 +438,37 @@
             transition: opacity 0.4s ease;
         }
 
-        /* Bottom-center navigator slot */
+        /* Bottom-center navigator slot (Cockpit Joystick) */
         #nav-center-slot {
-            position: absolute;
+            position: fixed;
             left: 50%;
+            bottom: 25px;
+            /* Sits proudly in the center, breaking out of the taskbar */
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
+            width: 100px;
+            height: 100px;
             cursor: grab;
-            border-radius: 12px;
+            border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 18px rgba(112, 225, 0, 0.4), 0 0 6px rgba(0, 242, 255, 0.3);
-            transition: box-shadow 0.3s;
+            box-shadow: 0 0 30px rgba(112, 225, 0, 0.4), inset 0 0 15px rgba(0, 242, 255, 0.3);
+            border: 2px solid rgba(0, 242, 255, 0.5);
+            background: radial-gradient(circle at center, #0d1117 0%, #06080a 100%);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             touch-action: none;
+            z-index: 10001;
+            /* Above taskbar */
         }
 
         #nav-center-slot:active {
             cursor: grabbing;
+            transform: translateX(-50%) scale(0.92);
+            box-shadow: 0 0 20px rgba(112, 225, 0, 0.7), inset 0 0 25px rgba(0, 242, 255, 0.6);
+            border-color: #00f2ff;
         }
 
         #nav-center-slot:hover {
-            box-shadow: 0 0 28px rgba(112, 225, 0, 0.7), 0 0 14px rgba(0, 242, 255, 0.5);
+            box-shadow: 0 0 45px rgba(112, 225, 0, 0.7), 0 0 20px rgba(0, 242, 255, 0.5);
+            border-color: #70E100;
         }
 
         /* Per-face environment taskbar */
@@ -786,7 +792,7 @@
             </div>
         </div>
         <div class="splash-title">LUJAN TESSERACT</div>
-        <div class="splash-sub">Sovereign OS // CyberDNA // EliteBook i5 vPro</div>
+        <div class="splash-sub">Randall OS // CyberDNA // EliteBook i5 vPro</div>
         <div class="splash-bar-wrap">
             <div class="splash-bar" id="splash-bar"></div>
         </div>
@@ -794,7 +800,7 @@
     </div>
     <!-- ═══ LOGIN / SIGN-ON SCREEN ═══ -->
     <div id="cubix-login">
-        <div class="login-logo">SOVEREIGN DIRECT // CUBIX OS v1.2</div>
+        <div class="login-logo">RANDALL DIRECT // CUBIX OS v1.2</div>
         <div class="login-title">LUJAN TESSERACT</div>
         <div class="login-sub">SELECT OPERATOR PROFILE TO INITIALIZE</div>
 
@@ -803,7 +809,7 @@
             <div class="login-profile active-profile" id="profile-admin" onclick="selectProfile('admin')">
                 <div class="profile-avatar">🛡️</div>
                 <div class="profile-name">ADMIN</div>
-                <div class="profile-role">Sovereign Operator</div>
+                <div class="profile-role">Randall Operator</div>
             </div>
             <!-- Future profiles (locked) -->
             <div class="login-profile" title="Not yet provisioned">
@@ -818,8 +824,7 @@
             </div>
         </div>
 
-        <button class="login-enter-btn" id="login-enter-btn" onclick="triggerLoginRequestFullscreen()">INITIALIZE
-            CUBIX</button>
+        <button class="login-enter-btn" id="login-enter-btn" onclick="triggerLogin()">INITIALIZE CUBIX</button>
 
         <div class="login-status-line">
             <span><span class="login-status-dot"></span>SYSTEM ONLINE</span>
@@ -845,37 +850,39 @@
         <div style="display:flex;align-items:center;gap:10px;">
             <div>
                 <div class="topbar-context-title">LUJAN TESSERACT</div>
-                <div style="font-size:0.65rem;color:#8892B0;letter-spacing:0.12em;margin-top:1px;">SOVEREIGN DIRECT //
+                <div style="font-size:0.65rem;color:#8892B0;letter-spacing:0.12em;margin-top:1px;">RANDALL DIRECT //
                     CUBIX OS</div>
             </div>
         </div>
 
-        <!-- Cubix Rubys Quick Navigation: C U B I X -->
+        <!-- Cubix Rubys Quick Navigation -->
         <div class="cubix-ruby-container">
             <div class="ruby-btn" id="ruby-c" title="Center View">C</div>
+            <div class="ruby-btn" id="ruby-o" title="Toggle Background Opacity (Multitasking)" onclick="cycleOpacity()">
+                O</div>
             <div class="ruby-btn" id="ruby-u" title="GRAEI AGI System">U</div>
             <div class="ruby-btn" id="ruby-b" title="Back Wall">B</div>
             <div class="ruby-btn" id="ruby-i" title="Right Wall">I</div>
             <div class="ruby-btn" id="ruby-x" title="Toggle Macro Matrix (Outer/Inner)">X</div>
         </div>
 
-
+        <div class="topbar-nav">
+            <span class="top-link">System Context</span>
+            <span class="top-link">Network Status</span>
+            <span class="top-link">Randall Directives</span>
+        </div>
     </div>
 
     <!-- 3D CSS ENVIRONMENT SCENE -->
     <div class="scene">
         <div class="world" id="world">
 
-            <!-- THE CROSS-LAYER BRIDGE: Visual conduit between Network and Device -->
-            <div id="cross-layer-bridge" class="cross-layer-bridge"></div>
-
             <!-- OUTER SYSTEM CUBE (Macro Environments) -->
             <div class="outer-cube" id="outer-cube">
                 <!-- Outer Face Right: Social / Entertainment -->
                 <div class="outer-face outer-right">
-                    <h1 class="outer-title">NETWORK INTERFACE // SOCIAL / ENTERTAINMENT</h1>
+                    <h1 class="outer-title">SOCIAL / ENTERTAINMENT</h1>
                     <div class="room-panel" style="background: rgba(13, 17, 23, 0.85); width: 85%; height: 80%;">
-                        <div class="visible-system-underlay"></div>
                         <div class="social-grid"
                             style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px;">
                             <div class="social-card"
@@ -904,9 +911,8 @@
                 </div>
                 <!-- Outer Face Back: Web Process Sign-on & Report -->
                 <div class="outer-face outer-back">
-                    <h1 class="outer-title">NETWORK INTERFACE // WEB SIGN-ON & TRAFFIC REPORT</h1>
+                    <h1 class="outer-title">WEB SIGN-ON & TRAFFIC REPORT</h1>
                     <div class="room-panel" style="background: rgba(13, 17, 23, 0.85); width: 85%; height: 80%;">
-                        <div class="visible-system-underlay"></div>
                         <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                             <div class="report-section">
                                 <h3 style="color: #00f2ff;">ACTIVE WEB SESSIONS</h3>
@@ -949,10 +955,9 @@
                 <!-- Outer Face Left: Network Manager -->
                 <div class="outer-face outer-left"
                     style="display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:40px;">
-                    <h1 class="outer-title">NETWORK INTERFACE // NETWORK MANAGER</h1>
+                    <h1 class="outer-title">⚡ NETWORK MANAGER</h1>
                     <div class="room-panel"
                         style="width:90%;max-width:700px;height:80%;display:flex;flex-direction:column;gap:0;padding:0;overflow:hidden;">
-                        <div class="visible-system-underlay"></div>
                         <!-- Toolbar -->
                         <div
                             style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(0,242,255,0.2);">
@@ -1011,60 +1016,62 @@
                         </div>
                     </div>
                 </div>
-                <!-- Outer Face Front: Lujan Sovereign Browser -->
+                <!-- Outer Face Front: Chromium Browser Setup -->
                 <div class="outer-face outer-front" style="display:flex; align-items:center; justify-content:center;">
                     <div class="browser-container"
-                        style="width: 95%; height: 90%; background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(25px); border-radius: 16px; border: 1px solid rgba(0, 242, 255, 0.3); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
+                        style="width: 95%; height: 90%; background: #ffffff; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.8); pointer-events: auto;">
+
+                        <!-- Browser Tabs -->
                         <div class="browser-header"
-                            style="background: #1a1d23; padding: 5px 20px 0 20px; display: flex; align-items: flex-end; gap: 10px;">
+                            style="background: #dee1e6; padding: 8px 10px 0 10px; display: flex; align-items: flex-end; gap: 5px;">
                             <div class="browser-tab active"
-                                style="background: rgba(13, 17, 23, 0.9); padding: 12px 25px; border-radius: 10px 10px 0 0; border: 1px solid rgba(0, 242, 255, 0.3); border-bottom: none; color: #00f2ff; font-size: 13px; font-weight: bold; cursor: pointer;">
-                                Sovereign Hub</div>
-                            <div class="browser-tab"
-                                style="padding: 12px 25px; color: #8892b0; font-size: 13px; cursor: pointer;">Deductive
-                                Archive</div>
-                            <div style="flex: 1;"></div>
-                            <div style="padding-bottom: 10px; color: #444; font-size: 18px; cursor: pointer;">+</div>
+                                style="background: #ffffff; padding: 10px 20px; border-radius: 8px 8px 0 0; color: #3c4043; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; min-width: 150px;">
+                                <span style="font-size:14px;">🌐</span> Tesseract
+                            </div>
+                            <div
+                                style="padding-bottom: 8px; padding-left: 10px; color: #5f6368; font-size: 16px; cursor: pointer; font-weight: bold;">
+                                +</div>
                         </div>
+
+                        <!-- Browser Toolbar -->
                         <div class="browser-topbar"
-                            style="background: rgba(22, 27, 34, 0.9); padding: 12px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px;">
-                            <div style="display:flex; gap: 15px; color: #8892b0;">
-                                <span style="cursor: pointer;" title="Back">←</span>
-                                <span style="cursor: pointer;" title="Forward">→</span>
-                                <span style="cursor: pointer;" title="Reload">↻</span>
+                            style="background: #ffffff; padding: 8px 15px; display: flex; align-items: center; border-bottom: 1px solid #dadce0; gap: 15px;">
+                            <div style="display:flex; gap: 15px; color: #5f6368; font-size: 18px;">
+                                <span style="cursor: pointer; font-weight:bold;">←</span>
+                                <span style="cursor: pointer; font-weight:bold;">→</span>
+                                <span style="cursor: pointer; font-weight:bold;">↻</span>
                             </div>
                             <div style="position: relative; flex: 1; display: flex; align-items: center;">
-                                <span style="position: absolute; left: 15px; color: #70E100; font-size: 12px;">🔒</span>
-                                <input type="text" id="browser-url" value="https://hub.lujan.vault"
-                                    style="width: 100%; background: #0d1117; border: 1px solid rgba(255,255,255,0.1); color: #E2E2E2; border-radius: 20px; padding: 10px 40px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none;">
+                                <span style="position: absolute; left: 15px; color: #5f6368; font-size: 12px;">🔒</span>
+                                <input type="text" id="browser-url" value="https://en.wikipedia.org/wiki/Tesseract"
+                                    style="width: 100%; background: #f1f3f4; border: none; color: #202124; border-radius: 20px; padding: 8px 40px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.9rem; outline: none;">
                             </div>
                             <button id="browser-go"
-                                style="background: linear-gradient(135deg, #00f2ff, #005eff); color: #0d1117; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: 800; font-size: 0.9rem;">ENTER</button>
+                                style="background: transparent; color: #5f6368; border: none; cursor: pointer; font-size: 18px;">🔍</button>
+                            <div style="color: #5f6368; font-size: 18px; cursor: pointer; margin-left: 10px;">⋮</div>
                         </div>
-                        <iframe id="browser-frame" src="LUJAN_VAULT_MVP.html"
-                            style="flex: 1; border: none; background: #0a0a0f; width: 100%;"></iframe>
+
+                        <!-- Browser Content -->
+                        <iframe id="browser-frame" src="https://en.wikipedia.org/wiki/Tesseract"
+                            style="flex: 1; border: none; background: #ffffff; width: 100%;"></iframe>
                     </div>
                 </div>
             </div>
 
-            <!-- INNER SOVEREIGN CUBE (Unified System Environment) -->
+            <!-- INNER RANDALL CUBE (Unified System Environment) -->
             <div class="environment-cube" id="environment-cube">
                 <!-- ALL Inner functionality consolidated into a single unified workspace on the primary face -->
-                <div class="face face-front sovereign-inner-app" style="pointer-events:auto;">
+                <div class="face face-front randall-inner-app" style="pointer-events:auto;">
                     <div class="inner-app-container bg-opaque">
-                        <div class="visible-system-underlay"></div>
                         <!-- Sidebar Navigation -->
                         <aside class="inner-sidebar" id="inner-sidebar">
                             <div class="sidebar-header">
                                 <div class="inner-logo" onclick="toggleSidebar()">⊞</div>
-                                <div class="inner-logo-text">SOVEREIGN</div>
+                                <div class="inner-logo-text">RANDALL</div>
                                 <button class="sidebar-toggle-btn" onclick="toggleSidebar()">◀</button>
                             </div>
                             <nav class="inner-nav">
-                                <div class="nav-item active" onclick="switchInnerView('home', this)">
-                                    <span class="nav-icon">🏠</span> Home
-                                </div>
-                                <div class="nav-item" onclick="switchInnerView('dashboard', this)">
+                                <div class="nav-item active" onclick="switchInnerView('dashboard', this)">
                                     <span class="nav-icon">📊</span> Dashboard
                                 </div>
                                 <div class="nav-item" onclick="switchInnerView('library', this)">
@@ -1126,19 +1133,10 @@
 
                         <!-- Main Content Area -->
                         <main class="inner-main">
-                            <!-- Home (Wallpaper) View -->
-                            <section id="view-home" class="inner-view active">
-                                <div class="wallpaper-logo-container">
-                                    <div class="wallpaper-logo"></div>
-                                    <div class="wallpaper-brand">LUJAN TESSERACT</div>
-                                    <div class="wallpaper-status">Sovereign OS // Core Systems Active</div>
-                                </div>
-                            </section>
-
                             <!-- Dashboard View -->
-                            <section id="view-dashboard" class="inner-view">
+                            <section id="view-dashboard" class="inner-view active">
                                 <header class="view-header">
-                                    <h1>SOVEREIGN DEVICE // SYSTEM CORE</h1>
+                                    <h1>RANDALL SYSTEM CORE</h1>
                                     <p>CyberDNA Coupled Interface | Node: EliteBook-vPro-01</p>
                                 </header>
                                 <div class="dashboard-grid">
@@ -1146,7 +1144,7 @@
                                     <div class="stat-card">
                                         <label>SPACE OPTIMIZATION (COMPRESSION)</label>
                                         <div class="stat-value text-green">90.4%</div>
-                                        <div class="stat-sub">980GB RAW -> 94GB SOVEREIGN</div>
+                                        <div class="stat-sub">980GB RAW -> 94GB RANDALL</div>
                                     </div>
                                     <!-- Power Efficiency Card -->
                                     <div class="stat-card">
@@ -1191,7 +1189,7 @@
                             <section id="view-library" class="inner-view">
                                 <header class="view-header">
                                     <h1>FUNCTION LIBRARY</h1>
-                                    <p>Centralized Sovereign Utility DNA</p>
+                                    <p>Centralized Randall Utility DNA</p>
                                 </header>
                                 <div class="library-layout">
                                     <div class="library-main">
@@ -1237,7 +1235,7 @@
                             <section id="view-files" class="inner-view">
                                 <header class="view-header">
                                     <h1>CODEMAP STORAGE & RECREATOR</h1>
-                                    <p>Sovereign Indexing | Space-Power Optimized Archive</p>
+                                    <p>Randall Indexing | Space-Power Optimized Archive</p>
                                 </header>
                                 <div class="storage-layout">
                                     <div class="storage-main">
@@ -1334,7 +1332,7 @@
                                 <div class="agi-layout">
                                     <div class="agi-chat-main">
                                         <div class="agi-chat-window">
-                                            <div class="chat-msg msg-ai">GRAEI AGI Online. Sovereign Assistant mode
+                                            <div class="chat-msg msg-ai">GRAEI AGI Online. Randall Assistant mode
                                                 active. How can I assist you, Architect Randall?</div>
                                         </div>
                                         <div class="agi-input-bar">
@@ -1344,7 +1342,7 @@
                                     </div>
                                     <!-- Embedded Terminal / Code Portal -->
                                     <div class="agi-terminal-dock">
-                                        <div class="terminal-header">GRAEI_SOVEREIGN_TERMINAL</div>
+                                        <div class="terminal-header">GRAEI_RANDALL_TERMINAL</div>
                                         <div class="terminal-body" id="agi-terminal">
                                             <div class="term-line">[SYSTEM] Terminal Initialized. Awaiting AI command
                                                 execution...</div>
@@ -1397,7 +1395,7 @@
                             <section id="view-msbridge" class="inner-view">
                                 <header class="view-header">
                                     <h1>MICROSOFT BRIDGE SHELL</h1>
-                                    <p>Sovereign Interface for Enterprise MS Assets // [AZURE_READY]</p>
+                                    <p>Randall Interface for Enterprise MS Assets // [AZURE_READY]</p>
                                 </header>
 
                                 <div class="ms-environment-layout">
@@ -1409,7 +1407,7 @@
                                         </div>
                                         <div class="ms-nav-card" onclick="switchMsContext('onedrive')">
                                             <div class="ms-ctx-label">STORAGE_SYNC</div>
-                                            <div class="ms-ctx-val">OneDrive Sovereign</div>
+                                            <div class="ms-ctx-val">OneDrive Randall</div>
                                         </div>
                                         <div class="ms-nav-card" onclick="switchMsContext('identity')">
                                             <div class="ms-ctx-label">USER_AUTH</div>
@@ -1417,7 +1415,7 @@
                                         </div>
                                         <div class="ms-nav-card" onclick="switchMsContext('wsl')">
                                             <div class="ms-ctx-label">SYSTEM_SUBSYSTEM</div>
-                                            <div class="ms-ctx-val">WSL Sovereign Shell</div>
+                                            <div class="ms-ctx-val">WSL Randall Shell</div>
                                         </div>
                                     </div>
 
@@ -1443,10 +1441,10 @@
                                 </div>
                             </section>
 
-                            <!-- Sovereign Manifesto View -->
+                            <!-- Randall Manifesto View -->
                             <section id="view-manifesto" class="inner-view">
                                 <header class="view-header">
-                                    <h1>SOVEREIGN MANIFESTO</h1>
+                                    <h1>RANDALL MANIFESTO</h1>
                                     <p>The Foundations of Lujan Tesseract OS | By Randall Lujan</p>
                                 </header>
                                 <div class="manifesto-content">
@@ -1475,508 +1473,431 @@
                                 </div>
                             </section>
 
-                            <!-- Secondary Faces (Mirrors or Auxiliary Data) -->
+                            <!-- Inner Face Right: Afro Samurai Hierarchy Admin Portal -->
                             <div class="face face-right"
-                                style="background: rgba(13,17,23,0.95); opacity: 0.5; display:flex; flex-direction:column; padding:30px;">
-                                <div
-                                    style="font-size: 2rem; color: #00f2ff; margin-bottom: 20px; text-shadow: 0 0 15px #00f2ff; font-weight:800;">
-                                    🔒 DARK ENCRYPTOR UI</div>
-
-                                <div style="flex:1; display:flex; gap: 20px;">
-                                    <!-- SEAL PANEL -->
+                                style="background: rgba(13,17,23,0.98); pointer-events: auto; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px;">
+                                <h1 class="outer-title"
+                                    style="margin: 0; color: #FF4B2B; font-size: 2.2rem; text-align: left; letter-spacing: 0.1em; text-transform: uppercase;">
+                                    #1 HIERARCHY / ADMIN OVERRIDE</h1>
+                                <div style="display: flex; gap: 30px; flex: 1; height: 100%;">
+                                    <!-- Exclusionary Access Log -->
                                     <div
-                                        style="flex:1; background: rgba(0,0,0,0.4); padding:20px; border-radius:12px; border:1px solid rgba(0,242,255,0.2);">
-                                        <h3 style="color:#E2E2E2; margin-top:0;">Seal Ephemeral Packet</h3>
-                                        <label style="color:#8892B0; font-size:0.85rem;">Payload Content</label>
-                                        <textarea id="seal-content"
-                                            style="width:100%; height:80px; background:rgba(0,0,0,0.3); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; margin-bottom:15px; resize:none;"
-                                            placeholder="Enter message to seal..."></textarea>
-
-                                        <label style="color:#8892B0; font-size:0.85rem;">TTL (Seconds)</label>
-                                        <input id="seal-ttl" type="number" value="300"
-                                            style="width:100%; background:rgba(0,0,0,0.3); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; margin-bottom:15px;">
-
-                                        <button id="seal-btn"
-                                            style="width:100%; background:#00f2ff; color:#000; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer;">SEAL
-                                            PACKET</button>
-
-                                        <div id="seal-result"
-                                            style="margin-top:15px; font-size:0.85rem; color:#70E100; word-break:break-all;">
+                                        style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,75,43,0.3); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;">
+                                        <div
+                                            style="padding: 15px 20px; background: rgba(255,75,43,0.1); font-weight: 900; color: #FF4B2B; border-bottom: 1px solid rgba(255,75,43,0.2); letter-spacing: 0.1em;">
+                                            ACCESS LOGS (RULES OF COMBAT)</div>
+                                        <div
+                                            style="padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 15px; font-family: monospace; font-size: 0.85rem; color: #A1C1D1;">
+                                            <div>> Number One cannot be challenged except by Number Two.</div>
+                                            <div>> System locked to highest authority.</div>
+                                            <div>> Analyzing subnet traffic... No valid Number Two detected.</div>
+                                            <div>> Authorization absolute.</div>
                                         </div>
                                     </div>
-
-                                    <!-- OPEN PANEL -->
+                                    <!-- Admin Execution Portal -->
+                                    <!-- Radical Transparency Storage Explorer -->
                                     <div
-                                        style="flex:1; background: rgba(0,0,0,0.4); padding:20px; border-radius:12px; border:1px solid rgba(0,242,255,0.2);">
-                                        <h3 style="color:#E2E2E2; margin-top:0;">Open Encrypted Packet</h3>
-
-                                        <label style="color:#8892B0; font-size:0.85rem;">Encrypted Bundle</label>
-                                        <textarea id="open-bundle"
-                                            style="width:100%; height:80px; background:rgba(0,0,0,0.3); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; margin-bottom:15px; resize:none;"
-                                            placeholder="Paste base64 bundle..."></textarea>
-
-                                        <label style="color:#8892B0; font-size:0.85rem;">Door Key</label>
-                                        <input id="open-key" type="text"
-                                            style="width:100%; background:rgba(0,0,0,0.3); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; margin-bottom:15px;"
-                                            placeholder="Paste door key...">
-
-                                        <button id="open-btn"
-                                            style="width:100%; background:transparent; color:#00f2ff; border:1px solid #00f2ff; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer;">DECRYPT
-                                            & BURN</button>
-
-                                        <div id="open-result"
-                                            style="margin-top:15px; font-size:0.85rem; color:#70E100; word-break:break-all;">
+                                        style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(161,193,209,0.2); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;">
+                                        <div
+                                            style="padding: 15px 20px; background: rgba(0,242,255,0.1); font-weight: 900; color: #00f2ff; border-bottom: 1px solid rgba(0,242,255,0.2); letter-spacing: 0.1em; display: flex; justify-content: space-between;">
+                                            <span>ABSOLUTE TRANSPARENCY DATA LOG</span>
+                                            <span style="color: #FF4B2B; font-size: 0.8rem;">[ZERO DECEPTION
+                                                METRICS]</span>
+                                        </div>
+                                        <div
+                                            style="padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                                            <div style="color: #00f2ff; margin-bottom: 10px; font-size: 0.9rem;">> All
+                                                operations execute with absolute authority.</div>
+                                            <button class="func-btn"
+                                                style="background: rgba(255,75,43,0.2); border-color: #FF4B2B; color: #FF4B2B;">PURGE
+                                                UNVERIFIED CONNECTIONS</button>
+                                            <button class="func-btn"
+                                                style="background: rgba(112,225,0,0.2); border-color: #70E100; color: #70E100;">FORCE
+                                                CDV6 ENCRYPTION</button>
+                                            <button class="func-btn"
+                                                style="background: rgba(0,242,255,0.2); border-color: #00f2ff; color: #00f2ff;">OVERRIDE
+                                                ROOT INDEX</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="face face-back" style="background: rgba(13,17,23,0.95); opacity: 0.5;">
-                                <div style="font-size: 2rem; color: rgba(161,193,209,0.2);">SOVEREIGN MIRROR</div>
+
+                            <!-- Inner Face Back: AGI Creation Station -->
+                            <div class="face face-back"
+                                style="background: #1e1e1e; pointer-events: auto; display: flex; flex-direction: column;">
+                                <div
+                                    style="background: #2d2d2d; width: 100%; height: 50px; display: flex; align-items: center; padding: 0 30px; border-bottom: 2px solid #00f2ff; box-sizing: border-box; justify-content: space-between;">
+                                    <span
+                                        style="color: #00f2ff; font-weight: 900; letter-spacing: 0.2em; font-size: 0.85rem;">GRAEI
+                                        AGI CREATION STATION // ANTIGRAVITY LINKED</span>
+                                    <span style="color: #8892B0; font-size: 0.75rem;">VS Code Web Engine</span>
+                                </div>
+                                <iframe
+                                    src="https://vscode.dev/tunnel/lujan-tesseract/C:/Users/randall/cyclic-cypher-compressor"
+                                    style="width: 100%; flex: 1; border: none; background: #1e1e1e;"
+                                    allow="clipboard-read; clipboard-write"></iframe>
                             </div>
-                            <div class="face face-left" style="background: rgba(13,17,23,0.95); opacity: 0.5;">
-                                <div style="font-size: 2rem; color: rgba(161,193,209,0.2);">SOVEREIGN MIRROR</div>
-                            </div>
-                    </div> <!-- End of environment-cube -->
-                </div> <!-- End of world -->
-            </div> <!-- End of scene -->
 
-            <!-- GLOBAL TASKBAR (SINGLE CONSOLIDATED STRUCTURE) -->
-            <footer class="global-taskbar">
-                <div class="taskbar-left">
-                    <div class="app-icon active" onclick="switchInnerView('dashboard')">SYSTEM</div>
-                    <div class="app-icon" onclick="switchInnerView('files')">CYCLIC STORAGE</div>
-                    <div class="app-icon" onclick="switchInnerView('agi')">GRAEI</div>
-                </div>
+                            <!-- Inner Face Left: Identity Profiler & Vetting Gauntlet -->
+                            <div class="face face-left"
+                                style="background: rgba(13,17,23,0.98); pointer-events: auto; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px;">
+                                <h1 class="outer-title"
+                                    style="margin: 0; color: #70E100; font-size: 2.2rem; text-align: left; letter-spacing: 0.1em; text-transform: uppercase;">
+                                    IDENTITY PROFILER / KDY VETTING</h1>
 
-                <div class="taskbar-center"></div>
+                                <div style="display: flex; gap: 30px; flex: 1; height: 100%;">
+                                    <!-- KDY Metric Scanner -->
+                                    <div
+                                        style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(112,225,0,0.3); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;">
+                                        <div
+                                            style="padding: 15px 20px; background: rgba(112,225,0,0.1); font-weight: 900; color: #70E100; border-bottom: 1px solid rgba(112,225,0,0.2); letter-spacing: 0.1em;">
+                                            FOUNDATIONAL KNOWLEDGE MATRIX</div>
+                                        <div
+                                            style="padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 15px; font-family: monospace; font-size: 0.85rem; color: #A1C1D1;">
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <span>Authenticity Threshold</span><span style="color: #00f2ff;">[
+                                                    ENFORCED ]</span></div>
+                                            <div style="display: flex; justify-content: space-between;"><span>Deception
+                                                    Index</span><span style="color: #FF4B2B;">[ ZERO TOLERANCE ]</span>
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <span>Theft/Liability Potential</span><span style="color: #70E100;">[
+                                                    SCANNED ]</span></div>
+                                            <hr style="border-color: rgba(112,225,0,0.2); margin: 10px 0;">
+                                            <div id="kdy-scanner-log"
+                                                style="color: #70E100; text-align: center; margin-top: auto; font-size: 0.9rem;">
+                                                > SYSTEM AWAITING ENTITY INTERFACE << /div>
+                                            </div>
+                                        </div>
 
-                <div class="taskbar-right">
-                    <div class="app-icon" onclick="switchInnerView('msbridge')">BRIDGE</div>
-                    <div class="app-icon" onclick="switchInnerView('bios')">FIRMWARE</div>
-                    <!-- SYSTEM TRAY (Windows-style) -->
-                    <div class="taskbar-utilities" id="sys-tray">
+                                        <!-- Vetting Execution -->
+                                        <div
+                                            style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,242,255,0.3); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden;">
+                                            <div
+                                                style="padding: 15px 20px; background: rgba(0,242,255,0.1); font-weight: 900; color: #00f2ff; border-bottom: 1px solid rgba(0,242,255,0.2); letter-spacing: 0.1em;">
+                                                GAUNTLET EXECUTION</div>
+                                            <div
+                                                style="padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                                                <div style="color: #00f2ff; margin-bottom: 10px; font-size: 0.9rem;">>
+                                                    Exposing fraudulent actors via mathematical discrepancy checks in
+                                                    foundational origin claims.</div>
+                                                <button class="func-btn"
+                                                    style="background: rgba(112,225,0,0.2); border-color: #70E100; color: #70E100;"
+                                                    onclick="adminRunIdentityVetting()">COMMENCE IDENTITY SCAN</button>
+                                                <button class="func-btn"
+                                                    style="background: rgba(255,75,43,0.2); border-color: #FF4B2B; color: #FF4B2B;"
+                                                    onclick="adminLockoutFraud()">ENFORCE ECOSYSTEM LOCKOUT</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- End of environment-cube -->
+                    </div> <!-- End of world -->
+                </div> <!-- End of scene -->
 
-                        <!-- Network -->
-                        <div class="tray-icon" id="tray-net" title="Network" onclick="toggleTray('tray-net-flyout')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M1.5 8.5a15 15 0 0 1 21 0M5 12a12 12 0 0 1 14 0M8.5 15.5a7.5 7.5 0 0 1 7 0M12 19h.01" />
-                            </svg>
-                            <span id="tray-net-label">WIFI</span>
-                        </div>
-                        <div class="tray-flyout" id="tray-net-flyout">
-                            <div class="flyout-title">📡 Network</div>
-                            <div id="flyout-net-ssid" style="font-size:0.8rem;color:#A1C1D1;margin-bottom:8px;">
-                                Checking...</div>
-                            <button class="flyout-btn" onclick="bridgeCmd('nmcli dev status')">Device Status</button>
-                            <button class="flyout-btn"
-                                onclick="switchInnerView('network'); toggleTray('tray-net-flyout')">Network Manager
-                                →</button>
-                        </div>
-
-                        <!-- Volume -->
-                        <div class="tray-icon" id="tray-vol" title="Volume" onclick="toggleTray('tray-vol-flyout')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-                            </svg>
-                            <span id="tray-vol-label">--</span>
-                        </div>
-                        <div class="tray-flyout" id="tray-vol-flyout">
-                            <div class="flyout-title">🔊 Volume</div>
-                            <input type="range" id="vol-slider" min="0" max="100" value="70" class="flyout-slider"
-                                oninput="document.getElementById('vol-val').textContent=this.value+'%'"
-                                onchange="setVolume(this.value)">
-                            <div id="vol-val" style="text-align:center;color:#00f2ff;font-size:0.85rem;margin-top:4px;">
-                                70%</div>
-                            <div style="display:flex;gap:6px;margin-top:8px;">
-                                <button class="flyout-btn" onclick="setVolume(0)">Mute</button>
-                                <button class="flyout-btn" onclick="setVolume(50)">50%</button>
-                                <button class="flyout-btn" onclick="setVolume(100)">Max</button>
-                            </div>
-                        </div>
-
-                        <!-- Brightness -->
-                        <div class="tray-icon" id="tray-bright" title="Brightness"
-                            onclick="toggleTray('tray-bright-flyout')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="5" />
-                                <line x1="12" y1="1" x2="12" y2="3" />
-                                <line x1="12" y1="21" x2="12" y2="23" />
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                                <line x1="1" y1="12" x2="3" y2="12" />
-                                <line x1="21" y1="12" x2="23" y2="12" />
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                            </svg>
-                            <span id="tray-bright-label">80%</span>
-                        </div>
-                        <div class="tray-flyout" id="tray-bright-flyout">
-                            <div class="flyout-title">☀️ Brightness</div>
-                            <input type="range" id="bright-slider" min="5" max="100" value="80" class="flyout-slider"
-                                oninput="document.getElementById('bright-val').textContent=this.value+'%'"
-                                onchange="setBrightness(this.value)">
-                            <div id="bright-val"
-                                style="text-align:center;color:#00f2ff;font-size:0.85rem;margin-top:4px;">80%</div>
-                        </div>
-
-                        <!-- Bluetooth -->
-                        <div class="tray-icon" id="tray-bt" title="Bluetooth" onclick="toggleTray('tray-bt-flyout')">
-                            <svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5" />
-                            </svg>
-                            <span id="tray-bt-label">BT</span>
-                        </div>
-                        <div class="tray-flyout" id="tray-bt-flyout">
-                            <div class="flyout-title">🔵 Bluetooth</div>
-                            <div id="bt-status-label" style="font-size:0.8rem;color:#A1C1D1;margin-bottom:8px;">
-                                Checking...</div>
-                            <button class="flyout-btn" onclick="setBluetooth('on')">Power ON</button>
-                            <button class="flyout-btn" onclick="setBluetooth('off')">Power OFF</button>
-                            <button class="flyout-btn" onclick="bridgeCmd('bluetoothctl devices')">Paired
-                                Devices</button>
-                        </div>
-
-                        <!-- Battery -->
-                        <div class="tray-icon" id="tray-bat" title="Battery" onclick="toggleTray('tray-bat-flyout')">
-                            <svg width="18" height="12" viewBox="0 0 24 16" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="1" y="2" width="18" height="12" rx="2" />
-                                <path d="M20 6v4" />
-                                <rect id="bat-fill-svg" x="3" y="4" width="12" height="8" fill="currentColor" rx="1"
-                                    style="transition:width 0.5s" />
-                            </svg>
-                            <span id="tray-bat-label">--</span>
-                        </div>
-                        <div class="tray-flyout" id="tray-bat-flyout">
-                            <div class="flyout-title">🔋 Battery</div>
-                            <div id="bat-detail" style="font-size:0.8rem;color:#A1C1D1;line-height:1.8;">Loading...
-                            </div>
-                            <button class="flyout-btn" style="margin-top:8px;"
-                                onclick="bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0')">Full
-                                Report</button>
-                        </div>
-
-                        <!-- Divider -->
-                        <div style="width:1px;height:28px;background:rgba(255,255,255,0.08);margin:0 4px;"></div>
-
-                        <!-- Clock -->
-                        <div class="tray-icon tray-clock" onclick="toggleTray('tray-power-flyout')"
-                            title="Power Options" style="min-width:80px;flex-direction:column;gap:1px;">
-                            <div id="sys-time"
-                                style="font-size:0.9rem;font-weight:700;color:#E2E2E2;font-variant-numeric:tabular-nums;">
-                                00:00</div>
-                            <div id="sys-date" style="font-size:0.65rem;color:#8892B0;letter-spacing:0.05em;">---</div>
-                        </div>
-
-                        <!-- Power Flyout -->
-                        <div class="tray-flyout tray-flyout-right" id="tray-power-flyout">
-                            <div class="flyout-title">⚡ Power</div>
-                            <button class="flyout-btn flyout-btn-warn" onclick="sysPower('sleep')">🌙 Sleep</button>
-                            <button class="flyout-btn flyout-btn-warn" onclick="sysPower('reboot')">🔄 Reboot</button>
-                            <button class="flyout-btn flyout-btn-danger" onclick="sysPower('shutdown')">⏻ Shut
-                                Down</button>
-                        </div>
-
+                <!-- GLOBAL TASKBAR (SINGLE CONSOLIDATED STRUCTURE) -->
+                <footer class="global-taskbar">
+                    <div class="taskbar-left">
+                        <div class="app-icon active" onclick="switchInnerView('dashboard')">SYSTEM</div>
+                        <div class="app-icon" onclick="switchInnerView('files')">CYCLIC STORAGE</div>
+                        <div class="app-icon" onclick="switchInnerView('agi')">GRAEI</div>
                     </div>
-                </div>
-            </footer>
 
-            <!-- PERSISTENT 3D NAVIGATOR (always visible, centered above taskbar) -->
-            <div id="nav-center-slot" title="Lujan Tesseract Core Navigator" style="
-                position: fixed;
-                bottom: 82px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 60px;
-                height: 60px;
-                z-index: 10000;
-                cursor: grab;
-                pointer-events: auto;
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 0 18px rgba(161,193,209,0.2), 0 2px 8px rgba(0,0,0,0.5);
-                border: 1px solid rgba(161,193,209,0.15);
-                background: rgba(13,17,23,0.8);
-            "></div>
-
-            <!-- PERSISTENT OMNI-GRAEI CHAT BUBBLE -->
-            <div class="floating-omni-ai">
-                <div class="omni-chat-window minimized" id="omni-window">
-                    <div class="omni-header">
-                        <div class="omni-title" title="Guided Research & Assistant Entity Intelligence">
-                            <div class="omni-indicator"></div>
-                            GRAEI GRAEI [MIRROR STACK]
+                    <div class="taskbar-center">
+                        <div id="nav-center-slot" title="Lujan Tesseract Core Navigator"></div>
+                        <div class="taskbar-branding">
+                            <div class="creator-name">RANDALL LUJAN</div>
+                            <div class="expertise-tag">AGE-I // RANDALL ARCHITECT</div>
                         </div>
-                        <!-- Controls -->
                     </div>
-                    <div class="omni-body" id="omni-chat-feed">
-                        <div class="chat-msg msg-ai">GRAEI Core Initialized. Synchronization complete. I am serving as
-                            your
-                            Mirror Stack—calibrated just above your optimal parameters to guide and assist you
-                            seamlessly across
-                            the OS.</div>
+
+                    <div class="taskbar-right">
+                        <div class="app-icon" onclick="switchInnerView('msbridge')">BRIDGE</div>
+                        <div class="app-icon" onclick="switchInnerView('bios')">FIRMWARE</div>
+                        <div class="taskbar-utilities">
+                            <div class="util-item" id="util-network" title="Network Stack Status">📡 ONLINE</div>
+                            <div class="util-item" id="util-battery" title="P-State Energy Management">🔋 100%</div>
+                            <div class="util-item" id="sys-time">00:00</div>
+                        </div>
                     </div>
-                    <div class="omni-input-area" style="display: flex; gap: 8px;">
-                        <input type="text" id="omni-input" placeholder="Query GRAEI..." style="flex: 1;">
-                        <button id="omni-send"
-                            style="background: #A1C1D1; color: #0d1117; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;">Enter</button>
+                </footer>
+
+                <!-- PERSISTENT OMNI-GRAEI CHAT BUBBLE -->
+                <div class="floating-omni-ai">
+                    <div class="omni-chat-window minimized" id="omni-window">
+                        <div class="omni-header">
+                            <div class="omni-title" title="Guided Research & Assistant Entity Intelligence">
+                                <div class="omni-indicator"></div>
+                                GRAEI GRAEI [MIRROR STACK]
+                            </div>
+                            <!-- Controls -->
+                        </div>
+                        <div class="omni-body" id="omni-chat-feed">
+                            <div class="chat-msg msg-ai">GRAEI Core Initialized. Synchronization complete. I am serving
+                                as
+                                your
+                                Mirror Stack—calibrated just above your optimal parameters to guide and assist you
+                                seamlessly across
+                                the OS.</div>
+                        </div>
+                        <div class="omni-input-area" style="display: flex; gap: 8px;">
+                            <input type="text" id="omni-input" placeholder="Query GRAEI..." style="flex: 1;">
+                            <button id="omni-send"
+                                style="background: #A1C1D1; color: #0d1117; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;">Enter</button>
+                        </div>
+                    </div>
+
+                    <div class="omni-bubble-btn" id="omni-toggle" title="Toggle GRAEI Mirror Stack">
+                        <span>👁️</span>
                     </div>
                 </div>
 
-                <div class="omni-bubble-btn" id="omni-toggle" title="Toggle GRAEI Mirror Stack">
-                    <span>👁️</span>
-                </div>
-            </div>
+                <!-- INJECT ENVIRONMENT LOGIC -->
+                <script type="module">
+                    import { initCubixEnvironment } from './cubix_environment_core.js';
+                    window.addEventListener('DOMContentLoaded', () => {
+                        initCubixEnvironment();
 
-            <!-- LOGIN LOGIC (plain script — must be global for onclick handlers) -->
-            <script>
-                window.selectProfile = function (id) {
-                    document.querySelectorAll('.login-profile').forEach(p => p.classList.remove('active-profile'));
-                    const el = document.getElementById('profile-' + id);
-                    if (el) el.classList.add('active-profile');
-                };
-
-                function runBootSplash() {
-                    const bar = document.getElementById('splash-bar');
-                    const status = document.getElementById('splash-status');
-                    const splash = document.getElementById('cubix-boot-splash');
-                    if (!splash) return;
-                    const steps = [
-                        [10, 'Mounting sovereign vault...'],
-                        [25, 'Loading Intel i915 DRM driver...'],
-                        [42, 'Initializing VA-API video pipeline...'],
-                        [58, 'Binding GRAEI AGI bridge...'],
-                        [72, 'Deploying Tesseract 3D environment...'],
-                        [88, 'Configuring Cubix OS kernel interface...'],
-                        [100, 'Sovereign boot complete.']
-                    ];
-                    let i = 0;
-                    function next() {
-                        if (i >= steps.length) {
-                            setTimeout(() => {
-                                splash.classList.add('fade-out');
-                                setTimeout(() => splash.remove(), 900);
-                            }, 400);
-                            return;
-                        }
-                        const [pct, msg] = steps[i++];
-                        if (bar) bar.style.width = pct + '%';
-                        if (status) status.textContent = msg;
-                        setTimeout(next, pct === 100 ? 600 : 380);
-                    }
-                    next();
-                }
-
-                window.triggerLogin = function () {
-                    const login = document.getElementById('cubix-login');
-                    const stage = document.getElementById('cube-assemble-stage');
-                    const btn = document.getElementById('login-enter-btn');
-                    if (!login || !stage || !btn) return;
-                    btn.textContent = 'ASSEMBLING...';
-                    btn.style.opacity = '0.6';
-                    login.classList.add('signing-in');
-                    stage.style.display = 'block';
-
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            stage.querySelectorAll('.assemble-panel').forEach(p => p.classList.add('assembled'));
+                        // Omni-GRAEI Toggle Logic
+                        const toggleBtn = document.getElementById('omni-toggle');
+                        const omniWin = document.getElementById('omni-window');
+                        toggleBtn.addEventListener('click', () => {
+                            omniWin.classList.toggle('minimized');
                         });
-                    });
 
-                    setTimeout(() => { stage.classList.add('explode'); }, 900);
+                        // Inner Web Browser Logic
+                        const bUrl = document.getElementById('browser-url');
+                        const bGo = document.getElementById('browser-go');
+                        const bFrame = document.getElementById('browser-frame');
 
-                    setTimeout(() => {
-                        login.style.transition = 'opacity 0.5s';
-                        login.style.opacity = '0';
-                        stage.style.opacity = '0';
-                        setTimeout(() => {
-                            login.remove();
-                            stage.remove();
-                            runBootSplash();
-                        }, 500);
-                    }, 1350);
-                };
-            </script>
-
-            <!-- INJECT ENVIRONMENT LOGIC -->
-            <script type="module">
-                import { initCubixEnvironment } from './cubix_environment_core.js';
-                window.addEventListener('DOMContentLoaded', () => {
-                    initCubixEnvironment();
-
-                    // Omni-GRAEI Toggle Logic
-                    const toggleBtn = document.getElementById('omni-toggle');
-                    const omniWin = document.getElementById('omni-window');
-                    toggleBtn.addEventListener('click', () => {
-                        omniWin.classList.toggle('minimized');
-                    });
-
-                    // Inner Web Browser Logic
-                    const bUrl = document.getElementById('browser-url');
-                    const bGo = document.getElementById('browser-go');
-                    const bFrame = document.getElementById('browser-frame');
-
-                    const navigateFrame = () => {
-                        let url = bUrl.value.trim();
-                        // Ensure protocol exists
-                        if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
-                            url = 'https://' + url;
-                            bUrl.value = url;
-                        }
-                        bFrame.src = url;
-                    };
-
-                    bGo.addEventListener('click', navigateFrame);
-                    bUrl.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') navigateFrame();
-                    });
-
-                    // Terminal Access Logic (Bypass iframe block)
-                    const termIcons = document.querySelectorAll('.app-icon');
-                    termIcons.forEach(icon => {
-                        if (icon.getAttribute('title') === 'Terminal Access') {
-                            icon.addEventListener('click', () => {
-                                window.open("https://vscode.dev/tunnel/lujan-tesseract/C:/Users/randall/cyclic-cypher-compressor", "VSCodeTunnel", "width=1400,height=900,menubar=no,toolbar=no,location=no,status=no");
-                            });
-                        }
-                    });
-
-                    // Interactive Settings Logic
-                    const settingsCategories = document.querySelectorAll('.settings-category');
-                    const settingGroupTitle = document.querySelector('.setting-group-title');
-                    settingsCategories.forEach(cat => {
-                        cat.addEventListener('click', () => {
-                            settingsCategories.forEach(c => c.classList.remove('active'));
-                            cat.classList.add('active');
-                            if (settingGroupTitle) settingGroupTitle.innerText = cat.innerText + ' Options';
-                        });
-                    });
-
-                    const checkboxes = document.querySelectorAll('.setting-item input[type="checkbox"]');
-                    checkboxes.forEach(cb => {
-                        cb.addEventListener('change', (e) => {
-                            const settingName = e.target.parentElement.parentElement.querySelector('h4').innerText;
-                            if (settingName === '3D Environment Rendering') {
-                                const spiral = document.getElementById('forge-spiral');
-                                const nav = document.getElementById('bottom-navigator');
-                                if (spiral) spiral.style.display = e.target.checked ? 'block' : 'none';
-                                if (nav) nav.style.opacity = e.target.checked ? '1' : '0';
+                        const navigateFrame = () => {
+                            let url = bUrl.value.trim();
+                            // Ensure protocol exists
+                            if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                                url = 'https://' + url;
+                                bUrl.value = url;
                             }
-                            if (settingName === 'Glassmorphism UI Blurring') {
-                                const panels = document.querySelectorAll('.room-panel');
-                                panels.forEach(p => {
-                                    p.style.backdropFilter = e.target.checked ? 'blur(10px)' : 'none';
-                                    p.style.backgroundColor = e.target.checked ? 'rgba(13, 17, 23, 0.75)' : 'rgba(13, 17, 23, 0.95)';
+                            bFrame.src = url;
+                        };
+
+                        bGo.addEventListener('click', navigateFrame);
+                        bUrl.addEventListener('keypress', (e) => {
+                            if (e.key === 'Enter') navigateFrame();
+                        });
+
+                        // Terminal Access Logic (Bypass iframe block)
+                        const termIcons = document.querySelectorAll('.app-icon');
+                        termIcons.forEach(icon => {
+                            if (icon.getAttribute('title') === 'Terminal Access') {
+                                icon.addEventListener('click', () => {
+                                    window.open("https://vscode.dev/tunnel/lujan-tesseract/C:/Users/randall/cyclic-cypher-compressor", "VSCodeTunnel", "width=1400,height=900,menubar=no,toolbar=no,location=no,status=no");
                                 });
                             }
                         });
-                    });
 
-                    // Interactive GRAEI Builder Forge Logic
-                    const roleBadges = document.querySelectorAll('.agi-role-badge');
-                    const roleBlueprintTitle = document.querySelector('.dna-editor div:first-child');
-                    roleBadges.forEach(badge => {
-                        badge.addEventListener('click', () => {
-                            roleBadges.forEach(b => {
-                                b.classList.remove('active');
-                                b.style.background = 'transparent';
+                        // Interactive Settings Logic
+                        const settingsCategories = document.querySelectorAll('.settings-category');
+                        const settingGroupTitle = document.querySelector('.setting-group-title');
+                        settingsCategories.forEach(cat => {
+                            cat.addEventListener('click', () => {
+                                settingsCategories.forEach(c => c.classList.remove('active'));
+                                cat.classList.add('active');
+                                if (settingGroupTitle) settingGroupTitle.innerText = cat.innerText + ' Options';
                             });
-                            badge.classList.add('active');
-                            badge.style.background = 'rgba(161,193,209,0.2)';
-
-                            const roleName = badge.querySelector('span').innerText;
-                            if (roleBlueprintTitle) {
-                                roleBlueprintTitle.innerText = `# Current Role Blueprint: ${roleName}`;
-                            }
                         });
+
+                        const checkboxes = document.querySelectorAll('.setting-item input[type="checkbox"]');
+                        checkboxes.forEach(cb => {
+                            cb.addEventListener('change', (e) => {
+                                const settingName = e.target.parentElement.parentElement.querySelector('h4').innerText;
+                                if (settingName === '3D Environment Rendering') {
+                                    const spiral = document.getElementById('forge-spiral');
+                                    const nav = document.getElementById('bottom-navigator');
+                                    if (spiral) spiral.style.display = e.target.checked ? 'block' : 'none';
+                                    if (nav) nav.style.opacity = e.target.checked ? '1' : '0';
+                                }
+                                if (settingName === 'Glassmorphism UI Blurring') {
+                                    const panels = document.querySelectorAll('.room-panel');
+                                    panels.forEach(p => {
+                                        p.style.backdropFilter = e.target.checked ? 'blur(10px)' : 'none';
+                                        p.style.backgroundColor = e.target.checked ? 'rgba(13, 17, 23, 0.75)' : 'rgba(13, 17, 23, 0.95)';
+                                    });
+                                }
+                            });
+                        });
+
+                        // Interactive GRAEI Builder Forge Logic
+                        const roleBadges = document.querySelectorAll('.agi-role-badge');
+                        const roleBlueprintTitle = document.querySelector('.dna-editor div:first-child');
+                        roleBadges.forEach(badge => {
+                            badge.addEventListener('click', () => {
+                                roleBadges.forEach(b => {
+                                    b.classList.remove('active');
+                                    b.style.background = 'transparent';
+                                });
+                                badge.classList.add('active');
+                                badge.style.background = 'rgba(161,193,209,0.2)';
+
+                                const roleName = badge.querySelector('span').innerText;
+                                if (roleBlueprintTitle) {
+                                    roleBlueprintTitle.innerText = `# Current Role Blueprint: ${roleName}`;
+                                }
+                            });
+                        });
+
                     });
 
-                });
+                    // === LIVE SYSTEM UTILITIES ===
 
-                // === LIVE SYSTEM UTILITIES ===
-
-                // Battery API
-                if ('getBattery' in navigator) {
-                    navigator.getBattery().then(battery => {
-                        function updateBattery() {
-                            const pct = Math.round(battery.level * 100);
-                            const charging = battery.charging;
-                            document.getElementById('battery-icon').innerText = charging ? '⚡' : (pct > 20 ? '🔋' : '🪫');
-                            document.getElementById('battery-label').innerText = `${pct}% ${charging ? '(Charging)' : '(P-State Lock)'}`;
-                        }
-                        updateBattery();
-                        battery.addEventListener('levelchange', updateBattery);
-                        battery.addEventListener('chargingchange', updateBattery);
-                    });
-                } else {
-                    document.getElementById('battery-label').innerText = 'N/A';
-                }
-
-                // Network Status
-                function updateNetwork() {
-                    const online = navigator.onLine;
-                    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-                    const netLabel = document.getElementById('net-label');
-                    const netIcon = document.getElementById('net-icon');
-                    if (online) {
-                        netIcon.innerText = '📡';
-                        const type = conn ? (conn.effectiveType || conn.type || 'Connected') : 'Connected';
-                        netLabel.innerText = `Online [${type.toUpperCase()}]`;
-                        netLabel.style.color = '#70E100';
+                    // Battery API
+                    if ('getBattery' in navigator) {
+                        navigator.getBattery().then(battery => {
+                            function updateBattery() {
+                                const pct = Math.round(battery.level * 100);
+                                const charging = battery.charging;
+                                document.getElementById('battery-icon').innerText = charging ? '⚡' : (pct > 20 ? '🔋' : '🪫');
+                                document.getElementById('battery-label').innerText = `${pct}% ${charging ? '(Charging)' : '(P-State Lock)'}`;
+                            }
+                            updateBattery();
+                            battery.addEventListener('levelchange', updateBattery);
+                            battery.addEventListener('chargingchange', updateBattery);
+                        });
                     } else {
-                        netIcon.innerText = '🚫';
-                        netLabel.innerText = 'OFFLINE [Sovereign]';
-                        netLabel.style.color = '#A1C1D1';
+                        document.getElementById('battery-label').innerText = 'N/A';
                     }
-                }
-                updateNetwork();
-                window.addEventListener('online', updateNetwork);
-                window.addEventListener('offline', updateNetwork);
 
-                // ── Login & Splash now handled by global plain script above ──
-
-                // Utility Button Launchers (Arch Linux)
-                document.getElementById('util-battery')?.addEventListener('click', () => {
-                    bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0');
-                });
-                document.getElementById('util-network')?.addEventListener('click', () => {
-                    bridgeCmd('nmcli device status');
-                });
-                document.getElementById('util-bluetooth')?.addEventListener('click', () => {
-                    bridgeCmd('bluetoothctl devices');
-                });
-                document.getElementById('util-taskmgr')?.addEventListener('click', () => {
-                    bridgeCmd('top -bn1 | head -20');
-                });
-
-                // ===== NETWORK MANAGER =====
-                const BRIDGE = 'http://localhost:8081';
-                const netList = document.getElementById('net-list');
-                const netConnPanel = document.getElementById('net-connect-panel');
-                const netAdvPanel = document.getElementById('net-advanced-panel');
-                let selectedSSID = '';
-
-                async function scanNetworks() {
-                    netList.innerHTML = '<div style="color:#8892B0;font-size:0.85rem;text-align:center;padding:20px;">Scanning…</div>';
-                    try {
-                        const res = await fetch(`${BRIDGE}/network/scan`);
-                        const data = await res.json();
-                        netList.innerHTML = '';
-                        if (!data.networks || data.networks.length === 0) {
-                            netList.innerHTML = '<div style="color:#8892B0;text-align:center;padding:20px;">No networks found.</div>';
-                            return;
+                    // Network Status
+                    function updateNetwork() {
+                        const online = navigator.onLine;
+                        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                        const netLabel = document.getElementById('net-label');
+                        const netIcon = document.getElementById('net-icon');
+                        if (online) {
+                            netIcon.innerText = '📡';
+                            const type = conn ? (conn.effectiveType || conn.type || 'Connected') : 'Connected';
+                            netLabel.innerText = `Online [${type.toUpperCase()}]`;
+                            netLabel.style.color = '#70E100';
+                        } else {
+                            netIcon.innerText = '🚫';
+                            netLabel.innerText = 'OFFLINE [Randall]';
+                            netLabel.style.color = '#A1C1D1';
                         }
-                        data.networks.forEach(net => {
-                            const bars = net.signal > 75 ? '🟢' : net.signal > 40 ? '🟡' : '🔴';
-                            const lock = net.auth !== 'Open' ? '🔒' : '🔓';
-                            const chip = document.createElement('div');
-                            chip.className = 'net-item' + (net.connected ? ' connected' : '');
-                            chip.innerHTML = `
+                    }
+                    updateNetwork();
+                    window.addEventListener('online', updateNetwork);
+                    window.addEventListener('offline', updateNetwork);
+
+                    // ── Login & Cube Assembly Logic ──
+                    window.selectProfile = function (id) {
+                        document.querySelectorAll('.login-profile').forEach(p => p.classList.remove('active-profile'));
+                        const el = document.getElementById('profile-' + id);
+                        if (el) el.classList.add('active-profile');
+                    };
+
+                    window.triggerLogin = function () {
+                        const login = document.getElementById('cubix-login');
+                        const stage = document.getElementById('cube-assemble-stage');
+                        const btn = document.getElementById('login-enter-btn');
+                        btn.textContent = 'ASSEMBLING...';
+                        btn.style.opacity = '0.6';
+                        login.classList.add('signing-in');
+
+                        // Show the assembly stage
+                        stage.style.display = 'block';
+
+                        // Step 1: fly panels in from edges
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                stage.querySelectorAll('.assemble-panel').forEach(p => p.classList.add('assembled'));
+                            });
+                        });
+
+                        // Step 2: after assembled, explode outward
+                        setTimeout(() => {
+                            stage.classList.add('explode');
+                        }, 900);
+
+                        // Step 3: fade login out, start boot splash
+                        setTimeout(() => {
+                            login.style.transition = 'opacity 0.5s';
+                            login.style.opacity = '0';
+                            stage.style.opacity = '0';
+                            setTimeout(() => {
+                                login.remove();
+                                stage.remove();
+                                runBootSplash();
+                            }, 500);
+                        }, 1350);
+                    };
+
+                    // ── Boot Splash Sequence ──
+                    function runBootSplash() {
+                        const bar = document.getElementById('splash-bar');
+                        const status = document.getElementById('splash-status');
+                        const splash = document.getElementById('cubix-boot-splash');
+                        const steps = [
+                            [10, 'Mounting randall vault...'],
+                            [25, 'Loading Intel i915 DRM driver...'],
+                            [42, 'Initializing VA-API video pipeline...'],
+                            [58, 'Binding GRAEI AGI bridge...'],
+                            [72, 'Deploying Tesseract 3D environment...'],
+                            [88, 'Configuring Cubix OS kernel interface...'],
+                            [100, 'Randall boot complete.']
+                        ];
+                        let i = 0;
+                        function next() {
+                            if (i >= steps.length) {
+                                setTimeout(() => {
+                                    splash.classList.add('fade-out');
+                                    setTimeout(() => splash.remove(), 900);
+                                }, 400);
+                                return;
+                            }
+                            const [pct, msg] = steps[i++];
+                            bar.style.width = pct + '%';
+                            status.textContent = msg;
+                            setTimeout(next, pct === 100 ? 600 : 380);
+                        }
+                        next();
+                    }
+
+                    // Utility Button Launchers (Arch Linux)
+                    document.getElementById('util-battery')?.addEventListener('click', () => {
+                        bridgeCmd('upower -i /org/freedesktop/UPower/devices/battery_BAT0');
+                    });
+                    document.getElementById('util-network')?.addEventListener('click', () => {
+                        bridgeCmd('nmcli device status');
+                    });
+                    document.getElementById('util-bluetooth')?.addEventListener('click', () => {
+                        bridgeCmd('bluetoothctl devices');
+                    });
+                    document.getElementById('util-taskmgr')?.addEventListener('click', () => {
+                        bridgeCmd('top -bn1 | head -20');
+                    });
+
+                    // ===== NETWORK MANAGER =====
+                    const BRIDGE = 'http://localhost:8081';
+                    const netList = document.getElementById('net-list');
+                    const netConnPanel = document.getElementById('net-connect-panel');
+                    const netAdvPanel = document.getElementById('net-advanced-panel');
+                    let selectedSSID = '';
+
+                    async function scanNetworks() {
+                        netList.innerHTML = '<div style="color:#8892B0;font-size:0.85rem;text-align:center;padding:20px;">Scanning…</div>';
+                        try {
+                            const res = await fetch(`${BRIDGE}/network/scan`);
+                            const data = await res.json();
+                            netList.innerHTML = '';
+                            if (!data.networks || data.networks.length === 0) {
+                                netList.innerHTML = '<div style="color:#8892B0;text-align:center;padding:20px;">No networks found.</div>';
+                                return;
+                            }
+                            data.networks.forEach(net => {
+                                const bars = net.signal > 75 ? '🟢' : net.signal > 40 ? '🟡' : '🔴';
+                                const lock = net.auth !== 'Open' ? '🔒' : '🔓';
+                                const chip = document.createElement('div');
+                                chip.className = 'net-item' + (net.connected ? ' connected' : '');
+                                chip.innerHTML = `
                         <span class="net-signal">${bars}</span>
                         <div class="net-info">
                             <div class="net-ssid">${net.ssid} ${lock}</div>
@@ -1984,283 +1905,222 @@
                         </div>
                         ${net.connected ? '<span class="net-badge">✔ Connected</span>' : ''}
                     `;
-                            if (!net.connected) {
-                                chip.addEventListener('click', () => {
-                                    selectedSSID = net.ssid;
-                                    document.getElementById('net-ssid-label').innerText = net.ssid;
-                                    netConnPanel.style.display = 'block';
-                                    document.getElementById('net-password').focus();
-                                });
-                            }
-                            netList.appendChild(chip);
-                        });
-                    } catch (e) {
-                        netList.innerHTML = '<div style="color:#FF4B2B;text-align:center;padding:20px;">Bridge offline — start sovereign_bridge.py</div>';
+                                if (!net.connected) {
+                                    chip.addEventListener('click', () => {
+                                        selectedSSID = net.ssid;
+                                        document.getElementById('net-ssid-label').innerText = net.ssid;
+                                        netConnPanel.style.display = 'block';
+                                        document.getElementById('net-password').focus();
+                                    });
+                                }
+                                netList.appendChild(chip);
+                            });
+                        } catch (e) {
+                            netList.innerHTML = '<div style="color:#FF4B2B;text-align:center;padding:20px;">Bridge offline — start randall_bridge.py</div>';
+                        }
                     }
-                }
 
-                document.getElementById('net-scan-btn')?.addEventListener('click', scanNetworks);
+                    document.getElementById('net-scan-btn')?.addEventListener('click', scanNetworks);
 
-                document.getElementById('net-advanced-btn')?.addEventListener('click', () => {
-                    netAdvPanel.style.display = netAdvPanel.style.display === 'none' ? 'block' : 'none';
-                });
+                    document.getElementById('net-advanced-btn')?.addEventListener('click', () => {
+                        netAdvPanel.style.display = netAdvPanel.style.display === 'none' ? 'block' : 'none';
+                    });
 
-                document.getElementById('net-cancel-btn')?.addEventListener('click', () => {
-                    netConnPanel.style.display = 'none';
-                });
+                    document.getElementById('net-cancel-btn')?.addEventListener('click', () => {
+                        netConnPanel.style.display = 'none';
+                    });
 
-                document.getElementById('net-connect-btn')?.addEventListener('click', async () => {
-                    const pw = document.getElementById('net-password').value;
-                    const statusEl = document.getElementById('net-connect-status');
-                    statusEl.innerText = 'Connecting…';
-                    statusEl.style.color = '#A1C1D1';
-                    try {
-                        const res = await fetch(`${BRIDGE}/network/connect`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ ssid: selectedSSID, password: pw })
-                        });
-                        const data = await res.json();
-                        if (data.status === 'SUCCESS') {
-                            statusEl.innerText = '✔ Connected successfully!';
-                            statusEl.style.color = '#70E100';
-                            setTimeout(() => { netConnPanel.style.display = 'none'; scanNetworks(); }, 1500);
-                        } else {
-                            statusEl.innerText = `✕ Failed: ${data.error || 'Unknown error'}`;
+                    document.getElementById('net-connect-btn')?.addEventListener('click', async () => {
+                        const pw = document.getElementById('net-password').value;
+                        const statusEl = document.getElementById('net-connect-status');
+                        statusEl.innerText = 'Connecting…';
+                        statusEl.style.color = '#A1C1D1';
+                        try {
+                            const res = await fetch(`${BRIDGE}/network/connect`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ ssid: selectedSSID, password: pw })
+                            });
+                            const data = await res.json();
+                            if (data.status === 'SUCCESS') {
+                                statusEl.innerText = '✔ Connected successfully!';
+                                statusEl.style.color = '#70E100';
+                                setTimeout(() => { netConnPanel.style.display = 'none'; scanNetworks(); }, 1500);
+                            } else {
+                                statusEl.innerText = `✕ Failed: ${data.error || 'Unknown error'}`;
+                                statusEl.style.color = '#FF4B2B';
+                            }
+                        } catch (e) {
+                            statusEl.innerText = '✕ Bridge offline.';
                             statusEl.style.color = '#FF4B2B';
                         }
-                    } catch (e) {
-                        statusEl.innerText = '✕ Bridge offline.';
-                        statusEl.style.color = '#FF4B2B';
+                    });
+
+                    // Auto-scan on load
+                    scanNetworks();
+
+                    // ===== PER-FACE TASKBAR WINDOW TRACKING =====
+                    // Track popups opened from each face and add chips to that face's taskbar
+                    const faceWindowMap = {
+                        0: 'windows-front', 1: 'windows-right', 2: 'windows-back', 3: 'windows-left'
+                    };
+                    let activeFaceIndex = 0;
+
+                    // Hook into app icon clicks to know active face
+                    document.querySelectorAll('.app-icon').forEach((icon, idx) => {
+                        icon.addEventListener('click', () => { activeFaceIndex = idx; });
+                    });
+
+                    function addWindowChip(label, faceIdx) {
+                        const containerId = faceWindowMap[faceIdx] || 'windows-front';
+                        const container = document.getElementById(containerId);
+                        if (!container) return;
+                        const chip = document.createElement('div');
+                        chip.className = 'taskbar-win-chip';
+                        chip.innerText = label;
+                        chip.addEventListener('click', () => chip.remove());
+                        container.appendChild(chip);
                     }
-                });
 
-                // Auto-scan on load
-                scanNetworks();
+                    // Intercept net-scan to register a window chip
+                    document.getElementById('net-scan-btn')?.addEventListener('click', () => {
+                        addWindowChip('📡 Net Scan', 3); // outer left face maps to index 3
+                    });
 
-                // ===== PER-FACE TASKBAR WINDOW TRACKING =====
-                // Track popups opened from each face and add chips to that face's taskbar
-                const faceWindowMap = {
-                    0: 'windows-front', 1: 'windows-right', 2: 'windows-back', 3: 'windows-left'
-                };
-                let activeFaceIndex = 0;
-
-                // Hook into app icon clicks to know active face
-                document.querySelectorAll('.app-icon').forEach((icon, idx) => {
-                    icon.addEventListener('click', () => { activeFaceIndex = idx; });
-                });
-
-                function addWindowChip(label, faceIdx) {
-                    const containerId = faceWindowMap[faceIdx] || 'windows-front';
-                    const container = document.getElementById(containerId);
-                    if (!container) return;
-                    const chip = document.createElement('div');
-                    chip.className = 'taskbar-win-chip';
-                    chip.innerText = label;
-                    chip.addEventListener('click', () => chip.remove());
-                    container.appendChild(chip);
-                }
-
-                // Intercept net-scan to register a window chip
-                document.getElementById('net-scan-btn')?.addEventListener('click', () => {
-                    addWindowChip('📡 Net Scan', 3); // outer left face maps to index 3
-                });
-
-                // Intercept terminal open
-                document.querySelectorAll('.app-icon').forEach(icon => {
-                    if (icon.getAttribute('title') === 'Terminal Access') {
-                        icon.addEventListener('click', () => addWindowChip('>_ VS Code Terminal', activeFaceIndex));
-                    }
-                });
-
-
-                // ===== AGI SYSTEM =====
-                const AGI_MODES = {
-                    sovereign: { label: 'MODE: SOVEREIGN ASSISTANT — Directives: Sovereign_Stewardship, Grey_Directive', greet: 'Sovereign Assistant online. Directives locked. How can I assist, Architect Randall?' },
-                    security: { label: 'MODE: CYBER SENTINEL — Monitoring all threat surfaces', greet: 'Cyber Sentinel active. GAPCI protocol enforced. What threat vector shall I analyze?' },
-                    code: { label: 'MODE: CODE ARCHITECT — CI/CD pipeline and build automation active', greet: 'Code Architect ready. Repository and build systems online. What are we building?' },
-                    research: { label: 'MODE: RESEARCH LIBRARIAN — Deep vault access enabled', greet: 'Research Librarian online. Lujan Vault indexed. What knowledge do you seek?' },
-                    creative: { label: 'MODE: CREATIVE FORGE — Ideation and brainstorm mode', greet: 'Creative Forge ignited. Innovation matrix unlocked. What are we creating today?' }
-                };
-                window.setAgiMode = function (mode, el) {
-                    document.querySelectorAll('.agi-mode-btn').forEach(b => b.classList.remove('agi-mode-active'));
-                    el.classList.add('agi-mode-active');
-                    const cfg = AGI_MODES[mode] || AGI_MODES.sovereign;
-                    const label = document.getElementById('agi-mode-label');
-                    const feed = document.getElementById('agi-chat-feed');
-                    if (label) label.textContent = cfg.label;
-                    if (feed) {
-                        feed.innerHTML = '';
-                        const msg = document.createElement('div');
-                        msg.className = 'chat-msg msg-ai';
-                        msg.textContent = cfg.greet;
-                        feed.appendChild(msg);
-                    }
-                };
-                const agiInput = document.getElementById('agi-input');
-                const agiSend = document.getElementById('agi-send');
-                const agiFeed = document.getElementById('agi-chat-feed');
-                const agiTerminal = document.getElementById('agi-terminal');
-
-                // Conversation history for multi-turn context
-                const graeiHistory = [];
-
-                // Check API key status on load
-                (async () => {
-                    try {
-                        const r = await fetch('http://localhost:8081/sys/has_key');
-                        const d = await r.json();
-                        if (!d.configured) {
-                            const warn = document.createElement('div');
-                            warn.className = 'chat-msg msg-ai';
-                            warn.style.borderLeftColor = '#FF4B2B';
-                            warn.style.color = '#FF4B2B';
-                            warn.innerHTML = `⚠️ <b>GRAEI needs a Gemini API key to activate full intelligence.</b><br><br>
-                                Run this in your terminal:<br>
-                                <code style="background:rgba(0,0,0,0.4);padding:4px 8px;border-radius:4px;display:block;margin-top:6px;">
-                                export GEMINI_API_KEY=your_key_here</code><br>
-                                Then restart the bridge: <code>python sovereign_bridge.py</code><br><br>
-                                Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#00f2ff;">aistudio.google.com</a>`;
-                            agiFeed?.appendChild(warn);
+                    // Intercept terminal open
+                    document.querySelectorAll('.app-icon').forEach(icon => {
+                        if (icon.getAttribute('title') === 'Terminal Access') {
+                            icon.addEventListener('click', () => addWindowChip('>_ VS Code Terminal', activeFaceIndex));
                         }
-                    } catch (e) { }
-                })();
+                    });
 
-                async function handleAgiSend() {
-                    if (!agiInput || !agiInput.value.trim()) return;
-                    const text = agiInput.value.trim();
-                    agiInput.value = '';
 
-                    // Add user message to UI
-                    const userMsg = document.createElement('div');
-                    userMsg.className = 'chat-msg msg-user';
-                    userMsg.textContent = text;
-                    agiFeed.appendChild(userMsg);
-                    agiFeed.scrollTop = agiFeed.scrollHeight;
-
-                    // Add to history
-                    graeiHistory.push({ role: 'user', text });
-
-                    // Thinking indicator
-                    const thinking = document.createElement('div');
-                    thinking.className = 'chat-msg msg-ai';
-                    thinking.innerHTML = '<span style="color:#8892B0;font-style:italic;">⟳ GRAEI processing...</span>';
-                    agiFeed.appendChild(thinking);
-                    agiFeed.scrollTop = agiFeed.scrollHeight;
-
-                    try {
-                        const res = await fetch('http://localhost:8081/omni/chat', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ message: text, history: graeiHistory.slice(-20) })
-                        });
-                        const data = await res.json();
-                        const reply = data.reply || data.error || '[No response]';
-
-                        // Render reply (strip [RUN: ...] tags from display)
-                        const cleanReply = reply.replace(/\[RUN: .+?\]/g, '').trim();
-                        thinking.innerHTML = cleanReply.replace(/\n/g, '<br>');
-                        thinking.style.color = '';
-                        thinking.style.fontStyle = '';
-
-                        // Add AI response to history
-                        graeiHistory.push({ role: 'ai', text: reply });
-
-                        // Render command results in terminal dock
-                        if (data.cmd_results && data.cmd_results.length > 0 && agiTerminal) {
-                            data.cmd_results.forEach(result => {
-                                const line = document.createElement('div');
-                                line.className = 'term-line';
-                                line.style.whiteSpace = 'pre-wrap';
-                                line.style.color = '#70E100';
-                                line.textContent = result;
-                                agiTerminal.appendChild(line);
+                    // ===== AGI SYSTEM =====
+                    const AGI_MODES = {
+                        randall: { label: 'MODE: RANDALL ASSISTANT — Directives: Randall_Stewardship, Grey_Directive', greet: 'Randall Assistant online. Directives locked. How can I assist, Architect Randall?' },
+                        security: { label: 'MODE: CYBER SENTINEL — Monitoring all threat surfaces', greet: 'Cyber Sentinel active. GAPCI protocol enforced. What threat vector shall I analyze?' },
+                        code: { label: 'MODE: CODE ARCHITECT — CI/CD pipeline and build automation active', greet: 'Code Architect ready. Repository and build systems online. What are we building?' },
+                        research: { label: 'MODE: RESEARCH LIBRARIAN — Deep vault access enabled', greet: 'Research Librarian online. Lujan Vault indexed. What knowledge do you seek?' },
+                        creative: { label: 'MODE: CREATIVE FORGE — Ideation and brainstorm mode', greet: 'Creative Forge ignited. Innovation matrix unlocked. What are we creating today?' }
+                    };
+                    window.setAgiMode = function (mode, el) {
+                        document.querySelectorAll('.agi-mode-btn').forEach(b => b.classList.remove('agi-mode-active'));
+                        el.classList.add('agi-mode-active');
+                        const cfg = AGI_MODES[mode] || AGI_MODES.randall;
+                        const label = document.getElementById('agi-mode-label');
+                        const feed = document.getElementById('agi-chat-feed');
+                        if (label) label.textContent = cfg.label;
+                        if (feed) {
+                            feed.innerHTML = '';
+                            const msg = document.createElement('div');
+                            msg.className = 'chat-msg msg-ai';
+                            msg.textContent = cfg.greet;
+                            feed.appendChild(msg);
+                        }
+                    };
+                    const agiInput = document.getElementById('agi-input');
+                    const agiSend = document.getElementById('agi-send');
+                    const agiFeed = document.getElementById('agi-chat-feed');
+                    async function handleAgiSend() {
+                        if (!agiInput || !agiInput.value.trim()) return;
+                        const text = agiInput.value.trim();
+                        agiInput.value = '';
+                        const userMsg = document.createElement('div');
+                        userMsg.className = 'chat-msg msg-user';
+                        userMsg.textContent = text;
+                        agiFeed.appendChild(userMsg);
+                        agiFeed.scrollTop = agiFeed.scrollHeight;
+                        const thinking = document.createElement('div');
+                        thinking.className = 'chat-msg msg-ai';
+                        thinking.style.color = '#8892B0';
+                        thinking.style.fontStyle = 'italic';
+                        thinking.textContent = '⟳ GRAEI processing...';
+                        agiFeed.appendChild(thinking);
+                        agiFeed.scrollTop = agiFeed.scrollHeight;
+                        try {
+                            const res = await fetch('http://localhost:8081/omni/chat', {
+                                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ message: text })
                             });
-                            agiTerminal.scrollTop = agiTerminal.scrollHeight;
+                            const data = await res.json();
+                            thinking.textContent = data.reply || data.error || '[No response]';
+                            thinking.style.color = '';
+                            thinking.style.fontStyle = '';
+                        } catch (e) {
+                            thinking.textContent = '[Bridge offline — start randall_bridge.py to connect AGI]';
+                            thinking.style.color = '#FF4B2B';
+                            thinking.style.fontStyle = '';
                         }
-
-                        // Show sys snapshot as subtle status
-                        if (data.sys_snapshot) {
-                            const snap = document.createElement('div');
-                            snap.className = 'chat-msg';
-                            snap.style.cssText = 'font-size:0.65rem;color:#5c7080;border:none;background:none;padding:2px 0;';
-                            snap.textContent = '📡 ' + data.sys_snapshot.substring(0, 120) + '...';
-                            agiFeed.appendChild(snap);
-                        }
-
-                    } catch (e) {
-                        thinking.innerHTML = '<span style="color:#FF4B2B;">Bridge offline — run: python sovereign_bridge.py</span>';
+                        agiFeed.scrollTop = agiFeed.scrollHeight;
                     }
-                    agiFeed.scrollTop = agiFeed.scrollHeight;
-                }
-                agiSend?.addEventListener('click', handleAgiSend);
-                agiInput?.addEventListener('keydown', e => { if (e.key === 'Enter') handleAgiSend(); });
+                    agiSend?.addEventListener('click', handleAgiSend);
+                    agiInput?.addEventListener('keydown', e => { if (e.key === 'Enter') handleAgiSend(); });
 
-                // ===== APP STORE =====
-                window.filterStore = function (cat, el) {
-                    document.querySelectorAll('.store-cat-btn').forEach(b => b.classList.remove('active'));
-                    el.classList.add('active');
-                    document.querySelectorAll('.store-app-card').forEach(card => {
-                        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
-                    });
-                };
-                window.installApp = function (btn, name) {
-                    btn.textContent = '⟳ Installing...';
-                    btn.disabled = true;
-                    setTimeout(() => {
-                        btn.textContent = '✓ Installed';
-                        btn.classList.add('installed');
-                        btn.onclick = null;
-                    }, 1800);
-                };
-                document.getElementById('store-search')?.addEventListener('input', function () {
-                    const q = this.value.toLowerCase();
-                    document.querySelectorAll('.store-app-card').forEach(card => {
-                        const name = card.querySelector('.store-app-name')?.textContent.toLowerCase() || '';
-                        const desc = card.querySelector('.store-app-desc')?.textContent.toLowerCase() || '';
-                        card.style.display = (name.includes(q) || desc.includes(q)) ? '' : 'none';
-                    });
-                });
-
-                // ── Linux bridge command helper ──
-                window.bridgeCmd = async function (cmd) {
-                    try {
-                        const res = await fetch('http://localhost:8081/system/exec', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ command: cmd })
+                    // ===== APP STORE =====
+                    window.filterStore = function (cat, el) {
+                        document.querySelectorAll('.store-cat-btn').forEach(b => b.classList.remove('active'));
+                        el.classList.add('active');
+                        document.querySelectorAll('.store-app-card').forEach(card => {
+                            card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
                         });
-                        const data = await res.json();
-                        const out = data.output || data.error || '[no output]';
-                        const overlay = document.createElement('div');
-                        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99998;display:flex;align-items:center;justify-content:center;';
-                        overlay.innerHTML = `<div style="background:#0d1117;border:1px solid rgba(0,242,255,0.4);border-radius:14px;padding:24px 28px;max-width:700px;width:90%;font-family:monospace;font-size:0.82rem;color:#A1C1D1;white-space:pre-wrap;max-height:70vh;overflow-y:auto;">
+                    };
+                    window.installApp = function (btn, name) {
+                        btn.textContent = '⟳ Installing...';
+                        btn.disabled = true;
+                        setTimeout(() => {
+                            btn.textContent = '✓ Installed';
+                            btn.classList.add('installed');
+                            btn.onclick = null;
+                        }, 1800);
+                    };
+                    document.getElementById('store-search')?.addEventListener('input', function () {
+                        const q = this.value.toLowerCase();
+                        document.querySelectorAll('.store-app-card').forEach(card => {
+                            const name = card.querySelector('.store-app-name')?.textContent.toLowerCase() || '';
+                            const desc = card.querySelector('.store-app-desc')?.textContent.toLowerCase() || '';
+                            card.style.display = (name.includes(q) || desc.includes(q)) ? '' : 'none';
+                        });
+                    });
+
+                    // ── Linux bridge command helper ──
+                    window.bridgeCmd = async function (cmd) {
+                        try {
+                            const res = await fetch('http://localhost:8081/system/exec', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ command: cmd })
+                            });
+                            const data = await res.json();
+                            const out = data.output || data.error || '[no output]';
+                            const overlay = document.createElement('div');
+                            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99998;display:flex;align-items:center;justify-content:center;';
+                            overlay.innerHTML = `<div style="background:#0d1117;border:1px solid rgba(0,242,255,0.4);border-radius:14px;padding:24px 28px;max-width:700px;width:90%;font-family:monospace;font-size:0.82rem;color:#A1C1D1;white-space:pre-wrap;max-height:70vh;overflow-y:auto;">
                     <div style="color:#00f2ff;font-weight:700;margin-bottom:10px;">$ ${cmd}</div>
                     <div style="color:#E2E2E2;">${out}</div>
                     <button onclick="this.closest('div[style]').remove()" style="margin-top:16px;background:rgba(0,242,255,0.15);color:#00f2ff;border:1px solid rgba(0,242,255,0.4);border-radius:8px;padding:6px 18px;cursor:pointer;font-family:inherit;">✕ Close</button>
                 </div>`;
-                        document.body.appendChild(overlay);
-                    } catch (e) {
-                        alert('Bridge offline — start sovereign_bridge.py');
-                    }
-                };
+                            document.body.appendChild(overlay);
+                        } catch (e) {
+                            alert('Bridge offline — start randall_bridge.py');
+                        }
+                    };
 
-                // ===== DEVICE MANAGEMENT =====
-                const deviceContent = {
-                    host: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💻 EliteBook Host — System Overview</h3>',
-                    display: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🖥️ Display Output — Monitor Config</h3><p style="color:#8892B0;font-size:0.88rem;">Primary: Intel i915 Iris Xe | Arch Linux DRM</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'xrandr --query\')">Query xrandr</button>',
-                    storage: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💾 Storage Array</h3><button class="dev-ctrl-btn" style="margin-top:8px;" onclick="bridgeCmd(\'df -h\')">df -h (Disk Usage)</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT\')">lsblk</button>',
-                    network: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">📡 Network Stack</h3><p style="color:#70E100;font-size:0.88rem;">Status: ONLINE</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'ip addr show\')">ip addr</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'nmcli device status\')">nmcli status</button>',
-                    bluetooth: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🔵 Bluetooth Bus</h3><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'bluetoothctl devices\')">List Devices</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'systemctl status bluetooth\')">BT Service</button>',
-                    npu: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🧠 NPU / Intel GPU Core</h3><p style="color:#00f2ff;font-size:0.88rem;">Sync: 68% — Lujan-Bridge Active</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'vainfo\')">vainfo (VA-API)</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'cat /proc/cpuinfo | grep -m1 name\')">CPU Info</button>'
-                };
-                window.showDevice = function (type, el) {
-                    document.querySelectorAll('.dev-item').forEach(i => i.classList.remove('active'));
-                    el.classList.add('active');
-                    const panel = document.getElementById('device-detail-panel');
-                    if (!panel) return;
-                    if (type === 'host') {
-                        panel.innerHTML = deviceContent.host + `
+                    // ===== DEVICE MANAGEMENT =====
+                    const deviceContent = {
+                        host: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💻 EliteBook Host — System Overview</h3>',
+                        display: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🖥️ Display Output — Monitor Config</h3><p style="color:#8892B0;font-size:0.88rem;">Primary: Intel i915 Iris Xe | Arch Linux DRM</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'xrandr --query\')">Query xrandr</button>',
+                        storage: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">💾 Storage Array</h3><button class="dev-ctrl-btn" style="margin-top:8px;" onclick="bridgeCmd(\'df -h\')">df -h (Disk Usage)</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT\')">lsblk</button>',
+                        network: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">📡 Network Stack</h3><p style="color:#70E100;font-size:0.88rem;">Status: ONLINE</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'ip addr show\')">ip addr</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'nmcli device status\')">nmcli status</button>',
+                        bluetooth: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🔵 Bluetooth Bus</h3><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'bluetoothctl devices\')">List Devices</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'systemctl status bluetooth\')">BT Service</button>',
+                        npu: '<h3 style="color:#A1C1D1;margin:0 0 14px 0;font-size:1rem;">🧠 NPU / Intel GPU Core</h3><p style="color:#00f2ff;font-size:0.88rem;">Sync: 68% — Lujan-Bridge Active</p><button class="dev-ctrl-btn" style="margin-top:12px;" onclick="bridgeCmd(\'vainfo\')">vainfo (VA-API)</button><button class="dev-ctrl-btn" style="margin-top:8px;margin-left:8px;" onclick="bridgeCmd(\'cat /proc/cpuinfo | grep -m1 name\')">CPU Info</button>'
+                    };
+                    window.showDevice = function (type, el) {
+                        document.querySelectorAll('.dev-item').forEach(i => i.classList.remove('active'));
+                        el.classList.add('active');
+                        const panel = document.getElementById('device-detail-panel');
+                        if (!panel) return;
+                        if (type === 'host') {
+                            panel.innerHTML = deviceContent.host + `
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
                     <div class="dev-stat-card"><div class="dev-stat-label">CPU USAGE</div><div class="dev-stat-val" id="dev-cpu">Polling...</div><div class="dev-stat-bar"><div class="dev-stat-fill" id="dev-cpu-bar" style="width:42%;background:#00f2ff;"></div></div></div>
                     <div class="dev-stat-card"><div class="dev-stat-label">MEMORY</div><div class="dev-stat-val" id="dev-mem">Polling...</div><div class="dev-stat-bar"><div class="dev-stat-fill" id="dev-mem-bar" style="width:61%;background:#70E100;"></div></div></div>
@@ -2279,53 +2139,53 @@
                     <button class="dev-ctrl-btn" onclick="bridgeCmd('pacman -Syu --noconfirm')">🔄 pacman -Syu</button>
                     <button class="dev-ctrl-btn" onclick="bridgeCmd('systemctl list-units --type=service --state=running')">⚙️ Services</button>
                 </div>`;
-                        pollDeviceStats();
-                    } else {
-                        panel.innerHTML = deviceContent[type] || '<p style="color:#8892B0;">No data.</p>';
-                    }
-                };
-
-                // Poll battery and energy telemetry for device panel
-                async function pollDeviceStats() {
-                    if ('getBattery' in navigator) {
-                        navigator.getBattery().then(b => {
-                            const pct = Math.round(b.level * 100);
-                            const el = document.getElementById('dev-batt');
-                            const bar = document.getElementById('dev-batt-bar');
-                            if (el) el.textContent = pct + '%' + (b.charging ? ' (Charging)' : ' (On Battery)');
-                            if (bar) { bar.style.width = pct + '%'; bar.style.background = pct > 30 ? '#70E100' : '#FF4B2B'; }
-                        });
-                    }
-
-                    // Poll CodeMapping/P-State Energy Telemetry
-                    try {
-                        const res = await fetch('http://localhost:8081/telemetry/energy', { method: 'POST', body: '{}' });
-                        const data = await res.json();
-
-                        const cpuEl = document.getElementById('dev-cpu');
-                        const cpuBar = document.getElementById('dev-cpu-bar');
-                        if (cpuEl) {
-                            cpuEl.innerHTML = `<span style="color:#E2E2E2;">${data.cpu_load}%</span> <span style="font-size:0.6rem;color:#70E100;">${data.energy_savings}% ENERGY SAVED</span>`;
+                            pollDeviceStats();
+                        } else {
+                            panel.innerHTML = deviceContent[type] || '<p style="color:#8892B0;">No data.</p>';
                         }
-                        if (cpuBar) {
-                            cpuBar.style.width = data.cpu_load + '%';
-                            cpuBar.style.background = '#00f2ff';
+                    };
+
+                    // Poll battery and energy telemetry for device panel
+                    async function pollDeviceStats() {
+                        if ('getBattery' in navigator) {
+                            navigator.getBattery().then(b => {
+                                const pct = Math.round(b.level * 100);
+                                const el = document.getElementById('dev-batt');
+                                const bar = document.getElementById('dev-batt-bar');
+                                if (el) el.textContent = pct + '%' + (b.charging ? ' (Charging)' : ' (On Battery)');
+                                if (bar) { bar.style.width = pct + '%'; bar.style.background = pct > 30 ? '#70E100' : '#FF4B2B'; }
+                            });
                         }
 
-                        // Update the memory card to show CodeMapping status
-                        const memEl = document.getElementById('dev-mem');
-                        const memBar = document.getElementById('dev-mem-bar');
-                        if (memEl) memEl.innerHTML = `<span style="font-size:0.75rem;color:#70E100;">CODEMAPPED</span>`;
-                        if (memBar) { memBar.style.width = '100%'; memBar.style.background = '#70E100'; }
+                        // Poll CodeMapping/P-State Energy Telemetry
+                        try {
+                            const res = await fetch('http://localhost:8081/telemetry/energy', { method: 'POST', body: '{}' });
+                            const data = await res.json();
 
-                    } catch (e) {
-                        const cpuEl = document.getElementById('dev-cpu');
-                        if (cpuEl) cpuEl.textContent = 'Bridge Offline';
+                            const cpuEl = document.getElementById('dev-cpu');
+                            const cpuBar = document.getElementById('dev-cpu-bar');
+                            if (cpuEl) {
+                                cpuEl.innerHTML = `<span style="color:#E2E2E2;">${data.cpu_load}%</span> <span style="font-size:0.6rem;color:#70E100;">${data.energy_savings}% ENERGY SAVED</span>`;
+                            }
+                            if (cpuBar) {
+                                cpuBar.style.width = data.cpu_load + '%';
+                                cpuBar.style.background = '#00f2ff';
+                            }
+
+                            // Update the memory card to show CodeMapping status
+                            const memEl = document.getElementById('dev-mem');
+                            const memBar = document.getElementById('dev-mem-bar');
+                            if (memEl) memEl.innerHTML = `<span style="font-size:0.75rem;color:#70E100;">CODEMAPPED</span>`;
+                            if (memBar) { memBar.style.width = '100%'; memBar.style.background = '#70E100'; }
+
+                        } catch (e) {
+                            const cpuEl = document.getElementById('dev-cpu');
+                            if (cpuEl) cpuEl.textContent = 'Bridge Offline';
+                        }
                     }
-                }
-                pollDeviceStats();
+                    pollDeviceStats();
 
-            </script>
+                </script>
 </body>
 
 </html>

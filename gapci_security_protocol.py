@@ -89,7 +89,7 @@ class GapciSecuritySystem:
             print(f"[GAPCI-SYGMA] 🚀 Sending agent backward along tracked vector ({exfiltration_target}) as counter-offensive.")
         elif determination == "REDEEMABLE_UTILITY":
             print("[GAPCI-SYGMA] 🛠️ Target contains optimized utility DNA.")
-            print("[GAPCI-SYGMA] 🧬 Injecting sanitized DNA into Sovereign Library for Commercial Lease.")
+            print("[GAPCI-SYGMA] 🧬 Injecting sanitized DNA into Randall Library for Commercial Lease.")
 
 
 class UniversalDownloadGate:

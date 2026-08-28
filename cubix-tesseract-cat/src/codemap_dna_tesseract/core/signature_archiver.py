@@ -32,18 +32,18 @@ CHARACTER_SETS = {
 
 CYCLIC_CONSTANT = "142857"
 
-def generate_sovereign_variables(secret_key):
+def generate_randall_variables(secret_key):
     """Generate deterministic variables from secret key."""
     h = hashlib.sha256(secret_key.encode()).hexdigest()
     return [int(h[i:i+2], 16) for i in range(0, len(h), 2)]
 
-def generate_shuffled_alphabets(sovereign_variables):
-    """Generate shuffled character alphabets from sovereign variables."""
+def generate_shuffled_alphabets(randall_variables):
+    """Generate shuffled character alphabets from randall variables."""
     base_alphabet = 'abcdefghijklmnopqrstuvwxyz'
     alphabets = []
-    for i, val in enumerate(sovereign_variables):
+    for i, val in enumerate(randall_variables):
         chars = list(base_alphabet)
-        # Shuffle based on sovereign variable
+        # Shuffle based on randall variable
         for _ in range(val % 10):
             chars = chars[1:] + chars[:1]
         alphabets.append(''.join(chars))
@@ -72,12 +72,12 @@ def classify_character(char):
             return char_type
     return 'unknown'
 
-def generate_signature(content, sovereign_variables, char_type):
+def generate_signature(content, randall_variables, char_type):
     """
     Generate signature for specific character type.
     Returns accumulated tallies for that character class.
     """
-    shuffled_alphabets = generate_shuffled_alphabets(sovereign_variables)
+    shuffled_alphabets = generate_shuffled_alphabets(randall_variables)
     rotor_streams = generate_rotor_streams(shuffled_alphabets, len(content))
     cypher_pairs = [(rotor_streams[i], rotor_streams[i+6]) for i in range(6)]
     
@@ -128,8 +128,8 @@ def create_archive(input_path, output_path, secret_key="default_key"):
     print(f"\nInput file: {os.path.basename(input_path)}")
     print(f"File size: {original_size:,} bytes")
     
-    # Generate sovereign variables
-    sovereign_variables = generate_sovereign_variables(secret_key)
+    # Generate randall variables
+    randall_variables = generate_randall_variables(secret_key)
     
     # Build archive structure
     archive = {
@@ -161,7 +161,7 @@ def create_archive(input_path, output_path, secret_key="default_key"):
             continue
         
         # Generate signature
-        signature, positions = generate_signature(type_content, sovereign_variables, char_type)
+        signature, positions = generate_signature(type_content, randall_variables, char_type)
         
         archive['character_counts'][char_type] = len(type_content)
         archive['signatures'][char_type] = {

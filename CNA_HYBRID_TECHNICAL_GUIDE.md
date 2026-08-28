@@ -286,7 +286,7 @@ Use case: Compliance archives, legal proof, long-term vault
 ### How Rotor Streams Are Generated
 
 ```python
-def generate_sovereign_variables(secret_key):
+def generate_randall_variables(secret_key):
     """Convert key into 32 deterministic numbers"""
     h = hashlib.sha256(secret_key.encode()).hexdigest()
     return [int(h[i:i+2], 16) for i in range(0, len(h), 2)]
@@ -295,12 +295,12 @@ def generate_sovereign_variables(secret_key):
              SHA256 = "8f14e45fceea167a5a36dedd4bea2543f0..."
              vars = [143, 14, 241, 230, ...] (32 values)
 
-def generate_shuffled_alphabets(sovereign_variables):
+def generate_shuffled_alphabets(randall_variables):
     """Create 32 different alphabet orderings from vars"""
     base = "abcdefghijklmnopqrstuvwxyz"
     alphabets = []
     
-    for var in sovereign_variables:
+    for var in randall_variables:
         chars = list(base)
         # Rotate by var value
         for _ in range(var % 10):
@@ -553,7 +553,7 @@ RATIO: 1.80%
 Input: test.txt (44 bytes)
 
 Step 1: Read file ✓
-Step 2: Generate sovereign variables from key ✓
+Step 2: Generate randall variables from key ✓
 Step 3: Create shuffled alphabets (32 variants) ✓
 Step 4: Classify characters:
         alphabetic: 35 chars

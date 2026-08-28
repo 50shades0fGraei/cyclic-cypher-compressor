@@ -79,7 +79,7 @@ class LujanVaultCLI:
         
         print(f"\nVault Process Complete.")
         print(f"  Result: {ratio:.2f}% Total Density Gain")
-        print(f"  Sovereign Gift (Free): {gifted_savings:.2f}%")
+        print(f"  Randall Gift (Free): {gifted_savings:.2f}%")
         print(f"  Lujan Miracle (Premium): {monetized_savings:.2f}%")
         print(f"  Artifact: {os.path.basename(output_path)}")
 
@@ -125,7 +125,7 @@ class LujanVaultCLI:
         conn.close()
 
         print("\n" + "="*80)
-        print("LUJAN DEDUCTIVE VAULT: SOVEREIGN ALLOCATION AUDIT")
+        print("LUJAN DEDUCTIVE VAULT: RANDALL ALLOCATION AUDIT")
         print("="*80)
         print(f"{'Filename':<30} {'Orig Size':<12} {'Ratio':<10} {'Gifted':<10} {'Monetized':<10}")
         print("-"*80)

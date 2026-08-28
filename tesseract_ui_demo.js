@@ -10,7 +10,7 @@
 const logStream = document.getElementById('logStream');
 
 const mockLogs = [
-    { type: 'BOOT', text: 'Sovereign-Root established. Keys verified.' },
+    { type: 'BOOT', text: 'Randall-Root established. Keys verified.' },
     { type: 'ACPI', text: 'P-state optimization applied. Savings: 68.2%' },
     { type: 'DCNA', text: 'Segment SOV_AUDIT_001 indexed in Reflective Space.' },
     { type: 'RCNA', text: 'Retention note archived. Integrity verified at 0.95.' },

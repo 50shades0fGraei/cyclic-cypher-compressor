@@ -18,7 +18,7 @@ class IntegrityAction:
 
 class IntegrityEnforcer:
     """
-    Sovereign Framework: Integrity Enforcer
+    Randall Framework: Integrity Enforcer
     Evaluates execution requests based on the physical nature of the action.
     "All things are permissible in actions of creation or energies of protection...
     but actions of destruction, edits, and changes have huge implications and need isolation."
@@ -29,7 +29,7 @@ class IntegrityEnforcer:
             ActionCategory.CREATION: 0.20,       # Minimal barrier. New assets isolated by default.
             ActionCategory.PROTECTION: 0.10,     # Systems rely on this, no real barrier to defend.
             ActionCategory.EDIT: 0.75,           # Major implications. High integrity required.
-            ActionCategory.DESTRUCTIVE: 0.95     # Highest segregation. Sovereign level only.
+            ActionCategory.DESTRUCTIVE: 0.95     # Highest segregation. Randall level only.
         }
         
     def evaluate_request(self, requesting_role, action: IntegrityAction, current_integrity_score):
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     enforcer.evaluate_request("General Assistant GRAEI", build_new_app, general_ai_integrity)
     enforcer.evaluate_request("General Assistant GRAEI", alter_kernel, general_ai_integrity) # Should Fail
 
-    # Example 2: Sovereign GRAEI with maximum integrity
-    sovereign_ai_integrity = 0.98
-    print("\n--- Testing Sovereign Master GRAEI (Integrity: 0.98) ---")
-    enforcer.evaluate_request("Sovereign Architect", wipe_vault, sovereign_ai_integrity) # Should Pass
+    # Example 2: Randall GRAEI with maximum integrity
+    randall_ai_integrity = 0.98
+    print("\n--- Testing Randall Master GRAEI (Integrity: 0.98) ---")
+    enforcer.evaluate_request("Randall Architect", wipe_vault, randall_ai_integrity) # Should Pass

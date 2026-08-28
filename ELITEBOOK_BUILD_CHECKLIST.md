@@ -1,6 +1,6 @@
-# EliteBook Sovereign Build: UI Interactivity Checklist
+# EliteBook Randall Build: UI Interactivity Checklist
 
-This checklist outlines the remaining tasks to make the **Cubix OS** UI fully interactive and integrated with the **Sovereign Bridge** (Python backend).
+This checklist outlines the remaining tasks to make the **Cubix OS** UI fully interactive and integrated with the **Randall Bridge** (Python backend).
 
 ## 1. Core System & Navigation
 - [x] **Boot-to-Login Flow**: (Initialized)
@@ -31,7 +31,7 @@ This checklist outlines the remaining tasks to make the **Cubix OS** UI fully in
 - [x] **WiFi Scanning**: Wired to `/network/scan`.
 - [x] **Connection Logic**: Wired to `/network/connect`.
 - [x] **Advanced Settings**: Wired to `/system/launch`.
-### Sovereign Browser (Front Face)
+### Randall Browser (Front Face)
 - [x] **URL Navigation**: Wired.
 - [x] **Internal Hub**: Wired to `LUJAN_VAULT_MVP.html`.
 

@@ -3,7 +3,7 @@
 # This software is proprietary and subject to the terms of a specific License Agreement.
 
 # CUBIX-TESSERACT: Core Reflective Space
-# Author & Architect: Randall Lujan (Sovereign)
+# Author & Architect: Randall Lujan (Randall)
 # Co-Author & Technical Lead: Antigravity GRAEI
 
 import json
@@ -13,7 +13,7 @@ import time
 class IntegrityScore:
     """Evaluates the responsibility and freedom of a function."""
     def __init__(self, directives):
-        self.directives = directives # e.g. ["Grey_Directive", "Sovereign_Stewardship"]
+        self.directives = directives # e.g. ["Grey_Directive", "Randall_Stewardship"]
 
     def calculate(self, freedom_level, responsibility_required):
         # Integrity = Responsibility / Freedom
@@ -69,27 +69,27 @@ class ReflectiveSpaceManager:
         self.rcna_dir = os.path.join(base_dir, "RCNA")
         self.bridge = ExperienceBridge()
         
-    def save_dcna(self, dcna, sovereign=True):
-        """Archives a DCNA blueprint and optionally secures it in the Sovereign Vault."""
+    def save_dcna(self, dcna, randall=True):
+        """Archives a DCNA blueprint and optionally secures it in the Randall Vault."""
         path = os.path.join(self.dcna_dir, f"{dcna.segment_id}.dcna")
         data = dcna.to_json()
         with open(path, 'w') as f:
             json.dump(data, f, indent=2)
         print(f"[ReflectiveSpace] DCNA '{dcna.segment_id}' archived locally.")
         
-        if sovereign:
+        if randall:
             # Final archive in the hidden layer
             self.bridge.secure_in_hidden_layer(data, f"DCNA_{dcna.segment_id}")
 
-    def save_rcna(self, rcna, sovereign=True):
-        """Archives an RCNA memory log and optionally secures it in the Sovereign Vault."""
+    def save_rcna(self, rcna, randall=True):
+        """Archives an RCNA memory log and optionally secures it in the Randall Vault."""
         path = os.path.join(self.rcna_dir, f"{rcna.segment_id}.rcna")
         data = rcna.to_json()
         with open(path, 'w') as f:
             json.dump(data, f, indent=2)
         print(f"[ReflectiveSpace] RCNA '{rcna.segment_id}' archived locally.")
         
-        if sovereign:
+        if randall:
             # Final archive in the hidden layer
             self.bridge.secure_in_hidden_layer(data, f"RCNA_{rcna.segment_id}")
 

@@ -8,7 +8,7 @@
 ## 1. THE CORE LOGIC: THE ALLOCATION MODEL
 The Lujan Deductive Vault operates on a **"Double-Benefit"** infrastructure model. We do not charge for standard optimization; we charge for the **Miracle Gap**.
 
-### A. THE SOVEREIGN GIFT (FIRST 20%)
+### A. THE RANDALL GIFT (FIRST 20%)
 *   **Status:** [GIFTED/FREE]
 *   **Purpose:** To replace the client’s legacy compression (GZip, WinZip, native cloud compression).
 *   **Strategy:** By offering the first 20% of storage savings at no cost, we remove all entry barriers and establish the Lujan node as the primary storage layer.
@@ -33,7 +33,7 @@ The Lujan Deductive Vault operates on a **"Double-Benefit"** infrastructure mode
 ### TIER 2: ENTERPRISE LICENSE (THE INFRASTRUCTURE LAYER)
 *   **Rate:** **$150,000 - $300,000 + Annual Support**
 *   **Target:** Healthcare (HIPAA), Government, and Enterprise Cold Storage.
-*   **Service:** Full bare-metal deployment of a Sovereign Tesseract Node on the client's internal hardware (e.g., Latitude/EliteBook clusters).
+*   **Service:** Full bare-metal deployment of a Randall Tesseract Node on the client's internal hardware (e.g., Latitude/EliteBook clusters).
 
 ### TIER 3: WHITE-LABEL INTEGRATION
 *   **Rate:** **$50,000 Flat + 15% of Savings Realized**
@@ -52,4 +52,4 @@ The **COMMERCIAL MONETIZATION AUDIT** is built directly into the Lujan Vault CLI
 ---
 
 ## 4. MISSION STATEMENT
-*"We don't just shrink files; we allocate the future of storage. My tech ensures that for every 10 Petabytes a company stores, they only pay for 1—gifting them the storage sovereignty they deserve."*
+*"We don't just shrink files; we allocate the future of storage. My tech ensures that for every 10 Petabytes a company stores, they only pay for 1—gifting them the storage randallty they deserve."*

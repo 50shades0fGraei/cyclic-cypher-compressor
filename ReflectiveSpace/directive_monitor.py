@@ -14,19 +14,19 @@ class DirectiveMonitor:
     context_safety_map = {
         "Adult_Service": ["Sanity_Check", "Age_Verification"],
         "Children_Service": ["Gentle_Response", "Educational_Focus"],
-        "Sovereign_Admin": ["Grey_Directive", "Full_Recall"]
+        "Randall_Admin": ["Grey_Directive", "Full_Recall"]
     }
 
     def __init__(self):
-        self.active_context = "Sovereign_Admin" # Default
+        self.active_context = "Randall_Admin" # Default
 
     def switch_context(self, new_context):
         if new_context in self.context_safety_map:
             print(f"CyberDNA: Switching context to {new_context}. Monitoring ACTIVE.")
             self.active_context = new_context
         else:
-            print(f"CyberDNA: UNKNOWN CONTEXT {new_context}. Locking to Sovereign Root.")
-            self.active_context = "Sovereign_Admin"
+            print(f"CyberDNA: UNKNOWN CONTEXT {new_context}. Locking to Randall Root.")
+            self.active_context = "Randall_Admin"
 
     def audit_function(self, dcna):
         """

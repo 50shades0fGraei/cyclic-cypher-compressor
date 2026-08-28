@@ -1,7 +1,7 @@
 # LUJAN DEDUCTIVE VAULT - COMMERCIAL DEMO (2 MINS)
 
 ## [0:00-0:15] INTRODUCTION
-"I’m Randall Lujan. I’m going to show you the Lujan Deductive Vault. It’s a sovereign data system that treats information as a mathematical coordinate rather than a binary file. We’re going to take this healthcare dataset and turn it into portable keyboard characters, then perfectly reconstruct it."
+"I’m Randall Lujan. I’m going to show you the Lujan Deductive Vault. It’s a randall data system that treats information as a mathematical coordinate rather than a binary file. We’re going to take this healthcare dataset and turn it into portable keyboard characters, then perfectly reconstruct it."
 
 ## [0:15-0:45] PHASE 1: UNIVERSAL ENCODING
 **Run Command:**
@@ -28,5 +28,5 @@ python lujan_vault.py store large_audit.log "Enterprise" --deep --double
 *   **"We operate on a Double-Benefit model. The first 20% of savings is a GIFT—we replace your legacy tools for free."**
 *   **"The remaining 70% allocation is the Lujan Miracle—that is where we reclaim your budget."**
 *   **SaaS API**: $0.05/GB (Standard Maintenance).
-*   **Enterprise License**: $150K - $300K (Sovereign Infrastructure Node).
+*   **Enterprise License**: $150K - $300K (Randall Infrastructure Node).
 *   **"We hit the 90% Miracle Standard, or you don't pay the performance fee. Period."**

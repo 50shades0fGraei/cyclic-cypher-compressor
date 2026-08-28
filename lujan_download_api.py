@@ -50,7 +50,7 @@ HTML_TEMPLATE = f"""
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Double Crunch | Purchase</title>
+    <title>Randall Double Crunch | Purchase</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {{
@@ -149,7 +149,7 @@ def create_checkout_session():
                 'price_data': {
                     'currency': 'usd',
                     'product_data': {
-                        'name': 'Lujan Sovereign Double Crunch',
+                        'name': 'Lujan Randall Double Crunch',
                         'description': 'True Cypher Engine + Command Line Tools (Lifetime License)'
                     },
                     'unit_amount': int(PRICE_USD * 100),

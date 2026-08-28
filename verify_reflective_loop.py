@@ -21,32 +21,32 @@ def run_reflective_loop():
     monitor = DirectiveMonitor()
     
     # --- PHASE 1: DCNA BIRTH (The Function Blueprint) ---
-    print("\n[Phase 1] Creating DCNA-001: 'Sovereign_Audit_v1'")
-    sovereign_audit_code = """
-def sovereign_audit(data_stream):
+    print("\n[Phase 1] Creating DCNA-001: 'Randall_Audit_v1'")
+    randall_audit_code = """
+def randall_audit(data_stream):
     # Detects sabotage by checking for identity-locked signatures
     if "Sabotage_Detected" in data_stream:
-        print("Sovereign Root: Lock established.")
+        print("Randall Root: Lock established.")
         return False
     return True
 """
     dcna = DCNA(
         segment_id="SOV_AUDIT_001",
-        code=sovereign_audit_code,
+        code=randall_audit_code,
         integrity_min=0.9,
-        directives=["Grey_Directive", "Sovereign_Stewardship"]
+        directives=["Grey_Directive", "Randall_Stewardship"]
     )
     
     # Audit the DCNA before entry
-    monitor.switch_context("Sovereign_Admin")
+    monitor.switch_context("Randall_Admin")
     if monitor.audit_function(dcna.to_json()):
-        manager.save_dcna(dcna, sovereign=True)
+        manager.save_dcna(dcna, randall=True)
     else:
         print("ALERT: DCNA Integrity Compromised. Archival ABORTED.")
         return
 
     # --- PHASE 2: EXECUTION & EXPERIENCE (Simulated) ---
-    print("\n[Phase 2] Executing Sovereign_Audit_v1 Logic...")
+    print("\n[Phase 2] Executing Randall_Audit_v1 Logic...")
     # Simulated performance data
     execution_success = True
     performance_metrics = 0.98
@@ -60,10 +60,10 @@ def sovereign_audit(data_stream):
         performance_score=performance_metrics,
         implications="Integrity confirmed for EliteBook G11 NPU deployment."
     )
-    manager.save_rcna(rcna, sovereign=True)
+    manager.save_rcna(rcna, randall=True)
 
     # --- PHASE 4: VERIFICATION ---
-    print("\n[Phase 4] Verifying Sovereign Archival in the Hidden Layer...")
+    print("\n[Phase 4] Verifying Randall Archival in the Hidden Layer...")
     # Check if local copies exist
     dcna_path = os.path.join(manager.dcna_dir, "SOV_AUDIT_001.dcna")
     rcna_path = os.path.join(manager.rcna_dir, "SOV_AUDIT_001.rcna")
@@ -72,7 +72,7 @@ def sovereign_audit(data_stream):
         print("\n[SUCCESS] Reflective Loop Complete.")
         print("✓ DCNA Segment ID 'SOV_AUDIT_001' Indexed.")
         print("✓ RCNA Retention Note Archived.")
-        print("✓ Sovereign Bridge: .0001 Compression Applied.")
+        print("✓ Randall Bridge: .0001 Compression Applied.")
         print("✓ HIDDEN LAYER: Mapping established to MSDS1 partition.")
     else:
         print("\n[FAILURE] Archival sequence broken.")

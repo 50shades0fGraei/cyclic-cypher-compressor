@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
 
   let traits = [
-    "Empathy", "Recursion", "Sovereignty", "Vigilance",
+    "Empathy", "Recursion", "Randallty", "Vigilance",
     "Entropy", "Integrity", "Expansion", "Reflection",
     "Adaptation", "Memory", "Intuition", "Precision", "Resonance"
   ]
@@ -21,12 +21,12 @@
   async function invokeConvergence() {
     const outer = {
       traits: selectedTraits,
-      planes: ["Emotion", "Logic", "Time", "Sovereignty"],
+      planes: ["Emotion", "Logic", "Time", "Randallty"],
       duality: "Forward"
     }
     const inner = {
       traits: selectedTraits,
-      planes: ["Logic", "Emotion", "Sovereignty", "Time"],
+      planes: ["Logic", "Emotion", "Randallty", "Time"],
       duality: "Reverse"
     }
 

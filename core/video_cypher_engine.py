@@ -78,3 +78,4 @@ class VideoCypherStage1:
                     search_idx += 6 
 
         return bytes([v if v is not None else 0 for v in matrix])
+

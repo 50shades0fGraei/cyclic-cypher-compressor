@@ -5,7 +5,7 @@
 # CyberDNA: Latitude Side-by-Side Provisioner (Diskpart Version)
 # Creates a Native VHD for Cubix OS files using diskpart for compatibility.
 
-$vhdPath = "C:\Sovereign_Vault.vhd"
+$vhdPath = "C:\Randall_Vault.vhd"
 $sourceDir = "c:\Users\randall\cyclic-cypher-compressor\Latitude_Deploy"
 $tempScript = "$env:TEMP\vhd_script.txt"
 
@@ -13,7 +13,7 @@ Write-Host "--- CyberDNA: Latitude Side-by-Side Provisioner ---" -ForegroundColo
 
 # 1. Create and Mount VHD using Diskpart
 if (-not (Test-Path $vhdPath)) {
-    Write-Host "[VHD] Creating 20GB Sovereign Vault at $vhdPath..."
+    Write-Host "[VHD] Creating 20GB Randall Vault at $vhdPath..."
     $script = @"
 create vdisk file="$vhdPath" maximum=20480 type=expandable
 attach vdisk
@@ -39,7 +39,7 @@ if (Test-Path "S:\") {
     Write-Host "[INSTALL] Injecting Cubix OS & Lujan Vault stack to S:\..."
     Copy-Item -Path "$sourceDir\*" -Destination "S:\" -Recurse -Force
     
-    # 3. Create the Sovereign Boot Shortcut
+    # 3. Create the Randall Boot Shortcut
     Write-Host "[SHORTCUT] Creating desktop bridge..."
     $WshShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut("$([Environment]::GetFolderPath('Desktop'))\Boot Cubix OS.lnk")
@@ -50,7 +50,7 @@ if (Test-Path "S:\") {
     
     $Shortcut.TargetPath = $browserPath
     $Shortcut.Arguments = "--allow-file-access-from-files --app=file:///S:/cubix_os.html --start-fullscreen"
-    $Shortcut.Description = "Launch Cubix OS Sovereign Environment"
+    $Shortcut.Description = "Launch Cubix OS Randall Environment"
     $Shortcut.Save()
     
     Write-Host "`n[POWER] Enforcing ACPI P-State Lock (Max Power Savings)..." -ForegroundColor Cyan
@@ -59,7 +59,7 @@ if (Test-Path "S:\") {
     powercfg /setdcvalueindex SCHEME_MAX SUB_PROCESSOR PROCTHROTTLEMAX 50
     powercfg /setactive scheme_max
     
-    Write-Host "`n[SUCCESS] Sovereign Vault Provisioned Successfully." -ForegroundColor Green
+    Write-Host "`n[SUCCESS] Randall Vault Provisioned Successfully." -ForegroundColor Green
     Write-Host "You now have a 'Boot Cubix OS' shortcut on your desktop."
     Write-Host "The Vault is currently mounted as Drive S:\"
 } else {

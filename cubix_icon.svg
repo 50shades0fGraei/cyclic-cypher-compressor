@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="256" height="256" rx="48" fill="#121212"/>
+<rect x="8" y="8" width="240" height="240" rx="40" stroke="#333333" stroke-width="4"/>
+<!-- Simple striking tesseract / cypher geometric visual representing the Randall Seal / Cubix system -->
+<g transform="translate(128, 128)">
+    <!-- Outer Square -->
+    <path d="M-60 -60 L60 -60 L60 60 L-60 60 Z" stroke="#E0E0E0" stroke-width="6" fill="none"/>
+    <!-- Inner Square -->
+    <path d="M-25 -25 L25 -25 L25 25 L-25 25 Z" stroke="#888888" stroke-width="4" fill="none"/>
+    <!-- Connectors -->
+    <line x1="-60" y1="-60" x2="-25" y2="-25" stroke="#E0E0E0" stroke-width="4"/>
+    <line x1="60" y1="-60" x2="25" y2="-25" stroke="#E0E0E0" stroke-width="4"/>
+    <line x1="-60" y1="60" x2="-25" y2="25" stroke="#E0E0E0" stroke-width="4"/>
+    <line x1="60" y1="60" x2="25" y2="25" stroke="#E0E0E0" stroke-width="4"/>
+    <!-- Central Power core indicator -->
+    <circle cx="0" cy="0" r="8" fill="#FFFFFF"/>
+</g>
+</svg>

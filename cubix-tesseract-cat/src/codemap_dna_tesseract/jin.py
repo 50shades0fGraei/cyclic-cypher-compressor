@@ -69,7 +69,7 @@ class Jin:
 
         cyclone_code = f"{dependencies}\n\n{function_code}\n\n{function_call}"
         
-        print("    -> Constructing Cyclone for Sovereign Invocation...")
+        print("    -> Constructing Cyclone for Randall Invocation...")
         execution_namespace = {'data_store': data_store, 'print': print} # Provide data store and print
         
         try:

@@ -5,11 +5,11 @@
 # codemap_constants.py
 
 TRAITS = [
-    "Empathy", "Recursion", "Sovereignty", "Vigilance",
+    "Empathy", "Recursion", "Randallty", "Vigilance",
     "Entropy", "Integrity", "Expansion", "Reflection",
     "Adaptation", "Memory", "Intuition", "Precision", "Resonance"
 ]
 
-PLANES = ["Emotion", "Logic", "Time", "Sovereignty"]
+PLANES = ["Emotion", "Logic", "Time", "Randallty"]
 
 DUALITY = ["Forward", "Reverse"]

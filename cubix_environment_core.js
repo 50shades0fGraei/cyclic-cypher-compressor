@@ -109,7 +109,7 @@ export function initCubixEnvironment() {
     ctx.fillText('TESSERACT', 256, 290);
     ctx.fillStyle = '#70E100';
     ctx.font = '900 30px "Outfit", sans-serif';
-    ctx.fillText('• SOVEREIGN •', 256, 420);
+    ctx.fillText('• RANDALL •', 256, 420);
 
     const logoTexture = new THREE.CanvasTexture(canvas);
 
@@ -167,9 +167,22 @@ export function initCubixEnvironment() {
     };
 
     const handleDoubleClick = () => {
-        if (typeof window.switchInnerView === 'function') {
-            window.switchInnerView('home');
-        }
+        if (typeof window.switchInnerView === 'function') window.switchInnerView = switchInnerView;
+
+        // Admin Panel Randall Overrides
+        window.adminPurge = function () {
+            const statusPanel = document.querySelector('.librarian-feed');
+            alert("RANDALL COMMAND: Initiating KDY Subnet Purge. Isolating verified MAC addresses.");
+            setTimeout(() => alert("[✓] PURGE COMPLETE. Unverified entity metrics have been structurally denied core access."), 1200);
+        };
+
+        window.adminForceCDV6 = function () {
+            alert("RANDALL COMMAND: Binding global volumes to pure RJL-ABSOLUTE CDV6 Mathematics.");
+        };
+
+        window.adminRootIndex = function () {
+            alert("RANDALL COMMAND: Initiating Chronological Index override.");
+        };
     };
 
     const onPointerDown = (clientX, clientY) => {
@@ -377,7 +390,7 @@ export function initCubixEnvironment() {
     }
     animate();
 
-    // --- SOVEREIGN BRIDGE (SYNC UI <-> PYTHON) ---
+    // --- RANDALL BRIDGE (SYNC UI <-> PYTHON) ---
     const BRIDGE_URL = "http://localhost:8081";
 
     function initOmniBridge() {
@@ -484,7 +497,7 @@ export function initCubixEnvironment() {
             }
         });
 
-        // Librarian Chat — powered by Gemini 1.5 Pro via Sovereign Bridge
+        // Librarian Chat — powered by Gemini 1.5 Pro via Randall Bridge
         const librarianInput = document.getElementById('librarian-input');
         const librarianSend = document.getElementById('librarian-send');
         const librarianFeed = document.querySelector('.librarian-chat > div:nth-child(2)');
@@ -516,7 +529,7 @@ export function initCubixEnvironment() {
                 aiDiv.innerHTML = `<b style="color:#00f2ff;">📚 Librarian (Gemini):</b> ${data.reply || data.error}`;
                 librarianFeed.appendChild(aiDiv);
             } catch (e) {
-                thinkDiv.innerText = "[ERROR] Bridge offline — start sovereign_bridge.py";
+                thinkDiv.innerText = "[ERROR] Bridge offline — start randall_bridge.py";
                 thinkDiv.style.color = "#FF4B2B";
             }
             librarianFeed.scrollTop = librarianFeed.scrollHeight;
@@ -683,7 +696,7 @@ export function initCubixEnvironment() {
                 applyMatrixState();
             }
         }
-        console.log(`[SOVEREIGN] Switched to view: ${viewId}`);
+        console.log(`[RANDALL] Switched to view: ${viewId}`);
     };
 
     // --- SIDEBAR TOGGLE LOGIC ---
@@ -691,7 +704,7 @@ export function initCubixEnvironment() {
         const sidebar = document.getElementById('inner-sidebar');
         if (sidebar) {
             sidebar.classList.toggle('collapsed');
-            console.log(`[SOVEREIGN] Sidebar ${sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
+            console.log(`[RANDALL] Sidebar ${sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
         }
     };
 
@@ -719,7 +732,7 @@ export function initCubixEnvironment() {
             else rubyO.classList.remove('active');
         }
 
-        console.log(`[SOVEREIGN] Visibility Mode: ${opacityClasses[currentOpacityLevel]}`);
+        console.log(`[RANDALL] Visibility Mode: ${opacityClasses[currentOpacityLevel]}`);
     };
 
     // --- SIDEBAR OPACITY CONTROL ---
@@ -745,7 +758,7 @@ export function initCubixEnvironment() {
             else rubyO.classList.remove('active');
         }
 
-        console.log(`[SOVEREIGN] Visibility Mode set to: ${opacityClasses[level]}`);
+        console.log(`[RANDALL] Visibility Mode set to: ${opacityClasses[level]}`);
     };
 
     // --- SIDEBAR AI CHAT LOGIC ---
@@ -770,7 +783,7 @@ export function initCubixEnvironment() {
         setTimeout(() => {
             const aiDiv = document.createElement('div');
             aiDiv.className = 'mini-msg msg-ai';
-            aiDiv.textContent = "Processing sovereign request... Command acknowledged.";
+            aiDiv.textContent = "Processing randall request... Command acknowledged.";
             feed.appendChild(aiDiv);
             feed.scrollTop = feed.scrollHeight;
         }, 1000);
@@ -793,7 +806,7 @@ export function initCubixEnvironment() {
                     <button onclick="closeDock()" style="background:none; border:none; color:#8892B0; cursor:pointer; font-weight:900;">✕</button>
                 </div>
                 <div style="flex:1; padding:20px; color:#E2E2E2; overflow-y:auto;">
-                    <h3>Sovereign Application Portal</h3>
+                    <h3>Randall Application Portal</h3>
                     <p>Executing ${appName} in protected memory space...</p>
                     <div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.3); border-radius:10px; border-left:4px solid #70E100;">
                         <div style="font-family:monospace; font-size:0.85rem; color:#70E100;">
@@ -805,7 +818,7 @@ export function initCubixEnvironment() {
                 </div>
             </div>
         `;
-        console.log(`[SOVEREIGN] Docked app: ${appName}`);
+        console.log(`[RANDALL] Docked app: ${appName}`);
     };
 
     window.closeDock = function () {
@@ -909,6 +922,115 @@ export function initCubixEnvironment() {
     pollSystemState();
     setInterval(pollSystemState, 15000); // Poll every 15s
 
-    console.log("[CUBIX TESSERACT] Sovereign Desktop Interface & System Tray Ready.");
-}
+    // --- STANDALONE WINDOW MANAGER (Zero-File Dependency) ---
+    class CubixWindowManager {
+        constructor() {
+            this.windows = [];
+            this.zIndexCounter = 100000;
+            this.activeWindow = null;
+        }
 
+        spawnWindow(title, contentHTML, icon = '💠', width = 450, height = 300) {
+            const winId = 'win-' + Math.random().toString(36).substr(2, 9);
+            const winNode = document.createElement('div');
+            winNode.className = 'sov-window';
+            winNode.id = winId;
+            winNode.style.width = width + 'px';
+            winNode.style.height = height + 'px';
+            winNode.style.top = '15vh';
+            winNode.style.left = '35vw';
+            winNode.style.zIndex = ++this.zIndexCounter;
+
+            winNode.innerHTML = `
+                <div class="sov-window-header" id="header-${winId}">
+                    <span style="font-size: 1.1rem; margin-right: 8px;">${icon}</span>
+                    <div class="sov-window-title">${title}</div>
+                    <div class="sov-window-controls">
+                        <button class="sov-win-btn close" title="Close" onclick="cubixWM.closeWindow('${winId}')"></button>
+                    </div>
+                </div>
+                <div class="sov-window-body">
+                    ${contentHTML}
+                </div>
+            `;
+
+            // Append over the 3D scene completely
+            document.body.appendChild(winNode);
+            this.windows.push(winNode);
+            this.makeDraggable(winNode, document.getElementById(`header-${winId}`));
+            this.focusWindow(winNode);
+
+            // Add chip to taskbar if window-chips container exists
+            const taskbar = document.querySelector('.env-taskbar-windows');
+            if (taskbar) {
+                const chip = document.createElement('div');
+                chip.className = 'taskbar-win-chip';
+                chip.id = `chip-${winId}`;
+                chip.innerHTML = `${icon} ${title}`;
+                chip.onclick = () => this.focusWindow(winNode);
+                taskbar.appendChild(chip);
+            }
+        }
+
+        closeWindow(winId) {
+            const win = document.getElementById(winId);
+            if (win) {
+                win.style.opacity = '0';
+                win.style.transform = 'scale(0.95)';
+                setTimeout(() => win.remove(), 200);
+            }
+            const chip = document.getElementById(`chip-${winId}`);
+            if (chip) chip.remove();
+            this.windows = this.windows.filter(w => w.id !== winId);
+        }
+
+        focusWindow(winNode) {
+            winNode.style.zIndex = ++this.zIndexCounter;
+            this.activeWindow = winNode;
+        }
+
+        makeDraggable(winNode, headerNode) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            headerNode.onmousedown = (e) => {
+                e.preventDefault();
+                this.focusWindow(winNode);
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            };
+
+            const elementDrag = (e) => {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                winNode.style.top = (winNode.offsetTop - pos2) + "px";
+                winNode.style.left = (winNode.offsetLeft - pos1) + "px";
+            }
+
+            const closeDragElement = () => {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    }
+
+    // Expose WM globally
+    window.cubixWM = new CubixWindowManager();
+
+    // Expose Codemap toggle
+    window.toggleCodemap = function () {
+        const launcher = document.getElementById('codemap-launcher');
+        if (launcher) {
+            if (launcher.classList.contains('visible')) {
+                launcher.classList.remove('visible');
+            } else {
+                launcher.classList.add('visible');
+            }
+        }
+    };
+
+    console.log("[CUBIX TESSERACT] Randall Desktop Interface & System Tray Ready.");
+}

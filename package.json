@@ -1,7 +1,7 @@
 {
   "name": "cyclic-cypher-compressor",
   "version": "1.2.0",
-  "description": "Lujan Tesseract Sovereign OS Interface",
+  "description": "Lujan Tesseract Randall OS Interface",
   "main": "main.js",
   "scripts": {
     "start": "electron ."

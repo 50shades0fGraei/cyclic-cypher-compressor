@@ -139,7 +139,7 @@ select.dna-input{cursor:pointer;}
 <div class="topbar">
   <div>
     <div class="topbar-title">🧬 GRAEI AGENT DNA BUILDER</div>
-    <div class="topbar-sub">Sovereign Role Governance — Positional AI Workflow Engine</div>
+    <div class="topbar-sub">Randall Role Governance — Positional AI Workflow Engine</div>
   </div>
   <div class="topbar-actions">
     <button class="btn-ghost" onclick="exportAgent()">📤 Export DNA</button>
@@ -174,7 +174,7 @@ select.dna-input{cursor:pointer;}
 
 <script>
 const ROLES = [
-  { id:'sovereign', icon:'🔵', name:'Sovereign Assistant', desc:'Top-level orchestrator', clearance:4 },
+  { id:'randall', icon:'🔵', name:'Randall Assistant', desc:'Top-level orchestrator', clearance:4 },
   { id:'sentinel',  icon:'🛡️', name:'Cyber Sentinel',     desc:'Security & threat monitor', clearance:3 },
   { id:'architect', icon:'⚙️', name:'Code Architect',      desc:'CI/CD & build systems', clearance:3 },
   { id:'librarian', icon:'📚', name:'Research Librarian',  desc:'Knowledge & vault access', clearance:2 },
@@ -184,7 +184,7 @@ const ROLES = [
   { id:'janitor',   icon:'🧹', name:'System Janitor',      desc:'Cleanup & maintenance', clearance:0 },
 ];
 
-const CLEARANCE_LABELS = ['RESTRICTED','STANDARD','ELEVATED','TRUSTED','SOVEREIGN'];
+const CLEARANCE_LABELS = ['RESTRICTED','STANDARD','ELEVATED','TRUSTED','RANDALL'];
 const CLEARANCE_CLS    = ['cl-0','cl-1','cl-2','cl-3','cl-4'];
 
 let agents = JSON.parse(localStorage.getItem('graei_agents') || '[]');
@@ -195,7 +195,7 @@ function saveToStorage() { localStorage.setItem('graei_agents', JSON.stringify(a
 function newAgent() {
   const id = 'agent_' + Date.now();
   agents.push({
-    id, name:'New Agent', roleId:'sovereign',
+    id, name:'New Agent', roleId:'randall',
     personality:{ empathy:50, nice:50, professional:50 },
     tasks:[], integrity:5, valor:5, systemic:5
   });
@@ -378,7 +378,7 @@ function renderTasks(tasks) {
               <option value="ephemeral" ${t.buildType==='ephemeral'?'selected':''}>Ephemeral (session-only)</option>
               <option value="persistent" ${t.buildType==='persistent'?'selected':''}>Persistent (vault-stored)</option>
               <option value="shared" ${t.buildType==='shared'?'selected':''}>Shared (team-accessible)</option>
-              <option value="sovereign" ${t.buildType==='sovereign'?'selected':''}>Sovereign (owner-only)</option>
+              <option value="randall" ${t.buildType==='randall'?'selected':''}>Randall (owner-only)</option>
             </select>
           </div>
         </div>
@@ -442,7 +442,7 @@ function renderTasks(tasks) {
                 <option value="this_agent" ${t.prefServes==='this_agent'?'selected':''}>This Agent Only</option>
                 <option value="same_role" ${t.prefServes==='same_role'?'selected':''}>Same-Role Agents</option>
                 <option value="org" ${t.prefServes==='org'?'selected':''}>Entire Organization</option>
-                <option value="sovereign" ${t.prefServes==='sovereign'?'selected':''}>Sovereign Owner Only</option>
+                <option value="randall" ${t.prefServes==='randall'?'selected':''}>Randall Owner Only</option>
               </select>
             </div>
           </div>
@@ -487,7 +487,7 @@ function removeTask(i) {
   if(tl) tl.innerHTML=renderTasks(a.tasks);
 }
 function updateTask(i,key,val) { const a=getAgent(); if(!a)return; a.tasks[i][key]=val; saveToStorage(); }
-function saveAgent() { saveToStorage(); renderSidebar(); alert('Agent DNA saved to Sovereign Vault.'); }
+function saveAgent() { saveToStorage(); renderSidebar(); alert('Agent DNA saved to Randall Vault.'); }
 function exportAgent() {
   const a=getAgent(); if(!a){alert('Select an agent first.');return;}
   const blob=new Blob([JSON.stringify(a,null,2)],{type:'application/json'});

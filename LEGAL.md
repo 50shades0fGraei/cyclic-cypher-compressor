@@ -8,7 +8,7 @@ This legal notice applies to the entire "Cyclic Cypher Compressor" project and i
 - **Deductive Metronome Architecture**
 - **Personal Vault System**
 - **Syllable Codec and Universal Keyboard Encoding**
-- **Sovereign OS Bridge and GRAEI Protocols**
+- **Randall OS Bridge and GRAEI Protocols**
 
 ## 2. OWNERSHIP & COPYRIGHT
 - **Proprietor:** Randall James Lujan

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Randall Media Vault
+Comment=Lujan Deductive Double Crunch
+Exec=randall-media-vault
+Icon=cubix_icon
+Terminal=false
+Categories=Utility;Security;

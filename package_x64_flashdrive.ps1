@@ -12,7 +12,7 @@ $files = @(
     "cubix_logo_wallpaper.png", "cubix_logo_placeholder.txt",
     "tesseract_ui_demo.html", "tesseract_ui_demo.css", "tesseract_ui_demo.js",
     "agi_communication_matrix.py", "agi_deployment.py", "experience_bridge.py", 
-    "gapci_security_protocol.py", "sovereign_bridge.py", "system_cleaner.py", 
+    "gapci_security_protocol.py", "randall_bridge.py", "system_cleaner.py", 
     "system_polish.py", "msds1_vault_access.py", "librarian_vault_manager.py"
 )
 

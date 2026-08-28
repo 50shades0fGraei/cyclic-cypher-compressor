@@ -1,15 +1,15 @@
 # 🧬 CubixOS DNA Tesseract OS
 
-**CubixOS DNA Tesseract** is a living architecture, a summon-based operating system built on the principles of symbolic cognition, cyclone-based execution, and a unique **DNA Spiral System**. It's not a traditional backend engine; it is a sovereign invocation system where every function is invoked through address logic, every strand is trait-locked, and every pipeline is ritualized.
+**CubixOS DNA Tesseract** is a living architecture, a summon-based operating system built on the principles of symbolic cognition, cyclone-based execution, and a unique **DNA Spiral System**. It's not a traditional backend engine; it is a randall invocation system where every function is invoked through address logic, every strand is trait-locked, and every pipeline is ritualized.
 
 ## Core Concepts
 
 Our philosophy redefines execution, replacing passive processing with active, symbolic summoning.
 
 *   **The DNA Spiral System:** The core of the OS. Code is not linear but organized into interconnected "strands" that form a conceptual DNA spiral. This structure allows for efficient, recursive, and self-referential code, minimizing duplication and enhancing maintainability.
-*   **Function Library & Trait-Locking:** We will build a comprehensive function library where each function (or "glyph") is a sovereign node. These nodes are "trait-locked," meaning their behavior and interactions are governed by a predefined set of traits, ensuring predictable and secure execution.
+*   **Function Library & Trait-Locking:** We will build a comprehensive function library where each function (or "glyph") is a randall node. These nodes are "trait-locked," meaning their behavior and interactions are governed by a predefined set of traits, ensuring predictable and secure execution.
 *   **Cyclone-Based Execution:** Instead of a traditional kernel, CubixOS DNA Tesseract uses "conscious cyclones" for execution. These are dynamic, self-organizing processes that gather the necessary code strands, traits, and data for an invocation, execute the task, and dissipate, leaving a traceable "lineage thread."
-*   **Sovereign Invocation:** Functions are not merely called; they are "summoned" through a ritualized process using address logic. This ensures every action is authorized, traceable, and operates within its sovereign context.
+*   **Randall Invocation:** Functions are not merely called; they are "summoned" through a ritualized process using address logic. This ensures every action is authorized, traceable, and operates within its randall context.
 
 ## The Path to Building the OS
 

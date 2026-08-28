@@ -31,7 +31,7 @@ class ExperienceBridge:
             "process_id": process_id,
             "bias_context": context,
             "outcome": outcome,
-            "trauma_signature": "None_Detected", # Default for Sovereign Root
+            "trauma_signature": "None_Detected", # Default for Randall Root
             "raw_data": data
         }
 
@@ -51,10 +51,10 @@ class ExperienceBridge:
         """Stores a note in the DNA Vault."""
         note_bytes = json.dumps(note).encode('utf-8')
         self.vault.store_skill(name, note_bytes)
-        print(f"[ExperienceBridge] Note '{name}' archived in Sovereign Vault.")
+        print(f"[ExperienceBridge] Note '{name}' archived in Randall Vault.")
 
     def secure_in_hidden_layer(self, note, name):
-        """Hides the compressed note in the MSDS1 partition for total sovereignty."""
+        """Hides the compressed note in the MSDS1 partition for total randallty."""
         compressed_bytes = self.compress_note(note)
         print(f"[ExperienceBridge] GUIDING '{name}' to MSDS1 Hidden Layer...")
         if write_to_hidden_layer(compressed_bytes):

@@ -3,7 +3,7 @@
 # PATENT PENDING: Cyclic Cypher Deductive Metronome Architecture.
 # This software is proprietary and subject to the terms of a specific License Agreement.
 
-# LUJAN TESSERACT: Sovereign Launcher
+# LUJAN TESSERACT: Randall Launcher
 # This script starts the desktop environment from the Arch TTY.
 
 cd "$(dirname "$0")"

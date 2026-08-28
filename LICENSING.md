@@ -228,7 +228,7 @@ This software is licensed exclusively on a **CONTRACT-ONLY** basis. There is no 
 - **NO** Modification for non-contracted use.
 - **NO** Commercial use without explicit written consent.
 
-For further information, see [LEGAL.md](file:///home/sovereign/cyclic-cypher-compressor/LEGAL.md).
+For further information, see [LEGAL.md](file://__HOME_RANDALL_PLACEHOLDER__/cyclic-cypher-compressor/LEGAL.md).
 
 ---
 

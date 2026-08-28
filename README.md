@@ -337,7 +337,7 @@ test_document.compressed       (Original compressed output)
 
 For detailed technical documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## 2. Technical Architecture: The Sovereign 27
+## 2. Technical Architecture: The Randall 27
 
 The engine utilizes a rotor system based on the cyclic constants to create a compression mapping:
 

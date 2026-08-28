@@ -1,7 +1,7 @@
 # Lujan Deductive Vault: Double Crunch Marketplace Release
 
 > **Patent Pending: Cyclic Cypher Deductive Metronome Architecture**  
-> **Developed by: Randall Lujan | Sovereign Tesseract Technology**
+> **Developed by: Randall Lujan | Randall Tesseract Technology**
 
 Welcome to the **Double Crunch** standalone API module, officially extracted from the enterprise Lujan Deductive Vault for marketplace deployment. This tool provides access to the revolutionary "Double Crunch" logic, achieving a theoretical mathematical limit in data optimization through recursive cyclic transformation.
 
@@ -47,4 +47,4 @@ iterative_decompress("data.cdv6", "restored_data.bin")
 
 ## Legal
 
-This software is **proprietary** and distributed strictly under a Sovereign Allocation Agreement via the corporate hub. Redistribution or unapproved enterprise utilization without a valid architectural license is prohibited.
+This software is **proprietary** and distributed strictly under a Randall Allocation Agreement via the corporate hub. Redistribution or unapproved enterprise utilization without a valid architectural license is prohibited.

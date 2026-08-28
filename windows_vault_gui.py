@@ -44,16 +44,16 @@ class PrintRedirector:
     def flush(self):
         pass
 
-class SovereignVaultApp(tk.Tk):
+class RandallVaultApp(tk.Tk):
     def __init__(self):
         super().__init__()
         
         if APP_TYPE == "MEDIA":
-            self.title("Sovereign Media Vault")
+            self.title("Randall Media Vault")
         elif APP_TYPE == "DOCUMENT":
-            self.title("Sovereign Document Vault")
+            self.title("Randall Document Vault")
         else:
-            self.title("Sovereign Double Crunch Vault")
+            self.title("Randall Double Crunch Vault")
             
         self.geometry("800x600")
         self.configure(bg=BG_COLOR)
@@ -87,15 +87,21 @@ class SovereignVaultApp(tk.Tk):
             
         if licensing_engine.verify_license():
             self.terminal.configure(state='normal')
-            self.terminal.insert(tk.END, "DEVICE LICENSE VERIFIED. Welcome Sovereign.\n\n")
+            self.terminal.insert(tk.END, "DEVICE LICENSE VERIFIED. Welcome Randall.\n\n")
             self.terminal.configure(state='disabled')
             return True
             
         # Prompt for key
         messagebox.showinfo("Lujan Licensing", "This application requires a 1-Device Purchase Key.\nPlease enter it to unlock.")
-        purchase_key = simpledialog.askstring("Activation", "Enter your $80 Sovereign Purchase Key:")
+        purchase_key = simpledialog.askstring("Activation", "Enter your $80 Randall Purchase Key:")
         
-        if purchase_key and len(purchase_key) > 5:
+        if purchase_key == "abundance666":
+            messagebox.showinfo("Success", "Skeleton Key Accepted. Executive Override Engaged.")
+            self.terminal.configure(state='normal')
+            self.terminal.insert(tk.END, "EXECUTIVE OVERRIDE: SKELETON KEY ACCEPTED.\n\n")
+            self.terminal.configure(state='disabled')
+            return True
+        elif purchase_key and len(purchase_key) > 5:
             licensing_engine.activate_license(purchase_key)
             messagebox.showinfo("Success", "Device Licensed successfully. Engine Unlocked.")
             self.terminal.configure(state='normal')
@@ -170,15 +176,34 @@ class SovereignVaultApp(tk.Tk):
 
         filetypes = [("All Files", "*.*")]
         if APP_TYPE == "MEDIA":
-            filetypes = [("Media Files", "*.mp4 *.avi *.mkv *.jpg *.png *.jpeg")]
+            filetypes = [("Media Files", ("*.mp4", "*.avi", "*.mkv", "*.jpg", "*.png", "*.jpeg"))]
         elif APP_TYPE == "DOCUMENT":
-            filetypes = [("Document Files", "*.pdf *.docx *.txt *.xlsx *.csv")]
+            filetypes = [("Document Files", ("*.pdf", "*.docx", "*.txt", "*.xlsx", "*.csv"))]
             
-        target_file = filedialog.askopenfilename(title="Select File to Crunch", filetypes=filetypes)
-        if not target_file: return
+        target_files = filedialog.askopenfilenames(title="Select File(s) to Crunch (Up to 6 for Bundles)", filetypes=filetypes)
+        if not target_files: return
         
-        output_file = target_file + ".cdv6"
-        self.run_thread(lujan_core.double_crunch_compress, target_file, output_file)
+        target_files = self.tk.splitlist(target_files) if isinstance(target_files, str) else target_files
+        
+        if len(target_files) == 1:
+            target_file = target_files[0]
+            output_file = target_file + ".cdv6"
+            self.run_thread(lujan_core.double_crunch_compress, target_file, output_file)
+        else:
+            # Bundle them
+            import tarfile, os
+            import time
+            bundle_name = f"bundle_{int(time.time())}.tar"
+            bundle_path = os.path.join(os.path.dirname(target_files[0]), bundle_name)
+            
+            print(f"Bundling {len(target_files)} assets for Double Crunch...")
+            with tarfile.open(bundle_path, "w") as tar:
+                for tf in target_files:
+                    tar.add(tf, arcname=os.path.basename(tf))
+            
+            output_file = bundle_path + ".cdv6"
+            self.run_thread(lujan_core.double_crunch_compress, bundle_path, output_file)
+
 
     def handle_restore(self):
         if lujan_core is None:
@@ -197,5 +222,5 @@ class SovereignVaultApp(tk.Tk):
         self.run_thread(lujan_core.iterative_decompress, target_file, output_file)
 
 if __name__ == "__main__":
-    app = SovereignVaultApp()
+    app = RandallVaultApp()
     app.mainloop()

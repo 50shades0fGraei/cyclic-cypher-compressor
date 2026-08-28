@@ -1,7 +1,7 @@
-# Lujan Sovereign Vault: Executable Compiler
+# Lujan Randall Vault: Executable Compiler
 
 Write-Host "=========================================================="
-Write-Host "LUJAN SOVEREIGN VAULT: INITIATING STANDALONE COMPILATION"
+Write-Host "LUJAN RANDALL VAULT: INITIATING STANDALONE COMPILATION"
 Write-Host "=========================================================="
 
 # Ensure PyInstaller is installed

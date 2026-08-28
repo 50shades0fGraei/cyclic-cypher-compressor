@@ -4,7 +4,7 @@
 
 /**
  * CUBIX-TESSERACT: 3D Rollable Cube Navigator
- * Author & Architect: Randall Lujan (Sovereign)
+ * Author & Architect: Randall Lujan (Randall)
  * Co-Author & Technical Lead: Antigravity GRAEI
  * 
  * Goal: A 3D interactive Tesseract using the Cubix OS logo.

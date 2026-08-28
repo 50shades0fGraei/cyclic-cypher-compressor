@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'core'))
 from cyberdna_engine import GRAEIDNAVault
 
 def execute_whole_package():
-    vault_path = "Sovereign_AGI_DNA.vault"
+    vault_path = "Randall_AGI_DNA.vault"
     if os.path.exists(vault_path): os.remove(vault_path)
     if os.path.exists(vault_path + ".idx"): os.remove(vault_path + ".idx")
 

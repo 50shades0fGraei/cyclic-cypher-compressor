@@ -109,7 +109,7 @@ export function initCubixEnvironment() {
     ctx.fillText('TESSERACT', 256, 290);
     ctx.fillStyle = '#70E100';
     ctx.font = '900 30px "Outfit", sans-serif';
-    ctx.fillText('• SOVEREIGN •', 256, 420);
+    ctx.fillText('• RANDALL •', 256, 420);
 
     const logoTexture = new THREE.CanvasTexture(canvas);
     
@@ -345,7 +345,7 @@ export function initCubixEnvironment() {
     }
     animate();
 
-    // --- SOVEREIGN BRIDGE (SYNC UI <-> PYTHON) ---
+    // --- RANDALL BRIDGE (SYNC UI <-> PYTHON) ---
     const BRIDGE_URL = "http://localhost:8081";
 
     function initOmniBridge() {
@@ -452,7 +452,7 @@ export function initCubixEnvironment() {
             }
         });
         
-        // Librarian Chat — powered by Gemini 1.5 Pro via Sovereign Bridge
+        // Librarian Chat — powered by Gemini 1.5 Pro via Randall Bridge
         const librarianInput = document.getElementById('librarian-input');
         const librarianSend = document.getElementById('librarian-send');
         const librarianFeed = document.querySelector('.librarian-chat > div:nth-child(2)');
@@ -484,7 +484,7 @@ export function initCubixEnvironment() {
                 aiDiv.innerHTML = `<b style="color:#00f2ff;">📚 Librarian (Gemini):</b> ${data.reply || data.error}`;
                 librarianFeed.appendChild(aiDiv);
             } catch (e) {
-                thinkDiv.innerText = "[ERROR] Bridge offline — start sovereign_bridge.py";
+                thinkDiv.innerText = "[ERROR] Bridge offline — start randall_bridge.py";
                 thinkDiv.style.color = "#FF4B2B";
             }
             librarianFeed.scrollTop = librarianFeed.scrollHeight;
@@ -526,7 +526,7 @@ export function initCubixEnvironment() {
         const targetView = document.getElementById(`view-${viewId}`);
         if (targetView) targetView.classList.add('active');
 
-        console.log(`[SOVEREIGN] Switched to view: ${viewId}`);
+        console.log(`[RANDALL] Switched to view: ${viewId}`);
     };
 
     // --- SIDEBAR TOGGLE LOGIC ---
@@ -534,7 +534,7 @@ export function initCubixEnvironment() {
         const sidebar = document.getElementById('inner-sidebar');
         if (sidebar) {
             sidebar.classList.toggle('collapsed');
-            console.log(`[SOVEREIGN] Sidebar ${sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
+            console.log(`[RANDALL] Sidebar ${sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
         }
     };
 
@@ -562,7 +562,7 @@ export function initCubixEnvironment() {
             else rubyO.classList.remove('active');
         }
 
-        console.log(`[SOVEREIGN] Visibility Mode: ${opacityClasses[currentOpacityLevel]}`);
+        console.log(`[RANDALL] Visibility Mode: ${opacityClasses[currentOpacityLevel]}`);
     };
 
     // --- SIDEBAR OPACITY CONTROL ---
@@ -588,7 +588,7 @@ export function initCubixEnvironment() {
             else rubyO.classList.remove('active');
         }
 
-        console.log(`[SOVEREIGN] Visibility Mode set to: ${opacityClasses[level]}`);
+        console.log(`[RANDALL] Visibility Mode set to: ${opacityClasses[level]}`);
     };
 
     // --- SIDEBAR AI CHAT LOGIC ---
@@ -613,7 +613,7 @@ export function initCubixEnvironment() {
         setTimeout(() => {
             const aiDiv = document.createElement('div');
             aiDiv.className = 'mini-msg msg-ai';
-            aiDiv.textContent = "Processing sovereign request... Command acknowledged.";
+            aiDiv.textContent = "Processing randall request... Command acknowledged.";
             feed.appendChild(aiDiv);
             feed.scrollTop = feed.scrollHeight;
         }, 1000);
@@ -636,7 +636,7 @@ export function initCubixEnvironment() {
                     <button onclick="closeDock()" style="background:none; border:none; color:#8892B0; cursor:pointer; font-weight:900;">✕</button>
                 </div>
                 <div style="flex:1; padding:20px; color:#E2E2E2; overflow-y:auto;">
-                    <h3>Sovereign Application Portal</h3>
+                    <h3>Randall Application Portal</h3>
                     <p>Executing ${appName} in protected memory space...</p>
                     <div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.3); border-radius:10px; border-left:4px solid #70E100;">
                         <div style="font-family:monospace; font-size:0.85rem; color:#70E100;">
@@ -648,7 +648,7 @@ export function initCubixEnvironment() {
                 </div>
             </div>
         `;
-        console.log(`[SOVEREIGN] Docked app: ${appName}`);
+        console.log(`[RANDALL] Docked app: ${appName}`);
     };
 
     window.closeDock = function() {
@@ -658,6 +658,6 @@ export function initCubixEnvironment() {
         }
     };
 
-    console.log("[CUBIX TESSERACT] Multi-Layer Tesseract + Sovereign Bridge Initialized.");
+    console.log("[CUBIX TESSERACT] Multi-Layer Tesseract + Randall Bridge Initialized.");
 }
 

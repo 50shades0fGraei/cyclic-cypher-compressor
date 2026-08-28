@@ -6,10 +6,10 @@ import os
 import shutil
 import time
 
-def organize_sovereign_workspace():
+def organize_randall_workspace():
     """
     Cleans up the workspace from test artifacts and ensures 
-    a 'Gentlemanly' professionalism for the Sovereign OS.
+    a 'Gentlemanly' professionalism for the Randall OS.
     """
     print("\n[SYSTEM CLEANSER] 🧹 Initiating Workspace Optimization...")
     
@@ -36,12 +36,12 @@ def organize_sovereign_workspace():
 
     # Move bridge/security logs to formal logs directory if they exist
     if os.path.exists("graei_dna.vault"):
-        shutil.move("graei_dna.vault", "graei_dna/sovereign.vault")
+        shutil.move("graei_dna.vault", "graei_dna/randall.vault")
         if os.path.exists("graei_dna.vault.idx"):
-            shutil.move("graei_dna.vault.idx", "graei_dna/sovereign.vault.idx")
+            shutil.move("graei_dna.vault.idx", "graei_dna/randall.vault.idx")
         print("[SYSTEM] 🧬 Migrated GRAEI DNA Vault into protected sub-directory.")
 
     print("[SYSTEM CLEANSER] ✅ Workplace Cleanliness: 100%. Protocol: Gentleman First.\n")
 
 if __name__ == "__main__":
-    organize_sovereign_workspace()
+    organize_randall_workspace()

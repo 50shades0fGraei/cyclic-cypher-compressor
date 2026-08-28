@@ -344,7 +344,7 @@ def iterative_decompress(input_path, output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Lujan Deductive Vault API - Marketplace Double Crunch Protocol",
-        epilog="Developed by Randall Lujan | Sovereign Tesseract Technology | Patent Pending"
+        epilog="Developed by Randall Lujan | Randall Tesseract Technology | Patent Pending"
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     
@@ -491,7 +491,7 @@ def iterative_decompress(input_path, output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Lujan Deductive Vault API - Marketplace Double Crunch Protocol",
-        epilog="Developed by Randall Lujan | Sovereign Tesseract Technology | Patent Pending"
+        epilog="Developed by Randall Lujan | Randall Tesseract Technology | Patent Pending"
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     

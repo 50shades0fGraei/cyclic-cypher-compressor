@@ -55,7 +55,7 @@ def static_proxy(path):
 
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "Sovereign Node Active", "version": "1.2.1-MARKETPLACE", "payments": "Secured"})
+    return jsonify({"status": "Randall Node Active", "version": "1.2.1-MARKETPLACE", "payments": "Secured"})
 
 @app.route('/api/v1/store', methods=['POST'])
 def store_file():

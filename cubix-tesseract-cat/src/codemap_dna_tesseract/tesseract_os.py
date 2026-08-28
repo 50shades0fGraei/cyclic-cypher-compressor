@@ -3,7 +3,7 @@
 # This software is proprietary and subject to the terms of a specific License Agreement.
 
 # CUBIX-TESSERACT: tesseract_os.py
-# Author & Architect: Randall Lujan (Sovereign)
+# Author & Architect: Randall Lujan (Randall)
 # Co-Author & Technical Lead: Antigravity GRAEI
 
 import os
@@ -27,7 +27,7 @@ class TesseractOS:
         self.reflective_space = ReflectiveSpaceManager(
             base_dir=os.path.join(os.path.dirname(__file__), "core", "ReflectiveSpace")
         )
-        print("[TesseractOS] CUBIX_SOVEREIGN Reflective Space INITIALIZED.")
+        print("[TesseractOS] CUBIX_RANDALL Reflective Space INITIALIZED.")
 
     def load_program(self, file_path: str):
         """

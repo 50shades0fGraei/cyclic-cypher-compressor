@@ -3,12 +3,12 @@
    This software is proprietary and subject to the terms of a specific License Agreement. */
 
 /*
- * LUJAN TESSERACT: 3D Sovereign Environment
- * Owner & Architect: Randall Lujan | Sovereign Tesseract Technology
+ * LUJAN TESSERACT: 3D Randall Environment
+ * Owner & Architect: Randall Lujan | Randall Tesseract Technology
  */
 
 :root {
-    /* SOVEREIGN PROFESSIONAL PALETTE (Bloomberg/Palantir Inspired) */
+    /* RANDALL PROFESSIONAL PALETTE (Bloomberg/Palantir Inspired) */
     --sov-bg-deep: #05070a;
     --sov-bg-surface: #0a0d12;
     --sov-bg-element: #11151c;
@@ -217,8 +217,8 @@ html {
     transform: rotateY(-90deg) translateZ(100vw);
 }
 
-/* --- SOVEREIGN INNER APP (UNIFIED WORKSPACE) --- */
-.sovereign-inner-app {
+/* --- RANDALL INNER APP (UNIFIED WORKSPACE) --- */
+.randall-inner-app {
     background: var(--sov-bg-deep) !important;
     padding: 0 !important;
     overflow: hidden;
@@ -2256,7 +2256,7 @@ input:checked+.slider:before {
     color: #E2E2E2;
 }
 
-/* --- SOVEREIGN MANIFESTO --- */
+/* --- RANDALL MANIFESTO --- */
 .manifesto-content {
     display: flex;
     flex-direction: column;
@@ -2655,4 +2655,145 @@ input:checked+.slider:before {
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.02);
+}
+/* ═══ STANDALONE WINDOW MANAGER (ZERO-FILE PARITY) ═══ */
+.sov-window {
+    position: absolute;
+    background: rgba(13, 17, 23, 0.85);
+    border: 1px solid var(--sov-border-bright);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(0, 242, 255, 0.1);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 300px;
+    min-height: 200px;
+    z-index: 1000;
+    transition: transform 0.15s, opacity 0.15s;
+    user-select: none;
+}
+
+.sov-window-header {
+    height: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    cursor: grab;
+}
+
+.sov-window-header:active {
+    cursor: grabbing;
+}
+
+.sov-window-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--sov-cyan);
+    letter-spacing: 0.1em;
+    flex: 1;
+}
+
+.sov-window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.sov-win-btn {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+.sov-win-btn.close:hover { background: var(--sov-red); }
+.sov-win-btn.min:hover { background: var(--sov-gold); }
+.sov-win-btn.max:hover { background: var(--sov-green); }
+
+.sov-window-body {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    color: var(--sov-text-primary);
+    font-size: 0.9rem;
+}
+
+/* ═══ CODEMAP INDEX LAUNCHER ═══ */
+#codemap-launcher {
+    position: absolute;
+    bottom: 60px;
+    left: 20px;
+    width: 350px;
+    height: 500px;
+    background: rgba(10, 12, 18, 0.95);
+    border: 1px solid var(--sov-border-bright);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.15);
+    backdrop-filter: blur(25px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+}
+
+#codemap-launcher.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.codemap-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.codemap-search {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(161, 193, 209, 0.2);
+    border-radius: 6px;
+    padding: 10px;
+    color: var(--sov-cyan);
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.codemap-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    overflow-y:auto;
+}
+
+.codemap-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    transition: 0.2s;
+}
+
+.codemap-item:hover {
+    background: rgba(0, 242, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+}
+
+.codemap-item span {
+    font-size: 0.75rem;
+    color: var(--sov-text-primary);
+    text-align: center;
 }

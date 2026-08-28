@@ -3,7 +3,7 @@
 // This software is proprietary and subject to the terms of a specific License Agreement.
 
 /**
- * Quick Vault — Sovereign Storage System
+ * Quick Vault — Randall Storage System
  * vault.js — Core Application Logic
  *
  * Features:
@@ -832,7 +832,7 @@ function initEvents() {
 
   // Top up
   document.getElementById('btn-topup').addEventListener('click', () => {
-    const amount = prompt("PAYPAL BUSINESS GATEWAY\nEnter amount to add to your Sovereign Wallet (USD):", "10.00");
+    const amount = prompt("PAYPAL BUSINESS GATEWAY\nEnter amount to add to your Randall Wallet (USD):", "10.00");
     if (!amount) return;
     
     // Simulate PayPal redirect / settlement
