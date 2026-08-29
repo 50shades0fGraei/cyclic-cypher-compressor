@@ -1,0 +1,6 @@
+PatientID,Name,DOB,Diagnosis,Treatment,LastVisit,RandallID
+H-001,John Doe,1985-05-12,G-Type Resonance,Stabilization Protocol,2026-02-14,GRAEI-9982
+H-002,Jane Smith,1992-11-23,Synaptic Lag,Neural Synchronization,2026-03-01,GRAEI-1245
+H-003,Alice Johnson,1978-08-05,Data Bloat OCD,Deductive Decompression,2026-04-10,GRAEI-8831
+H-004,Bob Wilson,2001-01-30,Digital Silence,Acoustic Restoration,2026-04-15,GRAEI-2245
+H-005,Emma Brown,1965-03-12,C-Cycle Loop,Triangulation Therapy,2026-04-20,GRAEI-5531

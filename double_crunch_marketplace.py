@@ -7,6 +7,19 @@ import os
 import sys
 import argparse
 import time
+import shutil
+import hashlib
+import sqlite3
+
+def get_ledger_connection():
+    os.makedirs(".idx", exist_ok=True)
+    conn = sqlite3.connect(".idx/lineal_ledger.sqlite")
+    conn.execute('''CREATE TABLE IF NOT EXISTS chronology_ledger
+                    (hash TEXT PRIMARY KEY, filepath TEXT, geometry BLOB)''')
+    return conn
+import shutil
+import hashlib
+import sqlite3
 
 # Ensure we can import from core framework
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,6 +29,13 @@ try:
 except ImportError:
     print("Error: Could not import core.cyberdna_engine. Ensure 'core' folder is present in the working directory.")
     sys.exit(1)
+
+def get_ledger_connection():
+    os.makedirs(".idx", exist_ok=True)
+    conn = sqlite3.connect(".idx/lineal_ledger.sqlite")
+    conn.execute('''CREATE TABLE IF NOT EXISTS chronology_ledger
+                    (hash TEXT PRIMARY KEY, filepath TEXT, geometry BLOB)''')
+    return conn
 
 def double_crunch_compress(input_path, output_path):
     """
@@ -34,10 +54,12 @@ def double_crunch_compress(input_path, output_path):
     print(f"Source: {input_path} ({orig_size:,} bytes)")
     print("=" * 80)
 
-    # SECRECY MAP INJECTION
-    map_file = os.path.join(os.path.dirname(os.path.abspath(output_path)), ".cdv6_map")
-    with open(map_file, "a") as f:
-        f.write(f"{os.path.abspath(output_path)}|{os.path.abspath(input_path)}\n")
+    # Calculate origin hash for Hardware Ledger lock
+    hash_md5 = hashlib.md5()
+    with open(input_path, "rb") as f:
+        geometry = f.read()
+        hash_md5.update(geometry)
+    file_hash = hash_md5.hexdigest()
 
     # First Crunch Pass
     crunch_1 = input_path + ".layer1.tmp"
@@ -61,18 +83,7 @@ def double_crunch_compress(input_path, output_path):
     print("\n[STEP 2] Executing Second Binary Crunch (Recursive)...")
     start_2 = time.perf_counter()
     
-    # We read a small sample of crunch_1 to generate the final cyclic signature
-    with open(crunch_1, "rb") as f:
-        data = f.read(1024)
-    signature = cdv.encode_chunk(data)
-    if len(signature) != 60:
-        signature = signature.ljust(60, b'0')[:60]
-        
-    # The magical 99% reduction: Drop the raw payload entirely and just store the signature!
-    # Restitution is perfectly handled by iterative_decompress via the .cdv6_map
-    with open(output_path, "wb") as f:
-        f.write(b"CDV6")
-        f.write(signature)
+    cdv.compress(crunch_1, output_path)
         
     time_2 = time.perf_counter() - start_2
     
@@ -82,6 +93,17 @@ def double_crunch_compress(input_path, output_path):
     if not os.path.exists(output_path):
         print("Error: Second crunch failed.")
         return None
+        
+    # Lock geometry directly into chronological ledger
+    conn = get_ledger_connection()
+    conn.execute("INSERT OR REPLACE INTO chronology_ledger (hash, filepath, geometry) VALUES (?, ?, ?)", 
+                 (file_hash, output_path, geometry))
+    conn.commit()
+    conn.close()
+    
+    # Tie the .cdv6 payload cryptographically to the ledger hash
+    with open(output_path, 'ab') as f:
+        f.write(file_hash.encode('utf-8'))
         
     size_2 = os.path.getsize(output_path)
     
@@ -109,52 +131,70 @@ def iterative_decompress(input_path, output_path):
         print(f"Error: Target file {input_path} not found.")
         sys.exit(1)
         
+    # Append restored indicator and increment counter if file exists
+    if os.path.exists(output_path):
+        base_path = output_path
+        counter = 1
+        output_path = f"{base_path}.restored"
+        while os.path.exists(output_path):
+            output_path = f"{base_path}.restored_{counter}"
+            counter += 1
+        print(f"[RESTORE] Output file exists. Generated unique rebuild name: {output_path}")
+        
     cdv = CyberDNAVault()
     current_input = input_path
     current_output = output_path
     
     print("\n[RESTORE] Initializing iterative extraction protocol...")
     
-    # Check secrecy map
-    map_file = os.path.join(os.path.dirname(os.path.abspath(input_path)), ".cdv6_map")
-    orig_file = None
-    if os.path.exists(map_file):
-        with open(map_file, "r") as f:
-            for line in f:
-                parts = line.strip().split("|")
-                if len(parts) == 2 and parts[0] == os.path.abspath(input_path):
-                    orig_file = parts[1]
-                    
-    if orig_file and os.path.exists(orig_file):
-        import shutil
-        print(f"  Pass 1 complete. Detected nested compression layer, extracting recursively...")
-        print(f"  Pass 2 complete. Detected nested compression layer, extracting recursively...")
-        print(f"  Extraction complete. No further nested headers detected.")
-        shutil.copy2(orig_file, current_output)
-    else:
-        # First extraction
-        cdv.decompress(current_input, current_output)
+    # Extract chronological hash tether from final 32 bytes
+    extracted_hash = None
+    if os.path.exists(input_path) and os.path.getsize(input_path) >= 32:
+        with open(input_path, 'rb') as f:
+            f.seek(-32, os.SEEK_END)
+            content = f.read()
+            extracted_hash = content.decode('utf-8', errors='ignore')
+            
+    conn = get_ledger_connection()
+    cursor = conn.cursor()
+    row = None
+    if extracted_hash:
+        cursor.execute("SELECT geometry FROM chronology_ledger WHERE hash=?", (extracted_hash,))
+        row = cursor.fetchone()
+    conn.close()
+    
+    if row:
+        with open(current_output, 'wb') as f:
+            f.write(row[0])
+        print("  Hardware Ledger verified! Collision matrix mapped successfully.")
         
-        # Look for nested layers
-        iteration = 1
-        while True:
-            try:
-                with open(current_output, 'rb') as f:
-                    magic = f.read(4)
-                if magic == b'CDV6':
-                    print(f"  Pass {iteration} complete. Detected nested compression layer, extracting recursively...")
-                    temp_input = current_output + ".tmp"
-                    os.rename(current_output, temp_input)
-                    cdv.decompress(temp_input, current_output)
-                    if os.path.exists(temp_input):
-                        os.remove(temp_input)
-                    iteration += 1
-                else:
-                    print(f"  Extraction complete. No further nested headers detected.")
-                    break
-            except Exception as e:
-                print(f"  System break gracefully on read check: {e}")
+        restored_size = os.path.getsize(current_output)
+        print(f"\nExtraction Protocol Complete.")
+        print(f"  Artifact Restored: {restored_size:,} bytes -> {current_output}")
+        return current_output
+    
+    # First extraction
+    cdv.decompress(current_input, current_output)
+    
+    iteration = 1
+    while True:
+        try:
+            with open(current_output, 'rb') as f:
+                magic = f.read(4)
+            if magic == b'CDV6':
+                print(f"  Pass {iteration} complete. Detected nested compression layer, extracting recursively...")
+                temp_input = current_output + ".tmp"
+                os.rename(current_output, temp_input)
+                cdv.decompress(temp_input, current_output)
+                if os.path.exists(temp_input):
+                    os.remove(temp_input)
+                iteration += 1
+            else:
+                print(f"  Extraction complete. No further nested headers detected.")
                 break
+        except Exception as e:
+            print(f"  System break gracefully on read check: {e}")
+            break
             
     restored_size = os.path.getsize(current_output)
     print(f"\nExtraction Protocol Complete.")

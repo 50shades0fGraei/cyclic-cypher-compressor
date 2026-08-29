@@ -86,6 +86,6 @@ def decode_from_keyboard_simple(keyboard_string):
             
             val = (val * BASE) + rem
             
-        decoded.extend(val.to_bytes(3, 'big'))
+        decoded.extend((val % 16777216).to_bytes(3, 'big'))
         
     return bytes(decoded[:data_length])
